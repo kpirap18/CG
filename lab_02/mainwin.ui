@@ -6,20 +6,20 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>960</width>
-    <height>767</height>
+    <width>1200</width>
+    <height>1000</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>960</width>
-    <height>767</height>
+    <width>1200</width>
+    <height>1000</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>960</width>
-    <height>767</height>
+    <width>1200</width>
+    <height>1000</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -29,15 +29,15 @@
    <widget class="QGroupBox" name="mode">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>10</y>
-      <width>221</width>
-      <height>151</height>
+      <x>30</x>
+      <y>100</y>
+      <width>281</width>
+      <height>181</height>
      </rect>
     </property>
     <property name="font">
      <font>
-      <pointsize>12</pointsize>
+      <pointsize>14</pointsize>
      </font>
     </property>
     <property name="title">
@@ -46,10 +46,10 @@
     <widget class="QLabel" name="label_dx">
      <property name="geometry">
       <rect>
-       <x>18</x>
-       <y>43</y>
+       <x>30</x>
+       <y>70</y>
        <width>55</width>
-       <height>21</height>
+       <height>31</height>
       </rect>
      </property>
      <property name="text">
@@ -59,8 +59,8 @@
     <widget class="QLabel" name="label_dy">
      <property name="geometry">
       <rect>
-       <x>98</x>
-       <y>43</y>
+       <x>160</x>
+       <y>70</y>
        <width>55</width>
        <height>31</height>
       </rect>
@@ -72,8 +72,8 @@
     <widget class="QPushButton" name="pushButton_mode">
      <property name="geometry">
       <rect>
-       <x>100</x>
-       <y>110</y>
+       <x>160</x>
+       <y>140</y>
        <width>111</width>
        <height>31</height>
       </rect>
@@ -90,8 +90,8 @@
     <widget class="QLineEdit" name="lineEdit_modex">
      <property name="geometry">
       <rect>
-       <x>8</x>
-       <y>73</y>
+       <x>30</x>
+       <y>100</y>
        <width>81</width>
        <height>31</height>
       </rect>
@@ -100,11 +100,37 @@
     <widget class="QLineEdit" name="lineEdit_modey">
      <property name="geometry">
       <rect>
-       <x>98</x>
-       <y>73</y>
+       <x>160</x>
+       <y>100</y>
        <width>81</width>
        <height>31</height>
       </rect>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_2">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>40</y>
+       <width>201</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_centermode_3">
+     <property name="geometry">
+      <rect>
+       <x>30</x>
+       <y>50</y>
+       <width>201</width>
+       <height>51</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Значение в пикселях&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;&lt;br/&gt;&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
     </widget>
    </widget>
@@ -112,9 +138,9 @@
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>160</y>
-      <width>221</width>
-      <height>291</height>
+      <y>300</y>
+      <width>291</width>
+      <height>341</height>
      </rect>
     </property>
     <property name="font">
@@ -134,8 +160,8 @@
     <widget class="QLabel" name="label_xm">
      <property name="geometry">
       <rect>
-       <x>20</x>
-       <y>70</y>
+       <x>30</x>
+       <y>110</y>
        <width>55</width>
        <height>21</height>
       </rect>
@@ -147,8 +173,8 @@
     <widget class="QLabel" name="label_ym">
      <property name="geometry">
       <rect>
-       <x>100</x>
-       <y>70</y>
+       <x>160</x>
+       <y>110</y>
        <width>55</width>
        <height>31</height>
       </rect>
@@ -160,8 +186,8 @@
     <widget class="QPushButton" name="pushButton_scale">
      <property name="geometry">
       <rect>
-       <x>102</x>
-       <y>247</y>
+       <x>170</x>
+       <y>300</y>
        <width>111</width>
        <height>31</height>
       </rect>
@@ -178,8 +204,8 @@
     <widget class="QLineEdit" name="lineEdit_xm">
      <property name="geometry">
       <rect>
-       <x>10</x>
-       <y>100</y>
+       <x>30</x>
+       <y>140</y>
        <width>81</width>
        <height>31</height>
       </rect>
@@ -188,8 +214,8 @@
     <widget class="QLineEdit" name="lineEdit_ym">
      <property name="geometry">
       <rect>
-       <x>100</x>
-       <y>100</y>
+       <x>160</x>
+       <y>140</y>
        <width>81</width>
        <height>31</height>
       </rect>
@@ -198,34 +224,34 @@
     <widget class="QLabel" name="label_centermode">
      <property name="geometry">
       <rect>
-       <x>10</x>
-       <y>50</y>
+       <x>30</x>
+       <y>60</y>
        <width>201</width>
-       <height>21</height>
+       <height>51</height>
       </rect>
      </property>
      <property name="text">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Центр масштабирования&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;&lt;br/&gt;&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Центр масштабирования&lt;br/&gt;(значение в пикселях)&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;&lt;br/&gt;&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
     </widget>
     <widget class="QLabel" name="label_coef">
      <property name="geometry">
       <rect>
-       <x>10</x>
-       <y>140</y>
+       <x>30</x>
+       <y>190</y>
        <width>181</width>
-       <height>31</height>
+       <height>41</height>
       </rect>
      </property>
      <property name="text">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Коэф-ты масшт-ния&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;  Коэффециенты&lt;br/&gt;масштабирования&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
     </widget>
     <widget class="QLabel" name="label_ky">
      <property name="geometry">
       <rect>
-       <x>100</x>
-       <y>170</y>
+       <x>160</x>
+       <y>230</y>
        <width>55</width>
        <height>31</height>
       </rect>
@@ -237,8 +263,8 @@
     <widget class="QLineEdit" name="lineEdit_ky">
      <property name="geometry">
       <rect>
-       <x>100</x>
-       <y>200</y>
+       <x>160</x>
+       <y>260</y>
        <width>81</width>
        <height>31</height>
       </rect>
@@ -247,8 +273,8 @@
     <widget class="QLineEdit" name="lineEdit_kx">
      <property name="geometry">
       <rect>
-       <x>10</x>
-       <y>200</y>
+       <x>30</x>
+       <y>260</y>
        <width>81</width>
        <height>31</height>
       </rect>
@@ -257,8 +283,8 @@
     <widget class="QLabel" name="label_kx">
      <property name="geometry">
       <rect>
-       <x>20</x>
-       <y>170</y>
+       <x>30</x>
+       <y>230</y>
        <width>55</width>
        <height>21</height>
       </rect>
@@ -267,14 +293,27 @@
       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;kx&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
     </widget>
+    <widget class="QLabel" name="label_3">
+     <property name="geometry">
+      <rect>
+       <x>30</x>
+       <y>40</y>
+       <width>201</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
    </widget>
    <widget class="QGroupBox" name="turn">
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>450</y>
-      <width>221</width>
-      <height>261</height>
+      <y>660</y>
+      <width>291</width>
+      <height>271</height>
      </rect>
     </property>
     <property name="font">
@@ -294,8 +333,8 @@
     <widget class="QPushButton" name="pushButton_turn">
      <property name="geometry">
       <rect>
-       <x>100</x>
-       <y>210</y>
+       <x>170</x>
+       <y>230</y>
        <width>111</width>
        <height>31</height>
       </rect>
@@ -312,9 +351,9 @@
     <widget class="QLineEdit" name="lineEdit_angle">
      <property name="geometry">
       <rect>
-       <x>10</x>
+       <x>20</x>
        <y>70</y>
-       <width>201</width>
+       <width>211</width>
        <height>31</height>
       </rect>
      </property>
@@ -323,33 +362,33 @@
      <property name="geometry">
       <rect>
        <x>20</x>
-       <y>50</y>
-       <width>201</width>
-       <height>21</height>
+       <y>40</y>
+       <width>241</width>
+       <height>41</height>
       </rect>
      </property>
      <property name="text">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Угол поворота&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Угол поворота (в градусах)&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
     </widget>
     <widget class="QLabel" name="label_centerturn">
      <property name="geometry">
       <rect>
-       <x>10</x>
-       <y>110</y>
+       <x>20</x>
+       <y>120</y>
        <width>181</width>
-       <height>31</height>
+       <height>91</height>
       </rect>
      </property>
      <property name="text">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Центр вращения&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Центр вращения&lt;br/&gt;(значение в пикселях)&lt;/span&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
     </widget>
     <widget class="QLabel" name="label_yturn">
      <property name="geometry">
       <rect>
-       <x>100</x>
-       <y>140</y>
+       <x>140</x>
+       <y>190</y>
        <width>55</width>
        <height>31</height>
       </rect>
@@ -361,8 +400,8 @@
     <widget class="QLineEdit" name="lineEdit_yturn">
      <property name="geometry">
       <rect>
-       <x>100</x>
-       <y>170</y>
+       <x>160</x>
+       <y>190</y>
        <width>81</width>
        <height>31</height>
       </rect>
@@ -371,8 +410,8 @@
     <widget class="QLineEdit" name="lineEdit_xturn">
      <property name="geometry">
       <rect>
-       <x>10</x>
-       <y>170</y>
+       <x>30</x>
+       <y>190</y>
        <width>81</width>
        <height>31</height>
       </rect>
@@ -381,8 +420,8 @@
     <widget class="QLabel" name="label_xturn">
      <property name="geometry">
       <rect>
-       <x>20</x>
-       <y>140</y>
+       <x>10</x>
+       <y>190</y>
        <width>55</width>
        <height>21</height>
       </rect>
@@ -398,7 +437,7 @@
     </property>
     <property name="geometry">
      <rect>
-      <x>690</x>
+      <x>950</x>
       <y>10</y>
       <width>221</width>
       <height>101</height>
@@ -463,6 +502,9 @@
      </property>
     </widget>
     <widget class="QLineEdit" name="lineEdit_centerx">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
      <property name="geometry">
       <rect>
        <x>10</x>
@@ -471,8 +513,14 @@
        <height>31</height>
       </rect>
      </property>
+     <property name="dragEnabled">
+      <bool>false</bool>
+     </property>
     </widget>
     <widget class="QLineEdit" name="lineEdit_centery">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
      <property name="geometry">
       <rect>
        <x>100</x>
@@ -486,9 +534,9 @@
    <widget class="QPushButton" name="pushButton_throw">
     <property name="geometry">
      <rect>
-      <x>300</x>
-      <y>10</y>
-      <width>201</width>
+      <x>450</x>
+      <y>20</y>
+      <width>321</width>
       <height>41</height>
      </rect>
     </property>
@@ -498,14 +546,14 @@
      </font>
     </property>
     <property name="text">
-     <string>Изначальное из-ние</string>
+     <string>Изначальное изображение</string>
     </property>
    </widget>
    <widget class="QPushButton" name="pushButton_back">
     <property name="geometry">
      <rect>
-      <x>520</x>
-      <y>10</y>
+      <x>810</x>
+      <y>20</y>
       <width>111</width>
       <height>41</height>
      </rect>
@@ -522,18 +570,18 @@
    <widget class="QGraphicsView" name="graphicsView">
     <property name="geometry">
      <rect>
-      <x>260</x>
+      <x>320</x>
       <y>120</y>
-      <width>691</width>
-      <height>581</height>
+      <width>861</width>
+      <height>801</height>
      </rect>
     </property>
    </widget>
    <widget class="QPushButton" name="pushButton_oxy">
     <property name="geometry">
      <rect>
-      <x>300</x>
-      <y>60</y>
+      <x>90</x>
+      <y>20</y>
       <width>331</width>
       <height>41</height>
      </rect>
@@ -547,13 +595,31 @@
      <string>Показать оси координат</string>
     </property>
    </widget>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>330</x>
+      <y>80</y>
+      <width>611</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>10</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>Отметки на осях координат поставлены по 50 пикселей</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>960</width>
+     <width>1200</width>
      <height>26</height>
     </rect>
    </property>

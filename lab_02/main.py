@@ -105,12 +105,22 @@ class MainWin(QtWidgets.QMainWindow, mainwin.Ui_MainWindow):
         if self.FLAG:
             scene.addLine(0, -w, 0, w, pen=pg.mkPen('g'))
             scene.addLine(-h, 0, h, 0, pen=pg.mkPen('g'))
+            scene.addLine(0, h // 2, -5, h // 2 - 20, pen=pg.mkPen('#77dd77'))
+            scene.addLine(0, h // 2, 5, h // 2 - 20, pen=pg.mkPen('g'))
+            scene.addLine(w // 2, 0, w // 2 - 20, 5, pen=pg.mkPen('g'))
+            scene.addLine(w // 2, 0, w // 2 - 20, -5, pen=pg.mkPen('g'))
+            # Отсечки
+            for i in range(50, 501, 50):
+                scene.addLine(i, 5, i, -5, pen=pg.mkPen('g'))
+                scene.addLine(-i, 5, -i, -5, pen=pg.mkPen('g'))
+                scene.addLine(5, i, -5, i, pen=pg.mkPen('g'))
+                scene.addLine(5, -i, -5, -i, pen=pg.mkPen('g'))
 
          # Отрисовка ромба
         for i in range(len(self.rhombus) - 1):
             scene.addLine(self.rhombus[i][0], self.rhombus[i][1],
                           self.rhombus[i + 1][0], self.rhombus[i + 1][1])
-        # Ортисовка улитки Паскаля
+        # Отрисовка улитки Паскаля
         for i in range(len(self.snail) - 1):
             scene.addLine(self.snail[i][0], self.snail[i][1],
                           self.snail[i + 1][0], self.snail[i + 1][1])
@@ -119,7 +129,6 @@ class MainWin(QtWidgets.QMainWindow, mainwin.Ui_MainWindow):
         print(len(self.hatching))
         i = 0
         for _ in range(len(self.hatching) // 2):
-            print("i", i)
             scene.addLine(self.hatching[i][0], self.hatching[i][1],
                           self.hatching[i + 1][0], self.hatching[i + 1][1])
             i += 2
@@ -127,8 +136,8 @@ class MainWin(QtWidgets.QMainWindow, mainwin.Ui_MainWindow):
         # Центр фигуры
         x = (self.rhombus[0][0] + self.rhombus[2][0]) / 2
         y = (self.rhombus[0][1] + self.rhombus[2][1]) / 2
-        self.lineEdit_centerx.setText("%.2f" % x)
-        self.lineEdit_centery.setText("%.2f" % y)
+        self.lineEdit_centerx.setText("%.3f" % x)
+        self.lineEdit_centery.setText("%.3f" % y)
 
         self.graphicsView.repaint()
         self.repaint()
@@ -157,10 +166,10 @@ class MainWin(QtWidgets.QMainWindow, mainwin.Ui_MainWindow):
         '''
             Функция на шаг назад.
         '''
-        self.hatching = self.hatching_duff
-        self.snail = self.snail_duff
-        self.rhombus = self.rhombus_duff
-        self.center = self.center_duff
+        self.hatching_duff, self.hatching = self.hatching, self.hatching_duff
+        self.snail_duff, self.snail = self.snail, self.snail_duff
+        self.rhombus_duff, self.rhombus = self.rhombus, self.rhombus_duff
+        self.center_duff, self.center = self.center, self.center_duff
         self.draw()
 
 
@@ -169,11 +178,11 @@ class MainWin(QtWidgets.QMainWindow, mainwin.Ui_MainWindow):
             Функция перемещения фигуры.
         '''
         try:
-            dx = int(self.lineEdit_modex.text())
-            dy = int(self.lineEdit_modey.text())
+            dx = float(self.lineEdit_modex.text())
+            dy = float(self.lineEdit_modey.text())
         except ValueError:
             QtWidgets.QMessageBox.critical(self, "Ошибка",
-                                           "Введите целые числа!!!")
+                                           "Невозможно прочитать числа!")
         self.copy_arr()
         for i in range(len(self.rhombus)):
             self.rhombus[i][0] += dx
@@ -258,6 +267,7 @@ class MainWin(QtWidgets.QMainWindow, mainwin.Ui_MainWindow):
             self.center[i][1] = yc + (self.center[i][1] - yc) * my_cos - \
                                  (self.center[i][0] - xc) * my_sin
             self.center[i][0] = x1
+
         self.draw()
 
 

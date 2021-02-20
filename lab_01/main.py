@@ -17,7 +17,7 @@ class MainWindow(tk.Tk):
         tk.Tk.__init__(self, *arg, **kwarg)
         
         # Главное окно
-        self.geometry("1200x990+300+10")
+        self.geometry("1200x990+100+10")
         self.title("Лабораторная работа №1")
         self["bg"] = "#7d182e"
         self.configure(highlightcolor="red")

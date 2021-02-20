@@ -92,6 +92,11 @@ def delete_point(root):
         root.answer.delete("all")
         list_dot = list(root.listdot.get(0, tk.END))
         n = len(list_dot)
+        print(number, 0 >= number > n)
+        if 0 >= number or number > n:
+            messagebox.showerror("Ошибка ввода данных",
+                                 "Неверный номер удаляемой точки.")
+            return
         list_dot.pop(number - 1)
         root.listdot.delete(0, tk.END)
         root.dot_num.delete(0, tk.END)

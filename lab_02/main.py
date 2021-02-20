@@ -173,6 +173,38 @@ class MainWin(QtWidgets.QMainWindow, mainwin.Ui_MainWindow):
         self.draw()
 
 
+    def mode(point, d):
+        '''
+            Формула перемещения для точки.
+        '''
+        point[0] += d[0]
+        point[1] += d[1]
+        return point
+
+
+    def scale(point, k, m):
+        '''
+            Формула масштабирования дл точки.
+        '''
+        point[0] = point[0] * k[0] + (1 - k[0]) * m[0]
+        point[1] = point[1] * k[1] + (1 - k[1]) * m[1]
+        return point
+
+
+    def turn(point, c, ang):
+        '''
+            Формула поворота для точки.
+        '''
+        my_sin = sin(radians(360 - ang))
+        my_cos = cos(radians(360 - ang))
+        x1 = c[0] + (point[0] - c[0]) * my_cos + \
+             (point[1] - c[1]) * my_sin
+        point[1] = c[1] + (point[1] - c[1]) * my_cos - \
+                   (point[0] - c[0]) * my_sin
+        point[0] = x1
+        return point
+    
+
     def draw_mode(self):
         '''
             Функция перемещения фигуры.
@@ -185,17 +217,13 @@ class MainWin(QtWidgets.QMainWindow, mainwin.Ui_MainWindow):
                                            "Невозможно прочитать числа!")
         self.copy_arr()
         for i in range(len(self.rhombus)):
-            self.rhombus[i][0] += dx
-            self.rhombus[i][1] += dy
+            self.rhombus[i] = MainWin.mode(self.rhombus[i], [dx, dy])
         for i in range(len(self.snail)):
-            self.snail[i][0] += dx
-            self.snail[i][1] += dy
+            self.snail[i] = MainWin.mode(self.snail[i], [dx, dy])
         for i in range(len(self.hatching)):
-            self.hatching[i][0] += dx
-            self.hatching[i][1] += dy
+            self.hatching[i] = MainWin.mode(self.hatching[i], [dx, dy])
         for i in range(len(self.center)):
-            self.center[i][0] += dx
-            self.center[i][1] += dy
+            self.center[i] = MainWin.mode(self.center[i], [dx, dy])
         self.draw()
 
 
@@ -214,17 +242,13 @@ class MainWin(QtWidgets.QMainWindow, mainwin.Ui_MainWindow):
                                            "целыми или вещественными числами")
         self.copy_arr()
         for i in range(len(self.rhombus)):
-            self.rhombus[i][0] = self.rhombus[i][0] * kx + (1 - kx) * xm
-            self.rhombus[i][1] = self.rhombus[i][1] * ky + (1 - ky) * ym
+            self.rhombus[i] = MainWin.scale(self.rhombus[i], [kx, ky], [xm, ym])
         for i in range(len(self.snail)):
-            self.snail[i][0] = self.snail[i][0] * kx + (1 - kx) * xm
-            self.snail[i][1] = self.snail[i][1] * ky + (1 - ky) * ym
+            self.snail[i] = MainWin.scale(self.snail[i], [kx, ky], [xm, ym])
         for i in range(len(self.hatching)):
-            self.hatching[i][0] = self.hatching[i][0] * kx + (1 - kx) * xm
-            self.hatching[i][1] = self.hatching[i][1] * ky + (1 - ky) * ym
+            self.hatching[i] = MainWin.scale(self.hatching[i], [kx, ky], [xm, ym])
         for i in range(len(self.center)):
-            self.center[i][0] = self.center[i][0] * kx + (1 - kx) * xm
-            self.center[i][1] = self.center[i][1] * ky + (1 - ky) * ym
+            self.center[i] = MainWin.scale(self.center[i], [kx, ky], [xm, ym])
         self.draw()
 
 
@@ -241,32 +265,14 @@ class MainWin(QtWidgets.QMainWindow, mainwin.Ui_MainWindow):
                                            "Угол и координаты должны быть \n"
                                            "целыми или вещественными числами")
         self.copy_arr()
-        my_sin = sin(radians(360 - angle))
-        my_cos = cos(radians(360 - angle))
         for i in range(len(self.rhombus)):
-            x1 = xc + (self.rhombus[i][0] - xc) * my_cos + \
-                 (self.rhombus[i][1] - yc) * my_sin
-            self.rhombus[i][1] = yc + (self.rhombus[i][1] - yc) * my_cos - \
-                                 (self.rhombus[i][0] - xc) * my_sin
-            self.rhombus[i][0] = x1
+            self.rhombus[i] = MainWin.turn(self.rhombus[i], [xc, yc], angle)
         for i in range(len(self.snail)):
-            x1 = xc + (self.snail[i][0] - xc) * my_cos + \
-                 (self.snail[i][1] - yc) * my_sin
-            self.snail[i][1] = yc + (self.snail[i][1] - yc) * my_cos - \
-                                 (self.snail[i][0] - xc) * my_sin
-            self.snail[i][0] = x1
+            self.snail[i] = MainWin.turn(self.snail[i], [xc, yc], angle)
         for i in range(len(self.hatching)):
-            x1 = xc + (self.hatching[i][0] - xc) * my_cos + \
-                 (self.hatching[i][1] - yc) * my_sin
-            self.hatching[i][1] = yc + (self.hatching[i][1] - yc) * my_cos - \
-                                 (self.hatching[i][0] - xc) * my_sin
-            self.hatching[i][0] = x1
+            self.hatching[i] = MainWin.turn(self.hatching[i], [xc, yc], angle)
         for i in range(len(self.center)):
-            x1 = xc + (self.center[i][0] - xc) * my_cos + \
-                 (self.center[i][1] - yc) * my_sin
-            self.center[i][1] = yc + (self.center[i][1] - yc) * my_cos - \
-                                 (self.center[i][0] - xc) * my_sin
-            self.center[i][0] = x1
+            self.center[i] = MainWin.turn(self.center[i], [xc, yc], angle)
 
         self.draw()
 

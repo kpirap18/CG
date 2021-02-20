@@ -106,6 +106,7 @@ def ang(ax, ay):
         ang_res = 0
     else:
         tg = ay / ax
+        print(math.degrees(math.atan(abs(tg))))
         ang_res = 90 - math.degrees(math.atan(abs(tg)))
     return ang_res
 
@@ -343,6 +344,7 @@ def draw_answer(root):
     root.answer.create_line(*ortho,
                             fill="#ff5349",
                             width=1.5)
+
 
     # Написание координат в окне ответа
     for i in range(1, 6, 2):

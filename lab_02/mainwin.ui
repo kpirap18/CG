@@ -37,7 +37,7 @@
     </property>
     <property name="font">
      <font>
-      <pointsize>14</pointsize>
+      <pointsize>18</pointsize>
      </font>
     </property>
     <property name="title">
@@ -123,14 +123,14 @@
     <widget class="QLabel" name="label_centermode_3">
      <property name="geometry">
       <rect>
-       <x>30</x>
-       <y>50</y>
-       <width>201</width>
+       <x>20</x>
+       <y>40</y>
+       <width>271</width>
        <height>51</height>
       </rect>
      </property>
      <property name="text">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Значение в пикселях&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;&lt;br/&gt;&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:14pt;&quot;&gt;Значение в пикселях&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:14pt;&quot;&gt;&lt;br/&gt;&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:14pt;&quot;&gt;&lt;br/&gt;&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
     </widget>
    </widget>
@@ -145,7 +145,7 @@
     </property>
     <property name="font">
      <font>
-      <pointsize>12</pointsize>
+      <pointsize>18</pointsize>
      </font>
     </property>
     <property name="title">
@@ -224,27 +224,27 @@
     <widget class="QLabel" name="label_centermode">
      <property name="geometry">
       <rect>
-       <x>30</x>
-       <y>60</y>
-       <width>201</width>
-       <height>51</height>
+       <x>10</x>
+       <y>50</y>
+       <width>271</width>
+       <height>61</height>
       </rect>
      </property>
      <property name="text">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Центр масштабирования&lt;br/&gt;(значение в пикселях)&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;&lt;br/&gt;&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:14pt;&quot;&gt;Центр масштабирования&lt;br/&gt;(значение в пикселях)&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:14pt;&quot;&gt;&lt;br/&gt;&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
     </widget>
     <widget class="QLabel" name="label_coef">
      <property name="geometry">
       <rect>
-       <x>30</x>
-       <y>190</y>
-       <width>181</width>
-       <height>41</height>
+       <x>20</x>
+       <y>180</y>
+       <width>241</width>
+       <height>51</height>
       </rect>
      </property>
      <property name="text">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;  Коэффециенты&lt;br/&gt;масштабирования&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:14pt;&quot;&gt;Коэффециенты&lt;br/&gt;масштабирования&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
     </widget>
     <widget class="QLabel" name="label_ky">
@@ -286,7 +286,7 @@
        <x>30</x>
        <y>230</y>
        <width>55</width>
-       <height>21</height>
+       <height>31</height>
       </rect>
      </property>
      <property name="text">
@@ -318,7 +318,7 @@
     </property>
     <property name="font">
      <font>
-      <pointsize>12</pointsize>
+      <pointsize>18</pointsize>
      </font>
     </property>
     <property name="title">
@@ -363,12 +363,12 @@
       <rect>
        <x>20</x>
        <y>40</y>
-       <width>241</width>
+       <width>271</width>
        <height>41</height>
       </rect>
      </property>
      <property name="text">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Угол поворота (в градусах)&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:14pt;&quot;&gt;Угол (в градусах)&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:14pt;&quot;&gt;&lt;br/&gt;&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:14pt;&quot;&gt;&lt;br/&gt;&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
     </widget>
     <widget class="QLabel" name="label_centerturn">
@@ -376,21 +376,21 @@
       <rect>
        <x>20</x>
        <y>120</y>
-       <width>181</width>
+       <width>251</width>
        <height>91</height>
       </rect>
      </property>
      <property name="text">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Центр вращения&lt;br/&gt;(значение в пикселях)&lt;/span&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:14pt;&quot;&gt;Центр вращения&lt;br/&gt;(значение в пикселях)&lt;br/&gt;&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
     </widget>
     <widget class="QLabel" name="label_yturn">
      <property name="geometry">
       <rect>
        <x>140</x>
-       <y>190</y>
+       <y>180</y>
        <width>55</width>
-       <height>31</height>
+       <height>41</height>
       </rect>
      </property>
      <property name="text">
@@ -437,9 +437,9 @@
     </property>
     <property name="geometry">
      <rect>
-      <x>950</x>
+      <x>940</x>
       <y>10</y>
-      <width>221</width>
+      <width>231</width>
       <height>101</height>
      </rect>
     </property>
@@ -451,7 +451,7 @@
     </property>
     <property name="font">
      <font>
-      <pointsize>12</pointsize>
+      <pointsize>18</pointsize>
      </font>
     </property>
     <property name="mouseTracking">
@@ -478,8 +478,8 @@
     <widget class="QLabel" name="label_centerx">
      <property name="geometry">
       <rect>
-       <x>20</x>
-       <y>30</y>
+       <x>10</x>
+       <y>60</y>
        <width>55</width>
        <height>21</height>
       </rect>
@@ -491,10 +491,10 @@
     <widget class="QLabel" name="label_centery">
      <property name="geometry">
       <rect>
-       <x>100</x>
-       <y>30</y>
+       <x>120</x>
+       <y>50</y>
        <width>55</width>
-       <height>31</height>
+       <height>41</height>
       </rect>
      </property>
      <property name="text">
@@ -507,7 +507,7 @@
      </property>
      <property name="geometry">
       <rect>
-       <x>10</x>
+       <x>30</x>
        <y>60</y>
        <width>81</width>
        <height>31</height>
@@ -523,7 +523,7 @@
      </property>
      <property name="geometry">
       <rect>
-       <x>100</x>
+       <x>140</x>
        <y>60</y>
        <width>81</width>
        <height>31</height>
@@ -573,7 +573,7 @@
       <x>320</x>
       <y>120</y>
       <width>861</width>
-      <height>801</height>
+      <height>821</height>
      </rect>
     </property>
    </widget>
@@ -606,7 +606,7 @@
     </property>
     <property name="font">
      <font>
-      <pointsize>10</pointsize>
+      <pointsize>12</pointsize>
      </font>
     </property>
     <property name="text">

@@ -37,9 +37,6 @@ class MainWin(QtWidgets.QMainWindow, mainwin.Ui_MainWindow):
         self.center_duff = []
 
         # Кнопки и функции к ним
-
-
-        
         self.pushButton_back.clicked.connect(self.draw_back)
         self.pushButton_mode.clicked.connect(self.draw_mode)
         self.pushButton_scale.clicked.connect(self.draw_scale)

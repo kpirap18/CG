@@ -35,15 +35,15 @@ def snail(teta, a, b):
     return res
 
 
-def hatching(snail):
+def hatching(snail, sh):
     '''
         Функция для создания массива для штрихов.
     '''
-    x_up = [-200, -100, 0, 50, -1, 100, 150, 200]
-    y_up = [0, 50, 100, 75, -1, 50, 25, 0]
+    x_up = [-sh * 4, -sh * 2, 0, sh, -1, sh * 2, sh * 3, sh * 4]
+    y_up = [0, sh, sh * 2, sh * 3 // 2, -1, sh, sh // 2, 0]
 
-    x_back = [-200, -150, -100, -1, -50,  0, 100, 200]
-    y_back = [0, -25, -50, -1, -75, -100, -50, 0]
+    x_back = [-sh * 4, -sh * 3, -sh * 2, -1, -sh,  0, sh * 2, sh * 4]
+    y_back = [0, -(sh // 2), -sh, -1, -(sh * 3 // 2), -sh * 2, -sh, 0]
 
     for i in range(len(snail)):
         if abs(1.5 * snail[i][0] - snail[i][1]) <= 0.2:

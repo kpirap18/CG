@@ -529,20 +529,15 @@ class Visual(QtWidgets.QMainWindow, untitled.Ui_MainWindow):
             self.draw_spectr(draw=False)
         time_array.append(time() - start)
 
-        figur, ax = plt.subplots()
+        plt.figure(figsize=(25, 10))
+        plt.rcParams['font.size'] = '14'
 
-        ax.bar(["ЦДА", "Брезенхем\n(float)", "Брезенхем\n(int)", 
+        plt.bar(["ЦДА", "Брезенхем\n(float)", "Брезенхем\n(int)", 
                 "Брезенхем\n(сглаживание)", "By", "Библиотечный"], time_array, color="red")
         plt.title("Исследование времени выполнения\n{0} - длина отрезка; {1} - угол пучка".format(lenn, angle))
         plt.ylabel("Время в секундах")
         self.scene.clear()
         plt.show()
-        # QtWidgets.QMessageBox.information(self, "Информация", 
-        #             "Временная характеристика алгоритмов\n\n"
-        #             "%5.2f - длина отрезка\n%5.2f - угол пучка"
-        #             % lenn, angle)
-            
-
 
 
     def com_step(self):
@@ -580,12 +575,12 @@ class Visual(QtWidgets.QMainWindow, untitled.Ui_MainWindow):
             wu.append(self.wu([w //2, h // 2], [x, y], False, True))
             teta += radians(2)
 
-        fig, ax = plt.subplots()
-        ax.plot(angle, cda, label='ЦДА')
-        ax.plot(angle, b_float, label='Брезенхем\n(float/int)')
-        ax.plot(angle, b_smooth, label='Брезенхем\nсглаживание')
-        ax.plot(angle, wu, label='Ву')
-        ax.set_facecolor('seashell')
+        plt.figure(figsize=(25, 10))
+        plt.rcParams['font.size'] = '14'
+        plt.plot(angle, cda, label='ЦДА')
+        plt.plot(angle, b_float, label='Брезенхем\n(float/int)')
+        plt.plot(angle, b_smooth, label='Брезенхем\nсглаживание', linestyle='-.')
+        plt.plot(angle, wu, label='Ву', linestyle=':')
         plt.title("Исследование ступенчатости.\n{0} - длина отрезка".format(lenn))
         plt.legend()
         plt.ylabel("Максимальное колличество ступенек.")
@@ -638,29 +633,25 @@ class Visual(QtWidgets.QMainWindow, untitled.Ui_MainWindow):
                 return
             teta += radians(2)
 
-        fig, ax = plt.subplots()
+        plt.figure(figsize=(25, 10))
+        plt.rcParams['font.size'] = '14'
         if (self.radioButtonCDA.isChecked()):
-            ax.plot(angle, cda, label='ЦДА')
+            plt.plot(angle, cda, label='ЦДА')
         elif (self.radioButtonBresFloat.isChecked() or
               self.radioButtonBresInt.isChecked()):
-            ax.plot(angle, b_float, label='Брезенхем\n(float/int)')
+            plt.plot(angle, b_float, label='Брезенхем\n(float/int)')
         elif (self.radioButtonBresSmooth.isChecked()):
-            ax.plot(angle, b_smooth, label='Брезенхем\nсглаживание')
+            plt.plot(angle, b_smooth, label='Брезенхем\nсглаживание')
         elif (self.radioButtonWu.isChecked()):
-            ax.plot(angle, wu, label='Ву')
+            plt.plot(angle, wu, label='Ву')
         
-        ax.set_facecolor('seashell')
+        # ax.set_facecolor('seashell')
         plt.title("Исследование ступенчатости.\n{0} - длина отрезка".format(lenn))
         plt.legend()
         plt.ylabel("Максимальное колличество ступенек.")
         plt.xlabel("Угол в градусах.")
         plt.show()
-        # QtWidgets.QMessageBox.information(self, "Информация", 
-        #             "Исследование ступенчатости отрезков\n\n"
-        #             "%5.2f - длина отрезка\n"
-        #             .format(lenn))
 
-    
 
 def sign(x):
     if x < 0:

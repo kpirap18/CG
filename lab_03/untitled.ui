@@ -1,0 +1,884 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1287</width>
+    <height>892</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QWidget" name="verticalLayoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>0</y>
+      <width>431</width>
+      <height>831</height>
+     </rect>
+    </property>
+    <layout class="QVBoxLayout" name="verticalLayout">
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout">
+       <item>
+        <widget class="QGroupBox" name="groupBoxChooseBG">
+         <property name="minimumSize">
+          <size>
+           <width>200</width>
+           <height>160</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>200</width>
+           <height>160</height>
+          </size>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>14</pointsize>
+          </font>
+         </property>
+         <property name="title">
+          <string>Цвет фона</string>
+         </property>
+         <widget class="QRadioButton" name="radioButtonWhite_bg">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>30</y>
+            <width>166</width>
+            <height>20</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>Белый</string>
+          </property>
+          <property name="checked">
+           <bool>true</bool>
+          </property>
+         </widget>
+         <widget class="QRadioButton" name="radioButtonBlack_bg">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>50</y>
+            <width>166</width>
+            <height>20</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>Черный</string>
+          </property>
+         </widget>
+         <widget class="QRadioButton" name="radioButtonRed_bg">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>110</y>
+            <width>166</width>
+            <height>20</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>Красный</string>
+          </property>
+         </widget>
+         <widget class="QRadioButton" name="radioButtonYellow_bg">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>70</y>
+            <width>166</width>
+            <height>20</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>Желтый</string>
+          </property>
+         </widget>
+         <widget class="QRadioButton" name="radioButtonGreen_bg">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>90</y>
+            <width>181</width>
+            <height>20</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>Зеленый</string>
+          </property>
+         </widget>
+         <widget class="QRadioButton" name="radioButtonBlue_bg">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>130</y>
+            <width>176</width>
+            <height>20</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>Синий</string>
+          </property>
+         </widget>
+        </widget>
+       </item>
+       <item>
+        <widget class="QGroupBox" name="groupBoxChooseLine">
+         <property name="minimumSize">
+          <size>
+           <width>200</width>
+           <height>160</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>200</width>
+           <height>160</height>
+          </size>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>14</pointsize>
+          </font>
+         </property>
+         <property name="title">
+          <string>Цвет линий</string>
+         </property>
+         <widget class="QRadioButton" name="radioButtonWhite_line">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>50</y>
+            <width>166</width>
+            <height>20</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>Белый</string>
+          </property>
+          <property name="checked">
+           <bool>false</bool>
+          </property>
+         </widget>
+         <widget class="QRadioButton" name="radioButtonBlack_line">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>30</y>
+            <width>166</width>
+            <height>20</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>Черный</string>
+          </property>
+          <property name="checked">
+           <bool>true</bool>
+          </property>
+         </widget>
+         <widget class="QRadioButton" name="radioButtonRed_line">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>110</y>
+            <width>166</width>
+            <height>20</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>Красный</string>
+          </property>
+         </widget>
+         <widget class="QRadioButton" name="radioButtonYellow_line">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>70</y>
+            <width>166</width>
+            <height>20</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>Желтый</string>
+          </property>
+         </widget>
+         <widget class="QRadioButton" name="radioButtonGreen_line">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>90</y>
+            <width>181</width>
+            <height>20</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>Зеленый</string>
+          </property>
+         </widget>
+         <widget class="QRadioButton" name="radioButtonBlue_line">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>130</y>
+            <width>176</width>
+            <height>20</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>Синий</string>
+          </property>
+         </widget>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <widget class="QGroupBox" name="groupBoxChooseAlg_2">
+       <property name="minimumSize">
+        <size>
+         <width>400</width>
+         <height>160</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>400</width>
+         <height>160</height>
+        </size>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>14</pointsize>
+        </font>
+       </property>
+       <property name="title">
+        <string>Выбор алгоритма</string>
+       </property>
+       <widget class="QRadioButton" name="radioButtonCDA">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>30</y>
+          <width>166</width>
+          <height>20</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>ЦДА</string>
+        </property>
+        <property name="checked">
+         <bool>true</bool>
+        </property>
+       </widget>
+       <widget class="QRadioButton" name="radioButtonBresFloat">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>50</y>
+          <width>241</width>
+          <height>20</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Брезенхем (float)</string>
+        </property>
+       </widget>
+       <widget class="QRadioButton" name="radioButtonWu">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>110</y>
+          <width>166</width>
+          <height>20</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Ву</string>
+        </property>
+       </widget>
+       <widget class="QRadioButton" name="radioButtonBresInt">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>70</y>
+          <width>166</width>
+          <height>20</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Брезенхем (int)</string>
+        </property>
+       </widget>
+       <widget class="QRadioButton" name="radioButtonBresSmooth">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>90</y>
+          <width>281</width>
+          <height>20</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Брезенхем сглаживание</string>
+        </property>
+       </widget>
+       <widget class="QRadioButton" name="radioButtonLib">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>130</y>
+          <width>251</width>
+          <height>20</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Библиотечная функция</string>
+        </property>
+       </widget>
+      </widget>
+     </item>
+     <item>
+      <widget class="QGroupBox" name="groupBox">
+       <property name="maximumSize">
+        <size>
+         <width>16777215</width>
+         <height>140</height>
+        </size>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>14</pointsize>
+        </font>
+       </property>
+       <property name="title">
+        <string>Построение отрезка</string>
+       </property>
+       <widget class="QLabel" name="labelEndCoords">
+        <property name="geometry">
+         <rect>
+          <x>210</x>
+          <y>30</y>
+          <width>176</width>
+          <height>21</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>14</pointsize>
+         </font>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::NoFrame</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Plain</enum>
+        </property>
+        <property name="text">
+         <string>Конец отрезка</string>
+        </property>
+        <property name="scaledContents">
+         <bool>false</bool>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+       <widget class="QLabel" name="labelStartCoords">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>30</y>
+          <width>181</width>
+          <height>21</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>14</pointsize>
+         </font>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::NoFrame</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Plain</enum>
+        </property>
+        <property name="text">
+         <string>Начало отрезка</string>
+        </property>
+        <property name="scaledContents">
+         <bool>false</bool>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+       <widget class="QLabel" name="labelStartX">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>60</y>
+          <width>16</width>
+          <height>21</height>
+         </rect>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::NoFrame</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Plain</enum>
+        </property>
+        <property name="text">
+         <string>X:</string>
+        </property>
+        <property name="scaledContents">
+         <bool>false</bool>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="lineEditStartX">
+        <property name="geometry">
+         <rect>
+          <x>30</x>
+          <y>60</y>
+          <width>71</width>
+          <height>21</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>16</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>0.0</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="labelStartX_2">
+        <property name="geometry">
+         <rect>
+          <x>220</x>
+          <y>60</y>
+          <width>16</width>
+          <height>21</height>
+         </rect>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::NoFrame</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Plain</enum>
+        </property>
+        <property name="text">
+         <string>X:</string>
+        </property>
+        <property name="scaledContents">
+         <bool>false</bool>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="lineEditEndX">
+        <property name="geometry">
+         <rect>
+          <x>240</x>
+          <y>60</y>
+          <width>71</width>
+          <height>21</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>16</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>200.0</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="pushButton_line_one">
+        <property name="geometry">
+         <rect>
+          <x>70</x>
+          <y>90</y>
+          <width>241</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Построить</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="labelStartY">
+        <property name="geometry">
+         <rect>
+          <x>100</x>
+          <y>60</y>
+          <width>31</width>
+          <height>21</height>
+         </rect>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::NoFrame</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Plain</enum>
+        </property>
+        <property name="text">
+         <string>Y:</string>
+        </property>
+        <property name="scaledContents">
+         <bool>false</bool>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="lineEditStartY">
+        <property name="geometry">
+         <rect>
+          <x>120</x>
+          <y>60</y>
+          <width>71</width>
+          <height>21</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>16</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>0.0</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="labelStartY_2">
+        <property name="geometry">
+         <rect>
+          <x>310</x>
+          <y>60</y>
+          <width>31</width>
+          <height>21</height>
+         </rect>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::NoFrame</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Plain</enum>
+        </property>
+        <property name="text">
+         <string>Y:</string>
+        </property>
+        <property name="scaledContents">
+         <bool>false</bool>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="lineEditEndY">
+        <property name="geometry">
+         <rect>
+          <x>330</x>
+          <y>60</y>
+          <width>71</width>
+          <height>21</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>16</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>350.0</string>
+        </property>
+       </widget>
+      </widget>
+     </item>
+     <item>
+      <widget class="QGroupBox" name="groupBox_2">
+       <property name="maximumSize">
+        <size>
+         <width>16777215</width>
+         <height>150</height>
+        </size>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>14</pointsize>
+        </font>
+       </property>
+       <property name="title">
+        <string>Построение спектра</string>
+       </property>
+       <widget class="QLineEdit" name="lineEditAngle">
+        <property name="geometry">
+         <rect>
+          <x>260</x>
+          <y>30</y>
+          <width>141</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>16</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>15</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="pushButtonDrawSpectrum">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>100</y>
+          <width>241</width>
+          <height>32</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Построить</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="labelAngle">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>30</y>
+          <width>241</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>14</pointsize>
+         </font>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::NoFrame</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Plain</enum>
+        </property>
+        <property name="text">
+         <string>Угол поворота в градусах</string>
+        </property>
+        <property name="scaledContents">
+         <bool>false</bool>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="lineEdiLen">
+        <property name="geometry">
+         <rect>
+          <x>260</x>
+          <y>60</y>
+          <width>141</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>16</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>200</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="labelAngle_2">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>60</y>
+          <width>241</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>14</pointsize>
+         </font>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::NoFrame</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Plain</enum>
+        </property>
+        <property name="text">
+         <string>Длина отрезка </string>
+        </property>
+        <property name="scaledContents">
+         <bool>false</bool>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label">
+       <property name="maximumSize">
+        <size>
+         <width>16777215</width>
+         <height>60</height>
+        </size>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>12</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>Длина и угол для измерения время и исследования 
+ ступенчатости берутся из поля выше.</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QGroupBox" name="groupBox_zamer">
+       <property name="maximumSize">
+        <size>
+         <width>16777215</width>
+         <height>150</height>
+        </size>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>14</pointsize>
+        </font>
+       </property>
+       <property name="title">
+        <string>Исследование </string>
+       </property>
+       <widget class="QPushButton" name="pushButton_time_all">
+        <property name="geometry">
+         <rect>
+          <x>30</x>
+          <y>40</y>
+          <width>171</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>11</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>Сравнение 
+времени</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="pushButton_step_ch">
+        <property name="geometry">
+         <rect>
+          <x>230</x>
+          <y>40</y>
+          <width>171</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>11</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>Исследование 
+ступенчатости</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="pushButton_step_all">
+        <property name="geometry">
+         <rect>
+          <x>30</x>
+          <y>90</y>
+          <width>371</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Ступенчатость всех алгоритмов</string>
+        </property>
+       </widget>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QGraphicsView" name="graphicsView">
+    <property name="geometry">
+     <rect>
+      <x>450</x>
+      <y>10</y>
+      <width>821</width>
+      <height>791</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_clean">
+    <property name="geometry">
+     <rect>
+      <x>460</x>
+      <y>810</y>
+      <width>408</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>15</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>Очистить экран</string>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1287</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menu">
+    <property name="title">
+     <string>Справка</string>
+    </property>
+    <addaction name="action"/>
+   </widget>
+   <addaction name="menu"/>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+  <action name="action">
+   <property name="text">
+    <string>О программе</string>
+   </property>
+  </action>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

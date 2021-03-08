@@ -54,7 +54,6 @@ def hatching(snail, sh):
 
     res = []
     for i in range(len(x_up)):
-        print(i)
         res.append([x_up[i], y_up[i]])
         res.append([x_back[i], y_back[i]])
     return res

@@ -41,9 +41,9 @@
    <widget class="QGroupBox" name="mode">
     <property name="geometry">
      <rect>
-      <x>30</x>
+      <x>20</x>
       <y>100</y>
-      <width>371</width>
+      <width>381</width>
       <height>181</height>
      </rect>
     </property>
@@ -58,33 +58,33 @@
     <widget class="QLabel" name="label_dx">
      <property name="geometry">
       <rect>
-       <x>20</x>
+       <x>30</x>
        <y>90</y>
        <width>55</width>
        <height>31</height>
       </rect>
      </property>
      <property name="text">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;dx&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:20pt;&quot;&gt;dx&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
     </widget>
     <widget class="QLabel" name="label_dy">
      <property name="geometry">
       <rect>
-       <x>210</x>
+       <x>200</x>
        <y>90</y>
        <width>55</width>
        <height>31</height>
       </rect>
      </property>
      <property name="text">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;dy&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:20pt;&quot;&gt;dy&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
     </widget>
     <widget class="QPushButton" name="pushButton_mode">
      <property name="geometry">
       <rect>
-       <x>230</x>
+       <x>250</x>
        <y>130</y>
        <width>121</width>
        <height>41</height>
@@ -92,19 +92,19 @@
      </property>
      <property name="font">
       <font>
-       <pointsize>10</pointsize>
+       <pointsize>14</pointsize>
       </font>
      </property>
      <property name="text">
-      <string>Перенести</string>
+      <string>Перенос</string>
      </property>
     </widget>
     <widget class="QLineEdit" name="lineEdit_modex">
      <property name="geometry">
       <rect>
-       <x>50</x>
+       <x>60</x>
        <y>90</y>
-       <width>101</width>
+       <width>121</width>
        <height>31</height>
       </rect>
      </property>
@@ -112,9 +112,9 @@
     <widget class="QLineEdit" name="lineEdit_modey">
      <property name="geometry">
       <rect>
-       <x>240</x>
+       <x>230</x>
        <y>90</y>
-       <width>101</width>
+       <width>121</width>
        <height>31</height>
       </rect>
      </property>
@@ -135,7 +135,7 @@
     <widget class="QLabel" name="label_centermode_3">
      <property name="geometry">
       <rect>
-       <x>40</x>
+       <x>20</x>
        <y>50</y>
        <width>271</width>
        <height>31</height>
@@ -172,27 +172,27 @@
     <widget class="QLabel" name="label_xm">
      <property name="geometry">
       <rect>
-       <x>40</x>
-       <y>130</y>
-       <width>55</width>
-       <height>21</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;Xm&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label_ym">
-     <property name="geometry">
-      <rect>
-       <x>210</x>
+       <x>20</x>
        <y>130</y>
        <width>55</width>
        <height>31</height>
       </rect>
      </property>
      <property name="text">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;Ym&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:20pt;&quot;&gt;Xm&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_ym">
+     <property name="geometry">
+      <rect>
+       <x>190</x>
+       <y>130</y>
+       <width>55</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:20pt;&quot;&gt;Ym&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:20pt;&quot;&gt;&lt;br/&gt;&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
     </widget>
     <widget class="QPushButton" name="pushButton_scale">
@@ -206,7 +206,7 @@
      </property>
      <property name="font">
       <font>
-       <pointsize>10</pointsize>
+       <pointsize>14</pointsize>
       </font>
      </property>
      <property name="text">
@@ -216,9 +216,9 @@
     <widget class="QLineEdit" name="lineEdit_xm">
      <property name="geometry">
       <rect>
-       <x>80</x>
+       <x>60</x>
        <y>130</y>
-       <width>101</width>
+       <width>121</width>
        <height>31</height>
       </rect>
      </property>
@@ -226,9 +226,9 @@
     <widget class="QLineEdit" name="lineEdit_ym">
      <property name="geometry">
       <rect>
-       <x>250</x>
+       <x>230</x>
        <y>130</y>
-       <width>101</width>
+       <width>121</width>
        <height>31</height>
       </rect>
      </property>
@@ -236,10 +236,10 @@
     <widget class="QLabel" name="label_centermode">
      <property name="geometry">
       <rect>
-       <x>10</x>
-       <y>60</y>
+       <x>20</x>
+       <y>80</y>
        <width>271</width>
-       <height>61</height>
+       <height>51</height>
       </rect>
      </property>
      <property name="text">
@@ -250,7 +250,7 @@
      <property name="geometry">
       <rect>
        <x>20</x>
-       <y>180</y>
+       <y>200</y>
        <width>241</width>
        <height>51</height>
       </rect>
@@ -262,22 +262,22 @@
     <widget class="QLabel" name="label_ky">
      <property name="geometry">
       <rect>
-       <x>220</x>
+       <x>200</x>
        <y>250</y>
        <width>55</width>
        <height>31</height>
       </rect>
      </property>
      <property name="text">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;ky&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:20pt;&quot;&gt;ky&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
     </widget>
     <widget class="QLineEdit" name="lineEdit_ky">
      <property name="geometry">
       <rect>
-       <x>250</x>
+       <x>230</x>
        <y>250</y>
-       <width>101</width>
+       <width>121</width>
        <height>31</height>
       </rect>
      </property>
@@ -285,9 +285,9 @@
     <widget class="QLineEdit" name="lineEdit_kx">
      <property name="geometry">
       <rect>
-       <x>70</x>
+       <x>60</x>
        <y>250</y>
-       <width>101</width>
+       <width>121</width>
        <height>31</height>
       </rect>
      </property>
@@ -295,14 +295,14 @@
     <widget class="QLabel" name="label_kx">
      <property name="geometry">
       <rect>
-       <x>40</x>
+       <x>30</x>
        <y>250</y>
        <width>55</width>
        <height>31</height>
       </rect>
      </property>
      <property name="text">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;kx&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:20pt;&quot;&gt;kx&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
     </widget>
     <widget class="QLabel" name="label_3">
@@ -353,7 +353,7 @@
      </property>
      <property name="font">
       <font>
-       <pointsize>10</pointsize>
+       <pointsize>14</pointsize>
       </font>
      </property>
      <property name="text">
@@ -377,9 +377,9 @@
      <property name="geometry">
       <rect>
        <x>20</x>
-       <y>110</y>
+       <y>130</y>
        <width>361</width>
-       <height>91</height>
+       <height>51</height>
       </rect>
      </property>
      <property name="text">
@@ -389,22 +389,22 @@
     <widget class="QLabel" name="label_yturn">
      <property name="geometry">
       <rect>
-       <x>230</x>
+       <x>210</x>
        <y>170</y>
        <width>55</width>
        <height>41</height>
       </rect>
      </property>
      <property name="text">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;y&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:20pt;&quot;&gt;y&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
     </widget>
     <widget class="QLineEdit" name="lineEdit_yturn">
      <property name="geometry">
       <rect>
-       <x>250</x>
+       <x>230</x>
        <y>180</y>
-       <width>101</width>
+       <width>121</width>
        <height>31</height>
       </rect>
      </property>
@@ -412,9 +412,9 @@
     <widget class="QLineEdit" name="lineEdit_xturn">
      <property name="geometry">
       <rect>
-       <x>90</x>
+       <x>60</x>
        <y>180</y>
-       <width>101</width>
+       <width>121</width>
        <height>31</height>
       </rect>
      </property>
@@ -422,22 +422,22 @@
     <widget class="QLabel" name="label_xturn">
      <property name="geometry">
       <rect>
-       <x>70</x>
-       <y>180</y>
+       <x>40</x>
+       <y>170</y>
        <width>55</width>
-       <height>21</height>
+       <height>41</height>
       </rect>
      </property>
      <property name="text">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;x&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:20pt;&quot;&gt;x&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
     </widget>
     <widget class="QLineEdit" name="lineEdit_angle">
      <property name="geometry">
       <rect>
-       <x>230</x>
+       <x>190</x>
        <y>60</y>
-       <width>121</width>
+       <width>161</width>
        <height>31</height>
       </rect>
      </property>
@@ -491,13 +491,13 @@
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>60</y>
+       <y>50</y>
        <width>55</width>
-       <height>21</height>
+       <height>41</height>
       </rect>
      </property>
      <property name="text">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;x&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:20pt;&quot;&gt;x&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
     </widget>
     <widget class="QLabel" name="label_centery">
@@ -510,7 +510,7 @@
       </rect>
      </property>
      <property name="text">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;y&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:20pt;&quot;&gt;y&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
     </widget>
     <widget class="QLineEdit" name="lineEdit_centerx">
@@ -554,7 +554,7 @@
     </property>
     <property name="font">
      <font>
-      <pointsize>12</pointsize>
+      <pointsize>14</pointsize>
      </font>
     </property>
     <property name="text">
@@ -572,7 +572,7 @@
     </property>
     <property name="font">
      <font>
-      <pointsize>12</pointsize>
+      <pointsize>14</pointsize>
      </font>
     </property>
     <property name="text">
@@ -587,6 +587,9 @@
       <width>861</width>
       <height>821</height>
      </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(255, 255, 255);</string>
     </property>
     <property name="transformationAnchor">
      <enum>QGraphicsView::NoAnchor</enum>
@@ -606,7 +609,7 @@
     </property>
     <property name="font">
      <font>
-      <pointsize>12</pointsize>
+      <pointsize>14</pointsize>
      </font>
     </property>
     <property name="text">
@@ -618,13 +621,13 @@
      <rect>
       <x>420</x>
       <y>80</y>
-      <width>611</width>
+      <width>521</width>
       <height>51</height>
      </rect>
     </property>
     <property name="font">
      <font>
-      <pointsize>12</pointsize>
+      <pointsize>14</pointsize>
      </font>
     </property>
     <property name="text">
@@ -638,7 +641,7 @@
      <x>0</x>
      <y>0</y>
      <width>1300</width>
-     <height>26</height>
+     <height>22</height>
     </rect>
    </property>
   </widget>

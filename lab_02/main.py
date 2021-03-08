@@ -8,11 +8,11 @@ from copy import deepcopy
 from PyQt5 import QtWidgets, QtCore, QtGui
 from math import sin, cos, pi, radians
 
-# КОэффециенты для улитки Паскаля
+# Коэффециенты для улитки Паскаля
 A = 40
 B = 30
 
-# размер пикселей на оси
+# Размер пикселей на оси
 SHAG = 50
 
 class MainWin(QtWidgets.QMainWindow, mainwin.Ui_Kozlova_lab_02):
@@ -22,8 +22,6 @@ class MainWin(QtWidgets.QMainWindow, mainwin.Ui_Kozlova_lab_02):
         super().__init__()
         self.setupUi(self)
         self.graphicsView.scale(1, -1)
-        # self.mous = QtGui.QWheelEvent()
-        # self.graphicsView.wheelEvent(self.mous)
 
         # Массивы для рисования текущего состояния фигуры
         # Ромб
@@ -73,7 +71,6 @@ class MainWin(QtWidgets.QMainWindow, mainwin.Ui_Kozlova_lab_02):
         '''
             Функция переключения "показать/скрыть оси координат".
         '''
-        print("flag", self.FLAG)
         scene = QtWidgets.QGraphicsScene()
         self.graphicsView.setScene(scene)
 
@@ -100,7 +97,6 @@ class MainWin(QtWidgets.QMainWindow, mainwin.Ui_Kozlova_lab_02):
         self.graphicsView.setScene(scene)
         w = self.graphicsView.width()
         h = self.graphicsView.height()
-        print(w, h)
         scene.setSceneRect(-w / 2, -h / 2, w - 2, h - 2)
 
         # Центр
@@ -218,23 +214,25 @@ class MainWin(QtWidgets.QMainWindow, mainwin.Ui_Kozlova_lab_02):
             Функция перемещения фигуры.
         '''
         try:
-            dx = float(self.lineEdit_modex.text())
-            dy = float(self.lineEdit_modey.text())
-        except ValueError:
-            QtWidgets.QMessageBox.critical(self, "Ошибка",
-                                           "Невозможно прочитать числа!")
-        self.copy_arr()
-        for i in range(len(self.rhombus)):
-            self.rhombus[i] = MainWin.mode(self.rhombus[i], [dx, dy])
-        for i in range(len(self.snail)):
-            self.snail[i] = MainWin.mode(self.snail[i], [dx, dy])
-        for i in range(len(self.hatching)):
-            self.hatching[i] = MainWin.mode(self.hatching[i], [dx, dy])
-        for i in range(len(self.center)):
-            self.center[i] = MainWin.mode(self.center[i], [dx, dy])
-        self.check()
-        self.draw()
+            dx = int(self.lineEdit_modex.text())
+            dy = int(self.lineEdit_modey.text())
 
+            self.copy_arr()
+            for i in range(len(self.rhombus)):
+                self.rhombus[i] = MainWin.mode(self.rhombus[i], [dx, dy])
+            for i in range(len(self.snail)):
+                self.snail[i] = MainWin.mode(self.snail[i], [dx, dy])
+            for i in range(len(self.hatching)):
+                self.hatching[i] = MainWin.mode(self.hatching[i], [dx, dy])
+            for i in range(len(self.center)):
+                self.center[i] = MainWin.mode(self.center[i], [dx, dy])
+            self.check()
+            self.draw()
+        except ValueError:
+            QtWidgets.QMessageBox.critical(self, "Невозможно прочитать числа!",
+                                           "Значения dx и dy должны быть целые\n"
+                                           "(так как значения в пикселях).")
+        
 
     def draw_scale(self):
         '''
@@ -243,24 +241,29 @@ class MainWin(QtWidgets.QMainWindow, mainwin.Ui_Kozlova_lab_02):
         try:
             kx = float(self.lineEdit_kx.text())
             ky = float(self.lineEdit_ky.text())
-            xm = float(self.lineEdit_xm.text())
-            ym = float(self.lineEdit_ym.text())
-        except ValueError:
-            QtWidgets.QMessageBox.critical(self, "Ошибка",
-                                           "Коэффиценты и координаты должны быть \n"
-                                           "целыми или вещественными числами")
-        self.copy_arr()
-        for i in range(len(self.rhombus)):
-            self.rhombus[i] = MainWin.scale(self.rhombus[i], [kx, ky], [xm, ym])
-        for i in range(len(self.snail)):
-            self.snail[i] = MainWin.scale(self.snail[i], [kx, ky], [xm, ym])
-        for i in range(len(self.hatching)):
-            self.hatching[i] = MainWin.scale(self.hatching[i], [kx, ky], [xm, ym])
-        for i in range(len(self.center)):
-            self.center[i] = MainWin.scale(self.center[i], [kx, ky], [xm, ym])
-        self.check()
-        self.draw()
+            xm = int(self.lineEdit_xm.text())
+            ym = int(self.lineEdit_ym.text())
 
+            self.copy_arr()
+            for i in range(len(self.rhombus)):
+                self.rhombus[i] = MainWin.scale(self.rhombus[i], [kx, ky], [xm, ym])
+            for i in range(len(self.snail)):
+                self.snail[i] = MainWin.scale(self.snail[i], [kx, ky], [xm, ym])
+            for i in range(len(self.hatching)):
+                self.hatching[i] = MainWin.scale(self.hatching[i], [kx, ky], [xm, ym])
+            for i in range(len(self.center)):
+                self.center[i] = MainWin.scale(self.center[i], [kx, ky], [xm, ym])
+
+            self.lineEdit_xturn.setText("%2.f" % xm)
+            self.lineEdit_yturn.setText("%2.f" % ym)
+            self.check()
+            self.draw()
+        except ValueError:
+            QtWidgets.QMessageBox.critical(self, "Невозможно прочитать числа",
+                                           "Координаты центра - целые числа \n"
+                                           "(так как значения в пикселях).\n"
+                                           "Коэффециенты - вещественные числа.")
+        
 
     def draw_turn(self):
         '''
@@ -268,35 +271,39 @@ class MainWin(QtWidgets.QMainWindow, mainwin.Ui_Kozlova_lab_02):
         '''
         try:
             angle = float(self.lineEdit_angle.text())
-            xc = float(self.lineEdit_xturn.text())
-            yc = float(self.lineEdit_yturn.text())
-        except ValueError:
-            QtWidgets.QMessageBox.critical(self, "Ошибка",
-                                           "Угол и координаты должны быть \n"
-                                           "целыми или вещественными числами")
-        self.copy_arr()
-        for i in range(len(self.rhombus)):
-            self.rhombus[i] = MainWin.turn(self.rhombus[i], [xc, yc], angle)
-        for i in range(len(self.snail)):
-            self.snail[i] = MainWin.turn(self.snail[i], [xc, yc], angle)
-        for i in range(len(self.hatching)):
-            self.hatching[i] = MainWin.turn(self.hatching[i], [xc, yc], angle)
-        for i in range(len(self.center)):
-            self.center[i] = MainWin.turn(self.center[i], [xc, yc], angle)
-        self.check()
-        self.draw()
+            xc = int(self.lineEdit_xturn.text())
+            yc = int(self.lineEdit_yturn.text())
 
+            self.copy_arr()
+            for i in range(len(self.rhombus)):
+                self.rhombus[i] = MainWin.turn(self.rhombus[i], [xc, yc], angle)
+            for i in range(len(self.snail)):
+                self.snail[i] = MainWin.turn(self.snail[i], [xc, yc], angle)
+            for i in range(len(self.hatching)):
+                self.hatching[i] = MainWin.turn(self.hatching[i], [xc, yc], angle)
+            for i in range(len(self.center)):
+                self.center[i] = MainWin.turn(self.center[i], [xc, yc], angle)
+
+            self.lineEdit_xm.setText("%2.f" % xc)
+            self.lineEdit_ym.setText("%2.f" % yc)
+            self.check()
+            self.draw()
+        except ValueError:
+            QtWidgets.QMessageBox.critical(self, "Невозможно прочитать числа",
+                                           "Координаты центра - целые числа \n"
+                                           "(так как значения в пикселях).\n"
+                                           "Угол - вещественное число.")
+        
 
     def check(self):
+        '''
+            Функция для проверки, выходит ли фигура за пределы экрана.
+        '''
         w = self.graphicsView.width()
         h = self.graphicsView.height()
 
 
         for i in range(len(self.rhombus)):
-            print("check", (w / 2 - self.rhombus[i][0]) < 1e-6, \
-            (-w / 2 - self.rhombus[i][0]) < 1e-6, \
-            (h / 2 - self.rhombus[i][1]),\
-            (-h / 2 - self.rhombus[i][1]))
             if (w / 2 < self.rhombus[i][0]) or \
                 (-w / 2 > self.rhombus[i][0]) or \
                 (h / 2 < self.rhombus[i][1]) or \

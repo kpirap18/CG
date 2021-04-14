@@ -24,7 +24,8 @@ current_fig = 0
 line_color = "#ff00ff"
 bg_color = "#ffffff"
 color_flag = "#00C12B"
-gran_color = "#000000"
+gran_color = "#00000f"
+gran_color_check = (0, 0, 15)
 color_for_check = (0, 193, 43)
 point_arr = [[]]
 end_arr = [[]]
@@ -36,6 +37,10 @@ def bresenham(picture, xStart, xEnd, yStart, yEnd):
     if xStart == xEnd and yStart == yEnd:
         picture.put(gran_color, (xStart, yStart))
         return
+    xStart = int(xStart)
+    yStart = int(yStart)
+    xEnd = int(xEnd)
+    yEnd = int(yEnd)
 
     deltaX = xEnd - xStart
     deltaY = yEnd - yStart
@@ -46,7 +51,7 @@ def bresenham(picture, xStart, xEnd, yStart, yEnd):
     deltaX = abs(deltaX)
     deltaY = abs(deltaY)
 
-    if deltaX < deltaY:
+    if deltaX <= deltaY:
         deltaX, deltaY = deltaY, deltaX
         flag = True
     else:
@@ -58,18 +63,17 @@ def bresenham(picture, xStart, xEnd, yStart, yEnd):
 
     for i in range(deltaX + 1):
         picture.put(gran_color, (curX, curY))
-
-        if flag:
-            if acc >= 0:
+        if acc >= 0:
+            if flag:
                 curX += stepX
-                acc -= (deltaX + deltaX)
-            curY += stepY
-            acc += deltaY + deltaY
-        else:
-            if acc >= 0:
+            else:
                 curY += stepY
-                acc -= (deltaX + deltaX)
-            curX += stepX
+            acc -= (deltaX + deltaX)
+        if acc <= 0:
+            if flag:
+                curY += stepY
+            else:
+                curX += stepX
             acc += deltaY + deltaY
 
 def left_click(event):
@@ -77,8 +81,8 @@ def left_click(event):
     global current_fig
     global picture
     global dot_num
-    point_arr[current_fig].append([event.x, event.y, gran_color])
-    dot_num.insert(tk.END, "%3d - (%5d; %5d)" % (len(point_arr[current_fig]), event.x, event.y))
+    point_arr[current_fig].append([int(event.x), int(event.y), gran_color])
+    dot_num.insert(tk.END, "%3d - (%.2f; %.2f)" % (len(point_arr[current_fig]), event.x, event.y))
     if len(point_arr[current_fig]) >= 2:
         end_arr[current_fig].append([[point_arr[current_fig][len(point_arr[current_fig]) - 2][0],
                                  point_arr[current_fig][len(point_arr[current_fig]) - 2][1]],
@@ -93,8 +97,8 @@ def right_click(event):
     global point_arr
     global current_fig
     global picture
+    global dot_num
 
-    print(current_fig)
     end_arr[current_fig].append([[point_arr[current_fig][0][0],
                              point_arr[current_fig][0][1]],
                             [point_arr[current_fig][len(point_arr[current_fig]) - 1][0],
@@ -106,7 +110,8 @@ def right_click(event):
     current_fig += 1
     end_arr.append(list())
     point_arr.append(list())
-    print(point_arr, end_arr)
+    dot_num.insert(tk.END, "-------------------------------")
+
 
 def center_click(event):
     global bg_color
@@ -140,16 +145,42 @@ def center_click(event):
         end_arr.pop()
         point_arr.pop()
         current_fig -= 1
-        # рисуем
+        bresenham(picture, point_arr[current_fig][0][0],
+                       point_arr[current_fig][len(point_arr[current_fig]) - 1][0],
+                       point_arr[current_fig][0][1],
+                       point_arr[current_fig][len(point_arr[current_fig]) - 1][1])
     gran_color = buf_color
 
 
 def set_canva_root(canva):
     global picture
     picture = tk.PhotoImage(width = W_canva, height = H_canva)
-
     canva.create_image((W_canva / 2, H_canva / 2), image = picture, state = "normal")
+def draw_raster__with_flag(picture, end_arr, sides):
+    global entry_time
+    start = time()
+    around_figure_all(picture, end_arr)
 
+    for curY in range(sides[2], sides[0] - 1, -1):
+        curColor = bg_color
+        invColor = line_color
+        curPointScanString = sides[3]
+        for curX in range(sides[3], sides[1] + 3):
+            if picture.get(curX, curY) == color_for_check:
+                picture.put(curColor, (curPointScanString, curY, curX, curY + 1))
+                curColor, invColor = invColor, curColor
+                curPointScanString = curX
+        picture.put(curColor, (curPointScanString, curY, curX, curY + 1))
+
+    end = time()
+    for fig in range(len(end_arr)):
+        for i in range(len(end_arr[fig])):
+            bresenham(picture, end_arr[fig][i][0][0], end_arr[fig][i][1][0], 
+                        end_arr[fig][i][0][1], end_arr[fig][i][1][1])
+    
+    time_str = str(round(end - start, 4)) + "ms"
+    entry_time.delete(0, tk.END)
+    entry_time.insert(tk.END, time_str)
 
 def clear_canva(canva):
     global point_arr
@@ -172,7 +203,8 @@ def clear_canva(canva):
 
 def choose_bg_color(root, r, c, canva):
     global bg_color
-    bg_color = colorchooser.askcolor()[1]
+    colour = colorchooser.askcolor()
+    bg_color = colour[1]
     canva_bg_color = tk.Canvas(root, bg = bg_color,
                               borderwidth = 5, relief = tk.RIDGE,
                               width = 60, height = 50)
@@ -181,15 +213,19 @@ def choose_bg_color(root, r, c, canva):
 
 def choose_line_color(root, r, c):
     global line_color
-    line_color = colorchooser.askcolor()[1]
+    colour = colorchooser.askcolor()
+    line_color = colour[1]
     canva_line_color = tk.Canvas(root, bg = line_color,
                             borderwidth = 5, relief = tk.RIDGE,
                             width = 60, height = 50)
     canva_line_color.place(x = r, y = c)
 
 def choose_gran_color(root, r, c):
-    global gran_color
-    gran_color = colorchooser.askcolor()[1]
+    global gran_color, gran_color_check
+    global color_flag, color_for_check
+    colour = colorchooser.askcolor()
+    gran_color = colour[1]
+    gran_color_check = (int(colour[0][0]), int(colour[0][1]), int(colour[0][2]))
     canva_gran_color = tk.Canvas(root, bg = gran_color,
                             borderwidth = 5, relief = tk.RIDGE,
                             width = 60, height = 50)
@@ -201,20 +237,28 @@ def add_point(root, entry_x, entry_y):
     global current_fig
     global dot_num
 
-    x_coord = int(entry_x.get())
-    y_coord = int(entry_y.get())
-    dot_num.insert(tk.END, "%3d - (%5d; %5d)" % (len(point_arr[current_fig]), x_coord, y_coo))
+    try:
+        x_coord = float(entry_x.get())
+        y_coord = float(entry_y.get())
+    except Exception:
+        messagebox.showerror("Внимание",
+                             "Невозможно считать координаты!")
+        return
+
+    dot_num.insert(tk.END, "%3d - (%.2f; %.2f)" % (len(point_arr[current_fig]), x_coord, y_coord))
+    x_coord = int(x_coord)
+    y_coord = int(y_coord)
     point_arr[current_fig].append([x_coord, y_coord, gran_color])
     if len(point_arr[current_fig]) >= 2:
         end_arr[current_fig].append([[point_arr[current_fig][len(point_arr[current_fig]) - 2][0],
-                                 point_arr[current_fig][len(point_arr[current_fig]) - 2][1]],
-                                [point_arr[current_fig][len(point_arr[current_fig]) - 1][0],
-                                 point_arr[current_fig][len(point_arr[current_fig]) - 1][1]]])
+                                    point_arr[current_fig][len(point_arr[current_fig]) - 2][1]],
+                                    [point_arr[current_fig][len(point_arr[current_fig]) - 1][0],
+                                    point_arr[current_fig][len(point_arr[current_fig]) - 1][1]]])
         bresenham(picture, point_arr[current_fig][len(point_arr[current_fig]) - 2][0],
-                       point_arr[current_fig][len(point_arr[current_fig]) - 1][0],
-                       point_arr[current_fig][len(point_arr[current_fig]) - 2][1],
-                       point_arr[current_fig][len(point_arr[current_fig]) - 1][1])
-
+                        point_arr[current_fig][len(point_arr[current_fig]) - 1][0],
+                        point_arr[current_fig][len(point_arr[current_fig]) - 2][1],
+                        point_arr[current_fig][len(point_arr[current_fig]) - 1][1])
+    
 def get_side(point_arr):
     x_right = 0
     x_left = W_canva
@@ -259,7 +303,8 @@ def make_min_max(point_arr):
 def around_figure_edge(picture, edge):
     if edge[0][1] == edge[1][1]:
         return
-
+    
+    m = (edge[1][0] - edge[0][0]) / (edge[1][1] - edge[0][1])
     if edge[0][1] > edge[1][1]:
         edge[1], edge[0] = edge[0], edge[1]
     step_x = (edge[1][0] - edge[0][0]) / (edge[1][1] - edge[0][1])
@@ -269,9 +314,15 @@ def around_figure_edge(picture, edge):
         if picture.get(int(x) + 1, y) != color_for_check:
             picture.put(color_flag, (int(x) + 1, y))
         else:
-            picture.put(color_flag, (int(x), y))
+            got = picture.get(int(x), y) == gran_color_check
+            if (m > 0 and (got))  or y == edge[0][1] or (got):
+                picture.put(color_flag, (int(x), y))
+            else:
+                picture.put(color_flag, (int(x) + 2, y))
         x += step_x
         y += 1
+
+
 
 def around_figure_all(picture, end_arr):
     for fig in range(len(end_arr)):
@@ -279,6 +330,7 @@ def around_figure_all(picture, end_arr):
         for i in range(len_arr):
             around_figure_edge(picture, end_arr[fig][i])
         around_figure_edge(picture, end_arr[fig][len_arr])
+
 
 def draw_raster_with_flag_delay(picture, canva, end_arr, sides, coef):
     global entry_time
@@ -293,7 +345,6 @@ def draw_raster_with_flag_delay(picture, canva, end_arr, sides, coef):
         for x in range(sides[3], sides[1] + 3):
             if picture.get(x, y) == color_for_check:
                 flag = not flag
-            print(flag)
             if flag:
                 picture.put(line_color, (x, y, x + 1, y + 1))
             else:
@@ -301,17 +352,14 @@ def draw_raster_with_flag_delay(picture, canva, end_arr, sides, coef):
 
         canva.update()
         sleep(0.001 * coef)
-        # if flag:
-        #     picture.put(line_color, (x, y, x, y + 1))
-        # else:
-        #     picture.put(bg_color, (x, y, x, y + 1))
 
+    end = time()
     for fig in range(len(end_arr)):
         for i in range(len(end_arr[fig])):
             bresenham(picture, end_arr[fig][i][0][0], end_arr[fig][i][1][0], 
                         end_arr[fig][i][0][1], end_arr[fig][i][1][1])
     
-    end = time()
+    
     time_str = str(round(end - start, 4)) + "ms"
     entry_time.delete(0, tk.END)
     entry_time.insert(tk.END, time_str)
@@ -321,7 +369,7 @@ def draw_raster_with_flag(picture, end_arr, sides):
     start = time()
     around_figure_all(picture, end_arr)
 
-    for y in range(sides[2], sides[0] - 1, -1):
+    for y in range(sides[0], sides[2] + 1, 1):
         flag = False
         for x in range(sides[3], sides[1] + 3):
             if picture.get(x, y) == color_for_check:
@@ -330,16 +378,13 @@ def draw_raster_with_flag(picture, end_arr, sides):
                 picture.put(line_color, (x, y, x + 1, y + 1))
             else:
                 picture.put(bg_color, (x, y, x + 1, y + 1))
-        # if flag:
-        #     picture.put(line_color, (x, y, x, y + 1))
-        # else:
-        #     picture.put(bg_color, (x, y, x, y + 1))
-
+    end = time()
+    
     for fig in range(len(end_arr)):
         for i in range(len(end_arr[fig])):
             bresenham(picture, end_arr[fig][i][0][0], end_arr[fig][i][1][0], 
                         end_arr[fig][i][0][1], end_arr[fig][i][1][1])
-    end = time()
+    
     time_str = str(round(end - start, 4)) + "ms"
     entry_time.delete(0, tk.END)
     entry_time.insert(tk.END, time_str)
@@ -349,23 +394,32 @@ def raster_scan(delay, canva, delay_coef):
         messagebox.showerror("Внимание",
                              "Фигура не замкнута или не нарисована.\nПроверьте!!!")
         return 
+    try:
+        coef = int(delay_coef.get())
+    except Exception:
+            messagebox.showerror("Внимание",
+                             "Невозможно считать значение коэффициента (целое число)")
+            return
+
     global end_arr
+    global point_arr
+    point_arr_copy = point_arr.copy()
     point_arr.pop()
     delay_ch = delay.get()
     sides = get_side(point_arr)
+    end_arr_copy = end_arr.copy()
     end_arr.pop()
     make_min_max(point_arr)
     if delay_ch[10] == 'с':
-        coef = int(delay_coef.get())
-        print("coef!!!!!!!!!!!!!", coef)
-        draw_raster_with_flag_delay(picture, canva, end_arr, sides, coef)
+        draw_raster_with_flag_delay(picture, canva, end_arr, sides, coef)        
     else:
         draw_raster_with_flag(picture, end_arr, sides)
+    point_arr = point_arr_copy.copy()
+    end_arr = end_arr_copy.copy()
+
 
 def time_res():
     global time_fig
-
-    print(current_fig, time_fig)
     if (current_fig == 0 or len(point_arr[current_fig - 1]) == 0):
         messagebox.showerror("Внимание",
                              "На поле рисовании нет фигуры.")
@@ -375,17 +429,22 @@ def time_res():
     sides = get_side(point_arr)
     make_min_max(point_arr)
     start = time()
-    draw_raster_with_flag(picture, end_arr, sides)
+    draw_raster__with_flag(picture, end_arr, sides)
     stop = time()
     time_fig.append(stop - start)
     res_time = tk.Tk()
     res_time.title("Временные характеристики.")
-    res_time.geometry("400x150+800+500")
-    tk.Label(res_time, text = "  Время рисования изображенной фигуры \n",
-             font = ("Consolas", 12)).grid()
+    res_time.geometry("500x200+800+500")
+
+    time_t = tk.Text(res_time, width=500, height=150)
+    scroll = tk.Scrollbar(command=time_t.yview)
+    scroll.pack(side=tk.LEFT, fill=tk.Y)
+ 
+    time_t.config(yscrollcommand=scroll.set)
+    time_t.grid()
     for i in range(len(time_fig)):
-        tk.Label(res_time, text = " Фигура номер " + str(i + 1) + ": " + str(time_fig[i]) + 
-                           " с", font = ("Consolas", 12)).grid()
+        time_t.insert(tk.END, " Фигура номер " + str(i + 1) + ": " + str(time_fig[i]) + 
+                           " с\n")
     res_time.mainloop()
 
 
@@ -525,7 +584,7 @@ def MainWindow():
                       font="consolas 14",
                       width = 7,
                       justify="center")
-    entry_x.insert(tk.END, "0")
+    entry_x.insert(tk.END, "100")
     entry_x.place(x = 375, y = 530)
 
     label_y = tk.Label()
@@ -540,7 +599,7 @@ def MainWindow():
                       font="consolas 14",
                       width = 7,
                       justify="center")
-    entry_y.insert(tk.END, "0")
+    entry_y.insert(tk.END, "100")
     entry_y.place(x = 535, y = 530) 
 
     # Кнопка ввода точки

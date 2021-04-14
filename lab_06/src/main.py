@@ -101,30 +101,6 @@ def right_click(event):
 def center_click(event):
     global point_z
     point_z.append([event.x, event.y])
-    # global bg_color
-    # global line_color
-    # global point_arr
-    # global current_fig
-    # if len(point_arr) == 0:
-    #     return
-    
-    # # Удаление последней линии
-    # buf_color = line_color
-    # line_color = bg_color
-    # if len(point_arr[current_fig]) != 0:
-    #     bresenham(picture, point_arr[current_fig][len(point_arr[current_fig]) - 2][0],
-    #                    point_arr[current_fig][len(point_arr[current_fig]) - 1][0],
-    #                    point_arr[current_fig][len(point_arr[current_fig]) - 2][1],
-    #                    point_arr[current_fig][len(point_arr[current_fig]) - 1][1])
-    #     point_arr[current_fig].pop()
-    # else:
-    #     point_arr.pop()
-    #     current_fig -= 1
-    #     bresenham(picture, point_arr[current_fig][0][0],
-    #                    point_arr[current_fig][len(point_arr[current_fig]) - 1][0],
-    #                    point_arr[current_fig][0][1],
-    #                    point_arr[current_fig][len(point_arr[current_fig]) - 1][1])
-    # line_color = buf_color
 
 def set_canva_root(canva):
     global picture
@@ -204,7 +180,7 @@ def seed_fill(img, xSeed, ySeed):
 
         gotColor = img.get(curX, curY)
         while gotColor != line_for_check and gotColor != seed_for_check:
-            img.put(seed_color, (curX, curY))    #НА ПРОДЕ УБЕРИ КОММЕНТАРИИ, ВЕРНИ ИСХОД
+            img.put(seed_color, (curX, curY))    
             curX -= 1
             gotColor = img.get(curX, curY)
         xLeft = curX + 1
@@ -275,7 +251,7 @@ def seed_fill(img, xSeed, ySeed):
 def seed_fill_delay(img, canva, coef, xSeed, ySeed):
     stack = list()
     stack.append([xSeed, ySeed])
-    print(stack)
+    print(stack, coef)
     while len(stack):
         gotDot = stack.pop()
 
@@ -284,7 +260,7 @@ def seed_fill_delay(img, canva, coef, xSeed, ySeed):
 
         gotColor = img.get(curX, curY)
         while gotColor != line_for_check and gotColor != seed_for_check:
-            img.put(seed_color, (curX, curY))    #НА ПРОДЕ УБЕРИ КОММЕНТАРИИ, ВЕРНИ ИСХОД
+            img.put(seed_color, (curX, curY))   
             curX -= 1
             gotColor = img.get(curX, curY)
         xLeft = curX + 1
@@ -367,9 +343,9 @@ def do_seed_fill(canva, delay, coef_delay, x_seed, y_seed):
         y = int(y)
 
     delay_d = delay.get()
-    if delay_d[10] != 'c':
-        seed_fill(picture, x, y)
-    else:
+    print(delay_d)
+    print(delay_d[10] == 'с')
+    if delay_d[10] == 'с':
         print("c")
         try:
             coef = int(coef_delay.get())
@@ -379,6 +355,10 @@ def do_seed_fill(canva, delay, coef_delay, x_seed, y_seed):
                              "Невозможно считать координаты затравочной точки!")
             return
         seed_fill_delay(picture, canva, coef, x, y)
+    else:
+        seed_fill(picture, x, y)
+
+
 def time_res():
     pass
 

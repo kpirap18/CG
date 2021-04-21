@@ -31,19 +31,20 @@ line_for_check = (0, 0, 15)
 seed_for_check = (255, 0, 255)
 point_arr = [[]]
 point_z = []
+time_fig = []
 
 
-def bresenham(picture, xStart, xEnd, yStart, yEnd):
-    if xStart == xEnd and yStart == yEnd:
-        picture.put(line_color, (xStart, yStart))
+def bresenham(picture, x_start, xEnd, y_start, yEnd):
+    if x_start == xEnd and y_start == yEnd:
+        picture.put(line_color, (x_start, y_start))
         return
-    xStart = int(xStart)
-    yStart = int(yStart)
+    x_start = int(x_start)
+    y_start = int(y_start)
     xEnd = int(xEnd)
     yEnd = int(yEnd)
 
-    deltaX = xEnd - xStart
-    deltaY = yEnd - yStart
+    deltaX = xEnd - x_start
+    deltaY = yEnd - y_start
 
     stepX = int(sign(deltaX))
     stepY = int(sign(deltaY))
@@ -58,23 +59,23 @@ def bresenham(picture, xStart, xEnd, yStart, yEnd):
         flag = False
 
     acc = deltaY + deltaY - deltaX
-    curX = xStart
-    curY = yStart
+    cur_x = x_start
+    cur_y = y_start
 
     for i in range(deltaX + 1):
-        picture.put(line_color, (curX, curY))
+        picture.put(line_color, (cur_x, cur_y))
 
         if acc >= 0:
             if flag:
-                curX += stepX
+                cur_x += stepX
             else:
-                curY += stepY
+                cur_y += stepY
             acc -= (deltaX + deltaX)
         if acc <= 0:
             if flag:
-                curY += stepY
+                cur_y += stepY
             else:
-                curX += stepX
+                cur_x += stepX
             acc += deltaY + deltaY
 
 def left_click(event):
@@ -110,10 +111,12 @@ def set_canva_root(canva):
 
 def clear_canva(canva):
     global point_arr
+    global point_z
     global current_fig
     global picture
     canva.delete("all")
     point_arr = [[]]
+    point_z = []
     current_fig = 0
     
     picture = tk.PhotoImage(width = W_canva, height = H_canva)
@@ -168,179 +171,232 @@ def add_point(root, entry_x, entry_y):
                         point_arr[current_fig][len(point_arr[current_fig]) - 2][1],
                         point_arr[current_fig][len(point_arr[current_fig]) - 1][1])
     
-def seed_fill(img, xSeed, ySeed):
+def seed_fill(picture, x_seed, y_seed):
+    global entry_time
+    start = time()
     stack = list()
-    stack.append([xSeed, ySeed])
+    stack.append([x_seed, y_seed])
     print(stack)
     while len(stack):
-        gotDot = stack.pop()
+        dot_z = stack.pop()
 
-        curX = gotDot[0]
-        curY = gotDot[1]
+        cur_x = dot_z[0]
+        cur_y = dot_z[1]
 
-        gotColor = img.get(curX, curY)
-        while gotColor != line_for_check and gotColor != seed_for_check:
-            img.put(seed_color, (curX, curY))    
-            curX -= 1
-            gotColor = img.get(curX, curY)
-        xLeft = curX + 1
-        img.put(seed_color, (xLeft, curY, gotDot[0] + 1, curY + 1))
+        got_color = picture.get(cur_x, cur_y)
+        while got_color != line_for_check and got_color != seed_for_check:
+            picture.put(seed_color, (cur_x, cur_y))    
+            cur_x -= 1
+            got_color = picture.get(cur_x, cur_y)
+        x_left = cur_x + 1
+        picture.put(seed_color, (x_left, cur_y, dot_z[0] + 1, cur_y + 1))
 
-        curX = gotDot[0] + 1
-        gotColor = img.get(curX, curY)
-        while gotColor != line_for_check and gotColor != seed_for_check:
-            img.put(seed_color, (curX, curY))
-            curX += 1
-            gotColor = img.get(curX, curY)
-        xRight = curX - 1
-        img.put(seed_color, (gotDot[0], curY, xRight + 1, curY + 1))
+        cur_x = dot_z[0] + 1
+        got_color = picture.get(cur_x, cur_y)
+        while got_color != line_for_check and got_color != seed_for_check:
+            picture.put(seed_color, (cur_x, cur_y))
+            cur_x += 1
+            got_color = picture.get(cur_x, cur_y)
+        x_right = cur_x - 1
+        picture.put(seed_color, (dot_z[0], cur_y, x_right + 1, cur_y + 1))
 
-        curX = xLeft
-        curY += 1
-
-        flag = False
-        while curX <= xRight:
-            gotColor = img.get(curX, curY)
-            while gotColor != line_for_check and gotColor != seed_for_check and curX <= xRight:
-                flag = True
-                curX += 1
-                gotColor = img.get(curX, curY)
-
-            if flag:
-                if curX == xRight and gotColor != line_for_check and gotColor != seed_for_check:
-                    stack.append([curX, curY])
-                else:
-                    stack.append([curX - 1, curY])
-                flag = False
-
-            xStart = curX
-            while (gotColor == line_for_check or gotColor == seed_for_check) and curX < xRight:
-                curX += 1
-                gotColor = img.get(curX, curY)
-
-            if curX == xStart:
-                curX += 1
-
-        curX = xLeft
-        curY -= 2
+        cur_x = x_left
+        cur_y += 1
 
         flag = False
-        while curX <= xRight:
-            gotColor = img.get(curX, curY)
-            while gotColor != line_for_check and gotColor != seed_for_check and curX <= xRight:
+        while cur_x <= x_right:
+            got_color = picture.get(cur_x, cur_y)
+            while got_color != line_for_check and got_color != seed_for_check and cur_x <= x_right:
                 flag = True
-                curX += 1
-                gotColor = img.get(curX, curY)
+                cur_x += 1
+                got_color = picture.get(cur_x, cur_y)
 
             if flag:
-                if curX == xRight and gotColor != line_for_check and gotColor != seed_for_check:
-                    stack.append([curX, curY])
+                if cur_x == x_right and got_color != line_for_check and got_color != seed_for_check:
+                    stack.append([cur_x, cur_y])
                 else:
-                    stack.append([curX - 1, curY])
+                    stack.append([cur_x - 1, cur_y])
                 flag = False
 
-            xStart = curX
-            while (gotColor == line_for_check or gotColor == seed_for_check) and curX < xRight:
-                curX += 1
-                gotColor = img.get(curX, curY)
+            x_start = cur_x
+            while (got_color == line_for_check or got_color == seed_for_check) and cur_x < x_right:
+                cur_x += 1
+                got_color = picture.get(cur_x, cur_y)
 
-            if curX == xStart:
-                curX += 1
+            if cur_x == x_start:
+                cur_x += 1
+
+        cur_x = x_left
+        cur_y -= 2
+
+        flag = False
+        while cur_x <= x_right:
+            got_color = picture.get(cur_x, cur_y)
+            while got_color != line_for_check and got_color != seed_for_check and cur_x <= x_right:
+                flag = True
+                cur_x += 1
+                got_color = picture.get(cur_x, cur_y)
+
+            if flag:
+                if cur_x == x_right and got_color != line_for_check and got_color != seed_for_check:
+                    stack.append([cur_x, cur_y])
+                else:
+                    stack.append([cur_x - 1, cur_y])
+                flag = False
+
+            x_start = cur_x
+            while (got_color == line_for_check or got_color == seed_for_check) and cur_x < x_right:
+                cur_x += 1
+                got_color = picture.get(cur_x, cur_y)
+
+            if cur_x == x_start:
+                cur_x += 1
+    end = time()
+    time_str = str(round(end - start, 4)) + "ms"
+    entry_time.delete(0, tk.END)
+    entry_time.insert(tk.END, time_str)
 
     
-def seed_fill_delay(img, canva, coef, xSeed, ySeed):
+def seed_fill_delay(picture, canva, coef, x_seed, y_seed):
+    global entry_time
+    start = time()
     stack = list()
-    stack.append([xSeed, ySeed])
+    # 2- занесение затравочного пикселя в стек
+    stack.append([x_seed, y_seed]) 
     print(stack, coef)
+    # 3- Цикл пока стек не пуст
     while len(stack):
-        gotDot = stack.pop()
+        # 3.1- извлечь затравочный пиксел
+        dot_z = stack.pop() 
 
-        curX = gotDot[0]
-        curY = gotDot[1]
+        cur_x = dot_z[0] 
+        cur_y = dot_z[1]
 
-        gotColor = img.get(curX, curY)
-        while gotColor != line_for_check and gotColor != seed_for_check:
-            img.put(seed_color, (curX, curY))   
-            curX -= 1
-            gotColor = img.get(curX, curY)
-        xLeft = curX + 1
-        img.put(seed_color, (xLeft, curY, gotDot[0] + 1, curY + 1))
+        got_color = picture.get(cur_x, cur_y)
+        # 3.2 Закраска пикселей текущей строки слева от затравочного
+        while got_color != line_for_check and got_color != seed_for_check: 
+            picture.put(seed_color, (cur_x, cur_y))   
+            cur_x -= 1
+            got_color = picture.get(cur_x, cur_y)
+            # canva.update()
+            # sleep(0.001 * coef)
+        x_left = cur_x + 1
+        picture.put(seed_color, (x_left, cur_y, dot_z[0] + 1, cur_y + 1))
 
-        curX = gotDot[0] + 1
-        gotColor = img.get(curX, curY)
-        while gotColor != line_for_check and gotColor != seed_for_check:
-            img.put(seed_color, (curX, curY))
-            curX += 1
-            gotColor = img.get(curX, curY)
-        xRight = curX - 1
-        img.put(seed_color, (gotDot[0], curY, xRight + 1, curY + 1))
+        # 3.3 Закраска пикселей текущей строки справа от затравочного
+        cur_x = dot_z[0] + 1
+        got_color = picture.get(cur_x, cur_y)
+        while got_color != line_for_check and got_color != seed_for_check:
+            picture.put(seed_color, (cur_x, cur_y))
+            cur_x += 1
+            got_color = picture.get(cur_x, cur_y)
+            # canva.update()
+            # sleep(0.001 * coef)
+        x_right = cur_x - 1
+        picture.put(seed_color, (dot_z[0], cur_y, x_right + 1, cur_y + 1))
+
 
         canva.update()
         sleep(0.001 * coef)
 
-        curX = xLeft
-        curY += 1
+        # ПОИСК ЗАТРАВОЧНЫХ ПИКСЕЛЕЙ
+        # Проверка строки выше на поиск затравочных пикселей
+        cur_x = x_left
+        cur_y += 1
+        
+        # 1- Цикл пока Х <= Хпр
+        while cur_x <= x_right: 
+            # 1.1 Флаг  0 (флаг нахождения затравки)
+            flag = False
+            got_color = picture.get(cur_x, cur_y)
+            
+            # 1.2 Пока цвет(х,у) != граничному И != цвету затравки И Х <= Хпр (<= для закраски шириной в один пиксель)
+            # то флаг = 1 и х = х + 1 
+            while got_color != line_for_check and got_color != seed_for_check and cur_x <= x_right:
+                flag = True
+                cur_x += 1
+                got_color = picture.get(cur_x, cur_y)
+            
+            # 1.3 Если флаг = 1
+            # то если цвет(х,у) != цвет границы И != цвет затравки И Х == Хпр 
+            #        то занести в стек х,у 
+            #        иначе занести в стек х - 1, у
+            if flag:
+                if cur_x == x_right and got_color != line_for_check and got_color != seed_for_check:
+                    stack.append([cur_x, cur_y])
+                else:
+                    stack.append([cur_x - 1, cur_y])
+                flag = False
+            # 1.4 В случае если интеревал был прерван, мы продолжаем проверку
+            # 1.4.1 Запоминаем абсцису текущего пикселя
+            x_start = cur_x
+            # 1.4.2 Если цвет(х,у) == цвет закраски ИЛИ цвет(х,у) == цвет границы И х < Хпр
+            while (got_color == line_for_check or got_color == seed_for_check) and cur_x < x_right:
+                cur_x += 1
+                got_color = picture.get(cur_x, cur_y)
+            
+            # 1.4.3 Если х == стратХ, то х = х + 1
+            if cur_x == x_start:
+                cur_x += 1
+
+        # Далее проверяем строку ниже текущей на поиск затравочного
+        cur_x = x_left
+        cur_y -= 2
 
         flag = False
-        while curX <= xRight:
-            gotColor = img.get(curX, curY)
-            while gotColor != line_for_check and gotColor != seed_for_check and curX <= xRight:
+        while cur_x <= x_right:
+            got_color = picture.get(cur_x, cur_y)
+            while got_color != line_for_check and got_color != seed_for_check and cur_x <= x_right:
                 flag = True
-                curX += 1
-                gotColor = img.get(curX, curY)
+                cur_x += 1
+                got_color = picture.get(cur_x, cur_y)
 
             if flag:
-                if curX == xRight and gotColor != line_for_check and gotColor != seed_for_check:
-                    stack.append([curX, curY])
+                if cur_x == x_right and got_color != line_for_check and got_color != seed_for_check:
+                    stack.append([cur_x, cur_y])
                 else:
-                    stack.append([curX - 1, curY])
+                    stack.append([cur_x - 1, cur_y])
                 flag = False
 
-            xStart = curX
-            while (gotColor == line_for_check or gotColor == seed_for_check) and curX < xRight:
-                curX += 1
-                gotColor = img.get(curX, curY)
+            # В случае если интеревал был прерван, мы продолжаем проверку
+            x_start = cur_x
+            while (got_color == line_for_check or got_color == seed_for_check) and cur_x < x_right:
+                cur_x += 1
+                got_color = picture.get(cur_x, cur_y)
 
-            if curX == xStart:
-                curX += 1
+            if cur_x == x_start:
+                cur_x += 1
 
-        curX = xLeft
-        curY -= 2
-
-        flag = False
-        while curX <= xRight:
-            gotColor = img.get(curX, curY)
-            while gotColor != line_for_check and gotColor != seed_for_check and curX <= xRight:
-                flag = True
-                curX += 1
-                gotColor = img.get(curX, curY)
-
-            if flag:
-                if curX == xRight and gotColor != line_for_check and gotColor != seed_for_check:
-                    stack.append([curX, curY])
-                else:
-                    stack.append([curX - 1, curY])
-                flag = False
-
-            xStart = curX
-            while (gotColor == line_for_check or gotColor == seed_for_check) and curX < xRight:
-                curX += 1
-                gotColor = img.get(curX, curY)
-
-            if curX == xStart:
-                curX += 1
+    end = time()
+    time_str = str(round(end - start, 4)) + "ms"
+    entry_time.delete(0, tk.END)
+    entry_time.insert(tk.END, time_str)
 
 def do_seed_fill(canva, delay, coef_delay, x_seed, y_seed):
-    x = x_seed.get()
-    y = y_seed.get()
-    print(point_z)
+    if current_fig == 0:
+        messagebox.showerror("Внимание",
+                             "Фигура не замкнута или не нарисована.\nПроверьте!!!")
+        return 
+    try:
+        x = x_seed.get()
+        y = y_seed.get()
+    except Exception:
+        messagebox.showerror("Внимание",
+                             "Невозможно считать координаты!")
+        return
 
     if x == "" or y == "":
         x = point_z[0][0]
         y = point_z[0][1]
     else:
-        x = int(x)
-        y = int(y)
+        try:
+            x = int(x)
+            y = int(y)
+        except Exception:
+            messagebox.showerror("Внимание",
+                                "Невозможно считать координаты затравочной точки!")
+            return
+        
 
     delay_d = delay.get()
     print(delay_d)
@@ -359,8 +415,42 @@ def do_seed_fill(canva, delay, coef_delay, x_seed, y_seed):
         seed_fill(picture, x, y)
 
 
-def time_res():
-    pass
+def time_res(x_seed, y_seed):
+    global time_fig
+    x = x_seed.get()
+    y = y_seed.get()
+    print(point_z)
+
+    if x == "" or y == "":
+        x = point_z[0][0]
+        y = point_z[0][1]
+    else:
+        x = int(x)
+        y = int(y)
+
+    global time_fig
+    if (current_fig == 0 or len(point_arr[current_fig - 1]) == 0):
+        messagebox.showerror("Внимание",
+                             "На поле рисовании нет фигуры.")
+        return
+    start = time()
+    seed_fill(picture, x, y)
+    stop = time()
+    time_fig.append(stop - start)
+    res_time = tk.Tk()
+    res_time.title("Временные характеристики.")
+    res_time.geometry("500x200+800+500")
+
+    time_t = tk.Text(res_time, width=500, height=150)
+    scroll = tk.Scrollbar(command=time_t.yview)
+    scroll.pack(side=tk.LEFT, fill=tk.Y)
+ 
+    time_t.config(yscrollcommand=scroll.set)
+    time_t.grid()
+    for i in range(len(time_fig)):
+        time_t.insert(tk.END, " Фигура номер " + str(i + 1) + ": " + str(time_fig[i]) + 
+                           " с\n")
+    res_time.mainloop()
 
 
 def MainWindow():
@@ -558,7 +648,7 @@ def MainWindow():
     time_button = tk.Button(root, text = "Временные характеристики алгоритма",
                                width = 35, height = 1, font = ("Consolas", 14),
                                bg = "#7fb5b5",
-                               command = lambda: time_res())
+                               command = lambda: time_res(entry_x_z, entry_y_z))
     time_button.place(x = 150, y = 700)
 
     # Кнопка очистки

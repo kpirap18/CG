@@ -129,24 +129,30 @@ def choose_bg_color(root, r, c, canva):
     bg_color = colorchooser.askcolor()[1]
     canva_bg_color = tk.Canvas(root, bg = bg_color,
                               borderwidth = 5, relief = tk.RIDGE,
-                              width = 60, height = 50)
+                              width = 60, height = 26)
     canva_bg_color.place(x = r, y = c)
     canva.configure(bg = bg_color)
 
 def choose_seed_color(root, r, c):
-    global seed_color
-    seed_color = colorchooser.askcolor()[1]
+    global seed_color, seed_for_check
+    got = colorchooser.askcolor()
+    
+    seed_color = got[1]
+    seed_for_check = (int(got[0][0]), int(got[0][1]), int(got[0][2]))
     canva_seed_color = tk.Canvas(root, bg = seed_color,
                             borderwidth = 5, relief = tk.RIDGE,
-                            width = 60, height = 50)
+                            width = 60, height = 26)
     canva_seed_color.place(x = r, y = c)
 
 def choose_line_color(root, r, c):
-    global line_color
-    line_color = colorchooser.askcolor()[1]
+    global line_color, line_for_check
+    got = colorchooser.askcolor()
+    # print(got)
+    line_color = got[1]
+    line_for_check = (int(got[0][0]), int(got[0][1]), int(got[0][2]))
     canva_line_color = tk.Canvas(root, bg = line_color,
                             borderwidth = 5, relief = tk.RIDGE,
-                            width = 60, height = 50)
+                            width = 60, height = 26)
     canva_line_color.place(x = r, y = c)
     
 def add_point(root, entry_x, entry_y):
@@ -176,7 +182,7 @@ def seed_fill(picture, x_seed, y_seed):
     start = time()
     stack = list()
     stack.append([x_seed, y_seed])
-    print(stack)
+    # print(stack)
     while len(stack):
         dot_z = stack.pop()
 
@@ -185,6 +191,7 @@ def seed_fill(picture, x_seed, y_seed):
 
         got_color = picture.get(cur_x, cur_y)
         while got_color != line_for_check and got_color != seed_for_check:
+            # print("nen1")
             picture.put(seed_color, (cur_x, cur_y))    
             cur_x -= 1
             got_color = picture.get(cur_x, cur_y)
@@ -194,6 +201,7 @@ def seed_fill(picture, x_seed, y_seed):
         cur_x = dot_z[0] + 1
         got_color = picture.get(cur_x, cur_y)
         while got_color != line_for_check and got_color != seed_for_check:
+            # print("nen11")
             picture.put(seed_color, (cur_x, cur_y))
             cur_x += 1
             got_color = picture.get(cur_x, cur_y)
@@ -205,6 +213,7 @@ def seed_fill(picture, x_seed, y_seed):
 
         flag = False
         while cur_x <= x_right:
+            # print("nen111")
             got_color = picture.get(cur_x, cur_y)
             while got_color != line_for_check and got_color != seed_for_check and cur_x <= x_right:
                 flag = True
@@ -263,7 +272,7 @@ def seed_fill_delay(picture, canva, coef, x_seed, y_seed):
     stack = list()
     # 2- занесение затравочного пикселя в стек
     stack.append([x_seed, y_seed]) 
-    print(stack, coef)
+    # print(stack, coef)
     # 3- Цикл пока стек не пуст
     while len(stack):
         # 3.1- извлечь затравочный пиксел
@@ -386,6 +395,10 @@ def do_seed_fill(canva, delay, coef_delay, x_seed, y_seed):
         return
 
     if x == "" or y == "":
+        if len(point_z) == 0:
+            messagebox.showerror("Внимание",
+                             "Остутствует затравочный пиксель!")
+            return
         x = point_z[0][0]
         y = point_z[0][1]
     else:
@@ -399,10 +412,10 @@ def do_seed_fill(canva, delay, coef_delay, x_seed, y_seed):
         
 
     delay_d = delay.get()
-    print(delay_d)
-    print(delay_d[10] == 'с')
+    # print(delay_d)
+    # print(delay_d[10] == 'с')
     if delay_d[10] == 'с':
-        print("c")
+        # print("c")
         try:
             coef = int(coef_delay.get())
             
@@ -419,7 +432,7 @@ def time_res(x_seed, y_seed):
     global time_fig
     x = x_seed.get()
     y = y_seed.get()
-    print(point_z)
+    # print(point_z)
 
     if x == "" or y == "":
         x = point_z[0][0]
@@ -442,10 +455,10 @@ def time_res(x_seed, y_seed):
     res_time.geometry("500x200+800+500")
 
     time_t = tk.Text(res_time, width=500, height=150)
-    scroll = tk.Scrollbar(command=time_t.yview)
-    scroll.pack(side=tk.LEFT, fill=tk.Y)
+    # scroll = tk.Scrollbar(time_t, command=time_t.yview)
+    # scroll.pack(side=tk.LEFT, fill=tk.Y)
  
-    time_t.config(yscrollcommand=scroll.set)
+    # time_t.config(yscrollcommand=scroll.set)
     time_t.grid()
     for i in range(len(time_fig)):
         time_t.insert(tk.END, " Фигура номер " + str(i + 1) + ": " + str(time_fig[i]) + 
@@ -529,7 +542,7 @@ def MainWindow():
     canva_seed_color.place(x = 155, y = 310)
     seed_color_button = tk.Button(root, text = "Цвет заливки", font = ("Consolas", 14),
                                height = 1, bg = "#7fb5b5", width = 11,
-                               command = lambda: choose_seed_color(root, 150, 310))
+                               command = lambda: choose_seed_color(root, 155, 310))
     seed_color_button.place(x = 10, y = 310)
 
     canva_line_color = tk.Canvas(root, bg = line_color,
@@ -538,7 +551,7 @@ def MainWindow():
     canva_line_color.place(x = 400, y = 310)
     line_color_button = tk.Button(root, text = "Цвет границ", font = ("Consolas", 14),
                                height = 1, bg = "#7fb5b5", width = 11,
-                               command = lambda: choose_line_color(root, 250, 310))
+                               command = lambda: choose_line_color(root, 400, 310))
     line_color_button.place(x = 250, y = 310)
 
     canva_bg_color = tk.Canvas(root, bg = bg_color,
@@ -547,7 +560,7 @@ def MainWindow():
     canva_bg_color.place(x = 625, y = 310)
     bg_color_button = tk.Button(root, text = "Цвет фона", font = ("Consolas", 14),
                                height = 1, bg = "#7fb5b5", width = 10,
-                               command = lambda: choose_bg_color(root, 560, 310, canva))
+                               command = lambda: choose_bg_color(root, 60, 310, canva))
     bg_color_button.place(x = 490, y = 310)
 
 

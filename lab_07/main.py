@@ -22,14 +22,14 @@ class Scene(QtWidgets.QGraphicsScene):
     
     def keyPressEvent(self, event):
         global ctrl
-        print(event.key() == Qt.Key_Control)
+        # print(event.key() == Qt.Key_Control)
         if event.key() == Qt.Key_Control:
-            print("if")
+            # print("if")
             ctrl = True
         else:
-            print("else")
+            # print("else")
             ctrl = False
-        print("res", ctrl)
+        # print("res", ctrl)
     # добавить точку по щелчку мыши
     def mousePressEvent(self, event):
         add_point(event.scenePos())
@@ -44,6 +44,7 @@ class Scene(QtWidgets.QGraphicsScene):
                 wind.rect[0] = now.x()
                 wind.rect[3] = now.y()
             else:
+                # print(type(now), now)
                 self.removeItem(self.itemAt(now, QTransform()))
                 p = event.scenePos()
                 self.addRect(now.x(), now.y(), abs(now.x() - p.x()), abs(now.y() - p.y()), wind.pen_rest)
@@ -245,6 +246,7 @@ class Visual(QtWidgets.QMainWindow, win2.Ui_MainWindow):
         wind.point_now = None
 
     def add_rect(self):
+        global now
         try:
             x_left = float(self.lineEdit_xleft.text())
             x_right = float(self.lineEdit_xright.text())
@@ -253,6 +255,8 @@ class Visual(QtWidgets.QMainWindow, win2.Ui_MainWindow):
         except Exception:
             QMessageBox.warning(self, "Внимание!", "Неверно введены координаты!")
             return 
+        now = QtCore.QPointF(x_left, y_up)
+        # print(now, type(now))
         self.rect[0] = x_left
         self.rect[1] = x_right
         self.rect[2] = y_down
@@ -356,27 +360,42 @@ def add_point(point):
 
 
 def get_code(a, rect):
+    # rect = [Х левый, Х правый, У нижнее, У верхнее]
     code = [0, 0, 0, 0]
-    if a[0] < rect[0]:
+    if a[0] < rect[0]: # X < X левый
         code[0] = 1
-    if a[0] > rect[1]:
+    if a[0] > rect[1]: # X > X правый
         code[1] = 1
-    if a[1] < rect[2]:
+    if a[1] > rect[2]: # У < У верхнее
         code[2] = 1
-    if a[1] > rect[3]:
+    if a[1] < rect[3]: # У > У нижнее
         code[3] = 1
 
     return code
 
-# отсекание
+# Отсечение!!!
+# Отсечение производится в определенном порядке:
+# левой, правой, нижней, верхней границами отсекателя.
 def clipping():
     global wind, now
-    
-    buf = wind.scene.itemAt(now, QTransform()).rect()
-    wind.clip = [buf.left(), buf.right(), buf.top(),  buf.bottom()]
+    try:
+        w = int(wind.spinBox_w.text())
+    except Exception:
+        QMessageBox.warning(wind, "Внимание!", "Не целове значение толщины!")
+        return 
+    wind.pen_res.setWidth(w)
+    # buf = wind.scene.itemAt(now.x(), now.y(), QTransform())
+    # if buf is None:
+    #     QMessageBox.warning(wind, "Внимание!", "Не введен отсекатель!")
+    # else:
+    #     buf = buf.rect()
+    #     wind.clip = [buf.left(), buf.right(), buf.top(),  buf.bottom()]
+    # # buf = wind.scene.itemAt(now, QTransform()).rect()
+    # wind.clip = [buf.left(), buf.right(), buf.top(),  buf.bottom()]
     for b in wind.lines:
         pass
-        cohen_sutherland(b, wind.clip)
+        cohen_sutherland(b, wind.rect) 
+        # cohen_sutherland(b, wind.clip) 
    
 
 
@@ -411,53 +430,74 @@ def is_visible(bar, rect):
     return vis
 
 
-
-
 def cohen_sutherland(bar, rect):
     global wind
     # инициализация флага
-    flag = 1 # общего положения
-    t = 1
+    flag = 0 # общего положения
+    m = 1
 
     # проверка вертикальности и горизонтальности отрезка
     if bar[1][0] - bar[0][0] == 0:
         flag = -1   # вертикальный отрезок
     else:
         # вычисление наклона
-        t = (bar[1][1] - bar[0][1]) / (bar[1][0] - bar[0][0])
-        if t == 0:
-            flag = 0   # горизонтальный
+        m = (bar[1][1] - bar[0][1]) / (bar[1][0] - bar[0][0])
+        if m == 0:
+            flag = 1   # горизонтальный
 
     # для каждой стороны окна
+    # Когда у нас вертикаль - то пропускается i = 0 и i = 1 
+    # Когда у нас горизонталь - то пропускаем i = 3 и i = 4
     for i in range(4):
+        """Видимость - 0 = невидимый
+                       1 = видимый
+                       2 = частично видимый"""
+        # Опредление видимости
         vis = is_visible(bar, rect)
+        # Если тривиально видим (полностью видим), то рисуем и выходим из цикла
         if vis == 1:
-            wind.scene.addLine(bar[0][0], bar[0][1], bar[1][0], bar[1][1], wind.pen_res)
+            print("if vis == 1:")
+            wind.scene.addLine(bar[0][0], bar[0][1], bar[1][0], 
+                               bar[1][1], wind.pen_res)
             return
+        # Иначе проверяем на невидимость (тривиальную невидимость), 
+        # то выход из цикла
         elif not vis:
+            print("if vis == 1: else")
             return
 
         # проверка пересечения отрезка и стороны окна
         code1 = get_code(bar[0], rect)
         code2 = get_code(bar[1], rect)
 
+        # Если Т1 == Т2, то переход на след шаг цикла
         if code1[i] == code2[i]:
+            print("if code1[i] == code2[i]:")
             continue
 
-        # проверка нахождения Р1 вне окна; если Р1 внутри окна, то Р2 и Р1 поменять местами
+        
+        # проверка нахождения Р1 вне окна; если Р1 внутри окна, 
+        # то Р2 и Р1 поменять местами
+        # Если Т1 == 0, то обмен местами точек, 
+        # (так как мы всегда принимаем Р1 за невидимую)
         if not code1[i]:
+            print("f not code1[i]:")
             bar[0], bar[1] = bar[1], bar[0]
 
+
         # поиск пересечений отрезка со сторонами окна
-        # контроль вертикальности отрезка
+        # Проверка  вертикальности  отрезка:  если Fl=-1, то переход к bar[0][1] = rect[i]
         if flag != -1:
+            print("if flag != -1:")
+            # СРавниваем i с 2, так как счет с 0
             if i < 2:
-                bar[0][1] = t * (rect[i] - bar[0][0]) + bar[0][1]
+                print("if flag != -1: if i < 2")
+                bar[0][1] = m * (rect[i] - bar[0][0]) + bar[0][1]
                 bar[0][0] = rect[i]
                 continue
             else:
-                bar[0][0] = (1 / t) * (rect[i] - bar[0][1]) + bar[0][0]
-
+                print("if flag != -1: if i < 2 else")
+                bar[0][0] = (1 / m) * (rect[i] - bar[0][1]) + bar[0][0]
         bar[0][1] = rect[i]
     wind.scene.addLine(bar[0][0], bar[0][1], bar[1][0], bar[1][1], wind.pen_res)
 

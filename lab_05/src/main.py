@@ -29,52 +29,51 @@ gran_color_check = (0, 0, 15)
 color_for_check = (0, 193, 43)
 point_arr = [[]]
 end_arr = [[]]
-min_max = [[]]
 time_fig = []
 
 
-def bresenham(picture, xStart, xEnd, yStart, yEnd):
-    if xStart == xEnd and yStart == yEnd:
-        picture.put(gran_color, (xStart, yStart))
+def bresenham(picture, x_start, x_end, y_start, y_end):
+    if x_start == x_end and y_start == y_end:
+        picture.put(gran_color, (x_start, y_start))
         return
-    xStart = int(xStart)
-    yStart = int(yStart)
-    xEnd = int(xEnd)
-    yEnd = int(yEnd)
+    x_start = int(x_start)
+    y_start = int(y_start)
+    x_end = int(x_end)
+    y_end = int(y_end)
 
-    deltaX = xEnd - xStart
-    deltaY = yEnd - yStart
+    dx = x_end - x_start
+    dy = y_end - y_start
 
-    stepX = int(sign(deltaX))
-    stepY = int(sign(deltaY))
+    shag_x = int(sign(dx))
+    shag_y = int(sign(dy))
 
-    deltaX = abs(deltaX)
-    deltaY = abs(deltaY)
+    dx = abs(dx)
+    dy = abs(dy)
 
-    if deltaX <= deltaY:
-        deltaX, deltaY = deltaY, deltaX
+    if dx <= dy:
+        dx, dy = dy, dx
         flag = True
     else:
         flag = False
 
-    acc = deltaY + deltaY - deltaX
-    curX = xStart
-    curY = yStart
+    acc = dy + dy - dx
+    cur_x = x_start
+    cur_y = y_start
 
-    for i in range(deltaX + 1):
-        picture.put(gran_color, (curX, curY))
+    for i in range(dx + 1):
+        picture.put(gran_color, (cur_x, cur_y))
         if acc >= 0:
             if flag:
-                curX += stepX
+                cur_x += shag_x
             else:
-                curY += stepY
-            acc -= (deltaX + deltaX)
+                cur_y += shag_y
+            acc -= (dx + dx)
         if acc <= 0:
             if flag:
-                curY += stepY
+                cur_y += shag_y
             else:
-                curX += stepX
-            acc += deltaY + deltaY
+                cur_x += shag_x
+            acc += dy + dy
 
 def left_click(event):
     global point_arr
@@ -156,44 +155,17 @@ def set_canva_root(canva):
     global picture
     picture = tk.PhotoImage(width = W_canva, height = H_canva)
     canva.create_image((W_canva / 2, H_canva / 2), image = picture, state = "normal")
-def draw_raster__with_flag(picture, end_arr, sides):
-    global entry_time
-    start = time()
-    around_figure_all(picture, end_arr)
-
-    for curY in range(sides[2], sides[0] - 1, -1):
-        curColor = bg_color
-        invColor = line_color
-        curPointScanString = sides[3]
-        for curX in range(sides[3], sides[1] + 3):
-            if picture.get(curX, curY) == color_for_check:
-                picture.put(curColor, (curPointScanString, curY, curX, curY + 1))
-                curColor, invColor = invColor, curColor
-                curPointScanString = curX
-        picture.put(curColor, (curPointScanString, curY, curX, curY + 1))
-
-    end = time()
-    for fig in range(len(end_arr)):
-        for i in range(len(end_arr[fig])):
-            bresenham(picture, end_arr[fig][i][0][0], end_arr[fig][i][1][0], 
-                        end_arr[fig][i][0][1], end_arr[fig][i][1][1])
-    
-    time_str = str(round(end - start, 4)) + "ms"
-    entry_time.delete(0, tk.END)
-    entry_time.insert(tk.END, time_str)
 
 def clear_canva(canva):
     global point_arr
     global end_arr
     global current_fig
-    global min_max
     global picture
     global dot_num
     canva.delete("all")
     dot_num.delete(0, tk.END)
     point_arr = [[]]
     end_arr = [[]]
-    min_max = [[]]
     current_fig = 0
     
     picture = tk.PhotoImage(width = W_canva, height = H_canva)
@@ -277,28 +249,6 @@ def get_side(point_arr):
                 y_top = i[1]
     return y_top, x_right, y_bottom, x_left
 
-def make_min_max(point_arr):
-    global min_max
-    min_max.clear()
-    min_max = [[]]
-
-    for fig in range(len(point_arr)):
-        min_max[fig].append(((point_arr[fig][0][1] < point_arr[fig][len(point_arr[fig]) - 1][1] and
-                                point_arr[fig][0][1] < point_arr[fig][1][1]) or
-                               (point_arr[fig][0][1] > point_arr[fig][len(point_arr[fig]) - 1][1] and
-                                point_arr[fig][0][1] > point_arr[fig][1][1])))
-        for i in range(1, len(point_arr[fig]) - 1):
-            min_max[fig].append(((point_arr[fig][i][1] < point_arr[fig][i - 1][1] and
-                                    point_arr[fig][i][1] < point_arr[fig][i + 1][1]) or
-                                   (point_arr[fig][i][1] > point_arr[fig][i - 1][1] and
-                                    point_arr[fig][i][1] > point_arr[fig][i + 1][1])))
-        min_max[fig].append((point_arr[fig][len(point_arr[fig]) - 1][1] < point_arr[fig][len(point_arr[fig]) - 2][1] and
-                        point_arr[fig][len(point_arr[fig]) - 1][1] < point_arr[fig][0][1]) or
-                       (point_arr[fig][len(point_arr[fig]) - 1][1] > point_arr[fig][len(point_arr[fig]) - 2][1] and
-                        point_arr[fig][len(point_arr[fig]) - 1][1] > point_arr[fig][0][1]))
-        min_max.append(list())
-    min_max.pop()
-
 
 def around_figure_edge(picture, edge):
     if edge[0][1] == edge[1][1]:
@@ -369,17 +319,19 @@ def draw_raster_with_flag(picture, end_arr, sides):
     start = time()
     around_figure_all(picture, end_arr)
 
-    for y in range(sides[0], sides[2] + 1, 1):
-        flag = False
-        for x in range(sides[3], sides[1] + 3):
-            if picture.get(x, y) == color_for_check:
-                flag = not flag
-            if flag:
-                picture.put(line_color, (x, y, x + 1, y + 1))
-            else:
-                picture.put(bg_color, (x, y, x + 1, y + 1))
+    for cur_y in range(sides[2], sides[0] - 1, -1):
+        cur_color = bg_color
+        dif_color = line_color
+        cur_string = sides[3]
+        for cur_x in range(sides[3], sides[1] + 3):
+            if picture.get(cur_x, cur_y) == color_for_check:
+                picture.put(cur_color, (cur_string, cur_y, cur_x, cur_y + 1))
+                cur_color, dif_color = dif_color, cur_color
+                cur_string = cur_x
+        picture.put(cur_color, (cur_string, cur_y, cur_x, cur_y + 1))
+
     end = time()
-    
+
     for fig in range(len(end_arr)):
         for i in range(len(end_arr[fig])):
             bresenham(picture, end_arr[fig][i][0][0], end_arr[fig][i][1][0], 
@@ -409,7 +361,6 @@ def raster_scan(delay, canva, delay_coef):
     sides = get_side(point_arr)
     end_arr_copy = end_arr.copy()
     end_arr.pop()
-    make_min_max(point_arr)
     if delay_ch[10] == 'с':
         draw_raster_with_flag_delay(picture, canva, end_arr, sides, coef)        
     else:
@@ -427,9 +378,8 @@ def time_res():
     point_arr.pop()
     end_arr.pop()
     sides = get_side(point_arr)
-    make_min_max(point_arr)
     start = time()
-    draw_raster__with_flag(picture, end_arr, sides)
+    draw_raster_with_flag(picture, end_arr, sides)
     stop = time()
     time_fig.append(stop - start)
     res_time = tk.Tk()

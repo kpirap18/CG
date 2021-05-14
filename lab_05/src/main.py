@@ -250,7 +250,7 @@ def get_side(point_arr):
     return y_top, x_right, y_bottom, x_left
 
 
-def around_figure_edge(picture, edge):
+def around_figure_edge(picture, edge, canva):
     if edge[0][1] == edge[1][1]:
         return
     
@@ -269,24 +269,26 @@ def around_figure_edge(picture, edge):
                 picture.put(color_flag, (int(x), y))
             else:
                 picture.put(color_flag, (int(x) + 2, y))
+        canva.update()
+        sleep(0.1)
         x += step_x
         y += 1
 
 
 
-def around_figure_all(picture, end_arr):
+def around_figure_all(picture, end_arr, canva):
     for fig in range(len(end_arr)):
         len_arr = len(end_arr[fig]) - 1
         for i in range(len_arr):
-            around_figure_edge(picture, end_arr[fig][i])
-        around_figure_edge(picture, end_arr[fig][len_arr])
+            around_figure_edge(picture, end_arr[fig][i], canva)
+        around_figure_edge(picture, end_arr[fig][len_arr], canva)
 
 
 def draw_raster_with_flag_delay(picture, canva, end_arr, sides, coef):
     global entry_time
     start = time()
 
-    around_figure_all(picture, end_arr)
+    around_figure_all(picture, end_arr, canva)
     canva.update()
     sleep(0.001 * coef)
 
@@ -314,10 +316,10 @@ def draw_raster_with_flag_delay(picture, canva, end_arr, sides, coef):
     entry_time.delete(0, tk.END)
     entry_time.insert(tk.END, time_str)
 
-def draw_raster_with_flag(picture, end_arr, sides):
+def draw_raster_with_flag(picture, end_arr, sides, canva):
     global entry_time
     start = time()
-    around_figure_all(picture, end_arr)
+    around_figure_all(picture, end_arr, canva)
 
     for cur_y in range(sides[2], sides[0] - 1, -1):
         cur_color = bg_color
@@ -364,7 +366,7 @@ def raster_scan(delay, canva, delay_coef):
     if delay_ch[10] == 'с':
         draw_raster_with_flag_delay(picture, canva, end_arr, sides, coef)        
     else:
-        draw_raster_with_flag(picture, end_arr, sides)
+        draw_raster_with_flag(picture, end_arr, sides, canva)
     point_arr = point_arr_copy.copy()
     end_arr = end_arr_copy.copy()
 

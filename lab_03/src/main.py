@@ -5,7 +5,6 @@ import pyqtgraph as pg
 import matplotlib.pyplot as plt
 
 from time import time
-from for_time import *
 from for_time2 import *
 from copy import deepcopy
 from PyQt5 import QtWidgets, QtCore, QtGui

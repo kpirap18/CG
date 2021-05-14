@@ -13,8 +13,8 @@ from PyQt5.QtGui import QPen, QColor, QImage, QPixmap, QPainter, QTransform
 from PyQt5.QtCore import Qt, QTime, QCoreApplication, QEventLoop, QPoint
 from math import sin, cos, pi, radians, fabs,  floor
 
-
 now = None
+now_buf = None
 ctrl = False
 wind = None
 
@@ -40,11 +40,17 @@ class Scene(QtWidgets.QGraphicsScene):
         global now, wind
         if wind.input_rect:
             if now is None:
+                # if len(wind.rect) == 4:
+                #     print("DDDDDDDDD")
+                #     pen = QtGui.QPen(QtCore.Qt.white)
+                #     self.addRect(wind.rect[0], wind.rect[3], 
+                #              abs(wind.rect[0] - wind.rect[1]), abs(wind.rect[3] - wind.rect[2]), pen)
+                #     wind.draw_all_line()
                 now = event.scenePos()
                 wind.rect[0] = now.x()
                 wind.rect[3] = now.y()
+                
             else:
-                # print(type(now), now)
                 self.removeItem(self.itemAt(now, QTransform()))
                 p = event.scenePos()
                 self.addRect(now.x(), now.y(), abs(now.x() - p.x()), abs(now.y() - p.y()), wind.pen_rest)
@@ -124,8 +130,11 @@ class Visual(QtWidgets.QMainWindow, win2.Ui_MainWindow):
 
 
     def cheng(self):
+        global now, now_buf
         if self.radioButton_draw_line.isChecked():
             print(self.rect)
+            now_buf = now
+            now = None
             self.input_lines = True
             self.input_rect = False
         elif self.radioButton_draw_rest.isChecked():
@@ -221,6 +230,11 @@ class Visual(QtWidgets.QMainWindow, win2.Ui_MainWindow):
     def set_yellow_bg(self):
         self.graphicsView.setStyleSheet("background-color: yellow")
 
+    def draw_all_line(self):
+        for i in range(len(self.lines)):
+            self.scene.addLine(self.lines[i][0][0], self.lines[i][0][1],
+                               self.lines[i][1][0], self.lines[i][1][1], 
+                               self.pen_line)
 
     def add_line1(self):
         try:
@@ -486,7 +500,7 @@ def cohen_sutherland(bar, rect):
 
 
         # поиск пересечений отрезка со сторонами окна
-        # Проверка  вертикальности  отрезка:  если Fl=-1, то переход к bar[0][1] = rect[i]
+        # Проверка  вертикальности  отрезка:  если Fl =-1, то переход к bar[0][1] = rect[i]
         if flag != -1:
             print("if flag != -1:")
             # СРавниваем i с 2, так как счет с 0

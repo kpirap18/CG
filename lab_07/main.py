@@ -13,10 +13,58 @@ from PyQt5.QtGui import QPen, QColor, QImage, QPixmap, QPainter, QTransform
 from PyQt5.QtCore import Qt, QTime, QCoreApplication, QEventLoop, QPoint
 from math import sin, cos, pi, radians, fabs,  floor
 
+
+from numpy import sign
+
 now = None
 now_buf = None
 ctrl = False
 wind = None
+
+def bresenham(picture, x_start, xEnd, y_start, yEnd, color):
+    if x_start == xEnd and y_start == yEnd:
+        picture.addLine(x_start, y_start, x_start, y_start, color)
+        return
+    x_start = int(x_start)
+    y_start = int(y_start)
+    xEnd = int(xEnd)
+    yEnd = int(yEnd)
+
+    deltaX = xEnd - x_start
+    deltaY = yEnd - y_start
+
+    stepX = int(sign(deltaX))
+    stepY = int(sign(deltaY))
+
+    deltaX = abs(deltaX)
+    deltaY = abs(deltaY)
+
+    if deltaX <= deltaY:
+        deltaX, deltaY = deltaY, deltaX
+        flag = True
+    else:
+        flag = False
+
+    acc = deltaY + deltaY - deltaX
+    cur_x = x_start
+    cur_y = y_start
+
+    for i in range(deltaX + 1):
+        picture.addLine(cur_x, cur_y, cur_x, cur_y, color)
+
+        if acc >= 0:
+            if flag:
+                cur_x += stepX
+            else:
+                cur_y += stepY
+            acc -= (deltaX + deltaX)
+        if acc <= 0:
+            if flag:
+                cur_y += stepY
+            else:
+                cur_x += stepX
+            acc += deltaY + deltaY
+
 
 class Scene(QtWidgets.QGraphicsScene):
     
@@ -61,6 +109,7 @@ class Scene(QtWidgets.QGraphicsScene):
                                                                                          wind.rect[2],
                                                                                          wind.rect[3])
         wind.label_10.setText(strr)
+
                
 
 
@@ -125,7 +174,7 @@ class Visual(QtWidgets.QMainWindow, win2.Ui_MainWindow):
         self.pushButton_clean.clicked.connect(self.clean_screen)
         self.pushButton_draw_line.clicked.connect(self.add_line1)
         self.pushButton_draw_rest.clicked.connect(self.add_rect)
-        self.pushButton_gran.clicked.connect(self.add_bars)
+        # self.pushButton_gran.clicked.connect(self.add_bars)
         self.pushButton_RES.clicked.connect(clipping)
 
 
@@ -230,11 +279,6 @@ class Visual(QtWidgets.QMainWindow, win2.Ui_MainWindow):
     def set_yellow_bg(self):
         self.graphicsView.setStyleSheet("background-color: yellow")
 
-    def draw_all_line(self):
-        for i in range(len(self.lines)):
-            self.scene.addLine(self.lines[i][0][0], self.lines[i][0][1],
-                               self.lines[i][1][0], self.lines[i][1][1], 
-                               self.pen_line)
 
     def add_line1(self):
         try:
@@ -255,8 +299,9 @@ class Visual(QtWidgets.QMainWindow, win2.Ui_MainWindow):
         item_e = QTableWidgetItem("[{0}, {1}]".format(x_end, y_end))
         wind.table_line.setItem(i, 0, item_b)
         wind.table_line.setItem(i, 1, item_e)
-        wind.scene.addLine(x_start, y_start, 
-                            x_end, y_end, wind.pen_line)
+
+        # bresenham(wind.scene, x_start, x_end, y_start, y_end, wind.pen_line)
+        wind.scene.addLine(x_start, y_start, x_end, y_end, wind.pen_line)
         wind.point_now = None
 
     def add_rect(self):
@@ -281,11 +326,12 @@ class Visual(QtWidgets.QMainWindow, win2.Ui_MainWindow):
 
 
         self.scene.addRect(x_left, y_up, abs(x_right - x_left), abs(y_down - y_up), self.pen_rest)
+        printf("NOW", now)
 
     def add_bars(self):
         global now, wind
         if now is None:
-            QMessageBox.warning(self, "Внимание!", "Не введен отсекатель!")
+            QMessageBox.warning(self, "Внимание!", "1111Не введен отсекатель!")
             return 
 
         buf = self.scene.itemAt(now, QTransform())
@@ -306,6 +352,7 @@ class Visual(QtWidgets.QMainWindow, win2.Ui_MainWindow):
             item_e = QTableWidgetItem("[{0}, {1}]".format(self.clip[0], self.clip[3] - t))
             self.table_line.setItem(i, 0, item_b)
             self.table_line.setItem(i, 1, item_e)
+            # bresenham(self.scene, self.clip[0],  self.clip[0],  self.clip[2] + t, self.clip[3] - t, self.pen_line)
             self.scene.addLine(self.clip[0], self.clip[2] + t,  self.clip[0], self.clip[3] - t, self.pen_line)
 
             self.lines.append([[self.clip[1], self.clip[2] + t],  [self.clip[1], self.clip[3] - t]])
@@ -315,6 +362,7 @@ class Visual(QtWidgets.QMainWindow, win2.Ui_MainWindow):
             item_e = QTableWidgetItem("[{0}, {1}]".format(self.clip[1], self.clip[3] - t))
             self.table_line.setItem(i, 0, item_b)
             self.table_line.setItem(i, 1, item_e)
+            # bresenham(self.scene, self.clip[1], self.clip[1],  self.clip[3] - t, self.clip[2] + t, self.pen_line)
             self.scene.addLine(self.clip[1], self.clip[3] - t,  self.clip[1], self.clip[2] + t, self.pen_line)
 
             self.lines.append([[self.clip[0] + k, self.clip[2]], [self.clip[1] - k, self.clip[2]]])
@@ -324,6 +372,7 @@ class Visual(QtWidgets.QMainWindow, win2.Ui_MainWindow):
             item_e = QTableWidgetItem("[{0}, {1}]".format(self.clip[1] - k, self.clip[2]))
             self.table_line.setItem(i, 0, item_b)
             self.table_line.setItem(i, 1, item_e)
+            # bresenham(self.scene,self.clip[0] + k, self.clip[1] - k,  self.clip[2], self.clip[2], self.pen_line)
             self.scene.addLine(self.clip[0] + k, self.clip[2], self.clip[1] - k, self.clip[2], self.pen_line)
 
             self.lines.append([[self.clip[0] + k, self.clip[3]], [self.clip[1] - k, self.clip[3]]])
@@ -333,6 +382,7 @@ class Visual(QtWidgets.QMainWindow, win2.Ui_MainWindow):
             item_e = QTableWidgetItem("[{0}, {1}]".format(self.clip[1] - k, self.clip[3]))
             self.table_line.setItem(i, 0, item_b)
             self.table_line.setItem(i, 1, item_e)
+            # bresenham(self.scene,self.clip[0] + k, self.clip[1] - k,  self.clip[3], self.clip[3], self.pen_line)
             self.scene.addLine(self.clip[0] + k, self.clip[3], self.clip[1] - k, self.clip[3], self.pen_line)
 
 
@@ -359,6 +409,7 @@ def add_point(point):
                     y = wind.point_now.y()
                 ctrl = False
             print("x, y", x, y)
+            
             wind.lines.append([[wind.point_now.x(), wind.point_now.y()],
                             [x, y]])
 
@@ -368,8 +419,8 @@ def add_point(point):
             item_e = QTableWidgetItem("[{0}, {1}]".format(point.x(), point.y()))
             wind.table_line.setItem(i, 0, item_b)
             wind.table_line.setItem(i, 1, item_e)
-            wind.scene.addLine(wind.point_now.x(), wind.point_now.y(), 
-                               x, y, wind.pen_line)
+            # bresenham(wind.scene, wind.point_now.x(), x, wind.point_now.y(), y, wind.pen_line)
+            wind.scene.addLine(wind.point_now.x(), wind.point_now.y(), x, y, wind.pen_line)
             wind.point_now = None
 
 
@@ -391,25 +442,29 @@ def get_code(a, rect):
 # Отсечение производится в определенном порядке:
 # левой, правой, нижней, верхней границами отсекателя.
 def clipping():
-    global wind, now
+    global wind
     try:
         w = int(wind.spinBox_w.text())
     except Exception:
         QMessageBox.warning(wind, "Внимание!", "Не целове значение толщины!")
         return 
     wind.pen_res.setWidth(w)
-    # buf = wind.scene.itemAt(now.x(), now.y(), QTransform())
-    # if buf is None:
-    #     QMessageBox.warning(wind, "Внимание!", "Не введен отсекатель!")
-    # else:
-    #     buf = buf.rect()
+
+    # if now is not None:
+    #     buf = wind.scene.itemAt(now.x(), now.y(), QTransform())
+    #     if buf is None:
+    #         QMessageBox.warning(wind, "Внимание!", "Не введен отсекатель!")
+    #     else:
+    #         buf = buf.rect()
+    #         wind.clip = [buf.left(), buf.right(), buf.top(),  buf.bottom()]
+    #     # buf = wind.scene.itemAt(now, QTransform()).rect()
     #     wind.clip = [buf.left(), buf.right(), buf.top(),  buf.bottom()]
-    # # buf = wind.scene.itemAt(now, QTransform()).rect()
-    # wind.clip = [buf.left(), buf.right(), buf.top(),  buf.bottom()]
+    # else:
+    #     QMessageBox.warning(wind, "Внимание!", "111Не введен отсекатель!")
+    #     return
+
     for b in wind.lines:
-        pass
         cohen_sutherland(b, wind.rect) 
-        # cohen_sutherland(b, wind.clip) 
    
 
 
@@ -471,8 +526,8 @@ def cohen_sutherland(bar, rect):
         # Если тривиально видим (полностью видим), то рисуем и выходим из цикла
         if vis == 1:
             print("if vis == 1:")
-            wind.scene.addLine(bar[0][0], bar[0][1], bar[1][0], 
-                               bar[1][1], wind.pen_res)
+            # bresenham(wind.scene, bar[0][0], bar[1][0], bar[0][1], bar[1][1], wind.pen_res)
+            wind.scene.addLine(bar[0][0], bar[0][1], bar[1][0], bar[1][1], wind.pen_res)
             return
         # Иначе проверяем на невидимость (тривиальную невидимость), 
         # то выход из цикла
@@ -513,6 +568,7 @@ def cohen_sutherland(bar, rect):
                 print("if flag != -1: if i < 2 else")
                 bar[0][0] = (1 / m) * (rect[i] - bar[0][1]) + bar[0][0]
         bar[0][1] = rect[i]
+    # bresenham(wind.scene, bar[0][0], bar[1][0], bar[0][1], bar[1][1], wind.pen_res)
     wind.scene.addLine(bar[0][0], bar[0][1], bar[1][0], bar[1][1], wind.pen_res)
 
 

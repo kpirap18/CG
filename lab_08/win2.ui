@@ -70,7 +70,7 @@
            </rect>
           </property>
           <property name="text">
-           <string>Х правый</string>
+           <string>Y</string>
           </property>
          </widget>
          <widget class="QLabel" name="label_3">
@@ -83,36 +83,10 @@
            </rect>
           </property>
           <property name="text">
-           <string>Х левый</string>
+           <string>Х</string>
           </property>
          </widget>
-         <widget class="QLabel" name="label_4">
-          <property name="geometry">
-           <rect>
-            <x>10</x>
-            <y>160</y>
-            <width>101</width>
-            <height>31</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string>У верхний</string>
-          </property>
-         </widget>
-         <widget class="QLabel" name="label_5">
-          <property name="geometry">
-           <rect>
-            <x>10</x>
-            <y>130</y>
-            <width>101</width>
-            <height>31</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string>У нижний</string>
-          </property>
-         </widget>
-         <widget class="QLineEdit" name="lineEdit_xleft">
+         <widget class="QLineEdit" name="lineEdit_x">
           <property name="geometry">
            <rect>
             <x>110</x>
@@ -130,7 +104,7 @@
            <string>100</string>
           </property>
          </widget>
-         <widget class="QLineEdit" name="lineEdit_xright">
+         <widget class="QLineEdit" name="lineEdit_y">
           <property name="geometry">
            <rect>
             <x>110</x>
@@ -145,62 +119,39 @@
            </font>
           </property>
           <property name="text">
-           <string>500</string>
-          </property>
-         </widget>
-         <widget class="QLineEdit" name="lineEdit_yup">
-          <property name="geometry">
-           <rect>
-            <x>110</x>
-            <y>160</y>
-            <width>113</width>
-            <height>25</height>
-           </rect>
-          </property>
-          <property name="font">
-           <font>
-            <pointsize>16</pointsize>
-           </font>
-          </property>
-          <property name="text">
            <string>100</string>
-          </property>
-         </widget>
-         <widget class="QLineEdit" name="lineEdit_ydown">
-          <property name="geometry">
-           <rect>
-            <x>110</x>
-            <y>130</y>
-            <width>113</width>
-            <height>25</height>
-           </rect>
-          </property>
-          <property name="font">
-           <font>
-            <pointsize>16</pointsize>
-           </font>
-          </property>
-          <property name="text">
-           <string>600</string>
           </property>
          </widget>
          <widget class="QPushButton" name="pushButton_draw_rest">
           <property name="geometry">
            <rect>
-            <x>98</x>
-            <y>204</y>
+            <x>100</x>
+            <y>110</y>
             <width>231</width>
             <height>41</height>
            </rect>
           </property>
           <property name="text">
-           <string>Нарисовать отсекатель</string>
+           <string>Ввести точку</string>
+          </property>
+         </widget>
+         <widget class="QPushButton" name="pushButton_draw_rest_2">
+          <property name="geometry">
+           <rect>
+            <x>100</x>
+            <y>180</y>
+            <width>231</width>
+            <height>41</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>Замкнуть контур</string>
           </property>
          </widget>
         </widget>
        </item>
        <item>
-        <widget class="QLabel" name="label_10">
+        <widget class="QTableWidget" name="table_rust">
          <property name="minimumSize">
           <size>
            <width>220</width>
@@ -213,14 +164,26 @@
            <height>250</height>
           </size>
          </property>
-         <property name="font">
-          <font>
-           <pointsize>16</pointsize>
-          </font>
-         </property>
-         <property name="text">
-          <string/>
-         </property>
+         <column>
+          <property name="text">
+           <string>X</string>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>14</pointsize>
+           </font>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Y</string>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>14</pointsize>
+           </font>
+          </property>
+         </column>
         </widget>
        </item>
       </layout>

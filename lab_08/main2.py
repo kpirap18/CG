@@ -1,4 +1,5 @@
 import sys
+from tkinter.constants import FALSE
 from numpy import sign
 import win2
 import pyqtgraph as pg
@@ -365,7 +366,76 @@ def end_rect():
             wind.scene.addLine(wind.rect[i - 1][0], wind.rect[i - 1][1], 
                                wind.rect[0][0], wind.rect[0][1], wind.pen_rest)
 
+def get_d_k_b(ax, ay, cx, cy):
+        # Коэффициенты прямой АС
+    # Если точки A и С лежат на одной вертикальной прямой
+    if abs((cx - ax) - 0) <= 1e-6:
+        k = 1
+        b = -cx
+        d = 0
+    else:
+        k = (cy - ay) / (cx - ax)
+        b = cy - (k * cx)
+        d = 1
 
+    return d, k, b
+
+
+def cross_lines(ax, ay, bx, by, cx, cy, dx, dy):
+    d_ab, k_ab, b_ab = get_d_k_b(ax, ay, bx, by)
+    d_cd, k_cd, b_cd = get_d_k_b(cx, cy, dx, dy)
+
+    print("ab", d_ab, k_ab, b_ab)
+    print("cd", d_cd, k_cd, b_cd)
+
+    if abs(k_ab - k_cd) < 1e-6:
+        return False
+    x = (b_cd - b_ab) / (k_ab - k_cd)
+    if d_cd == 0:
+        y = (k_ab * x + b_ab) 
+    elif d_ab == 0:
+        y = (k_cd * x + b_cd)
+    else:
+        y = (k_ab * x + b_ab)
+
+    print(x, y)
+
+    b1 = ax
+    b2 = bx
+    ax = max(b1, b2)
+    bx = min(b1, b2)
+    b1 = ay
+    b2 = by
+    ay = max(b1, b2)
+    by = min(b1, b2)
+
+    print((bx < x and x < ax) and (by < y and y < ay), "aaaa", ax, x, bx, ay, y, by)
+    if (bx < x and x < ax) and (by < y and y < ay):
+        return True
+    else:
+        return False
+
+    
+
+def check_cross(arr):
+    n = len(arr)
+    f = False
+    for i in range(n - 1):
+        for j in range(i + 1, n, 1):
+            if j == n - 1:
+                f = cross_lines(arr[i][0], arr[i][1], arr[i + 1][0], arr[i + 1][1],
+                                arr[j][0], arr[j][1], arr[0][0], arr[0][1])
+                print("n-1 f", f, i, j, arr[i], arr[j])
+                if f:
+                    return True
+            else:
+                f = cross_lines(arr[i][0], arr[i][1], arr[i + 1][0], arr[i + 1][1],
+                                arr[j][0], arr[j][1], arr[j + 1][0], arr[j + 1][1])
+                print("simple f", f, i, j, arr[i], arr[j])
+                if f:
+                    return True
+
+    return False
 
 
 def scalar_mult(a, b):
@@ -389,6 +459,10 @@ def is_convex(arr):
         if prev != cur:
             return False
         prev = cur
+
+    if (check_cross(arr)):
+        return False
+
     return True
 
 def normal(a, b, pos):
@@ -396,7 +470,7 @@ def normal(a, b, pos):
     posvec = [pos[0] - b[0], pos[1] - b[1]]
 
     if fvec[1]:
-        fpoint = fvec[0] / fvec[1]
+        fpoint = -fvec[0] / fvec[1]
         normvec = [1, fpoint]
     else:
         normvec = [0, 1]
@@ -456,6 +530,12 @@ def cyrus_beck_alg():
 def draw_lines(arr):
     print(arr)
     global wind
+    try:
+        w = int(wind.spinBox_w.text())
+    except Exception:
+        QMessageBox.warning(wind, "Внимание!", "Не целове значение толщины!")
+        return 
+    wind.pen_res.setWidth(w)
     for l in arr:
 
         wind.scene.addLine(l[1][0], l[1][1], l[0][0], l[0][1], wind.pen_res)

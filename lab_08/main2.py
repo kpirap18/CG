@@ -11,8 +11,8 @@ from copy import deepcopy
 from PyQt5 import QtWidgets, QtCore, QtGui
 from PyQt5 import QtWidgets, uic
 from PyQt5.QtWidgets import QTableWidgetItem, QMessageBox
-from PyQt5.QtGui import QPen, QColor, QImage, QPixmap, QPainter, QTransform
-from PyQt5.QtCore import Qt, QTime, QCoreApplication, QEventLoop, QPoint, endl
+from PyQt5.QtGui import QBrush, QPen, QColor, QImage, QPixmap, QPainter, QPolygon, QTransform, QVector3D, QPolygonF
+from PyQt5.QtCore import Qt, QTime, QCoreApplication, QEventLoop, QPoint, endl, QPointF
 from math import sin, cos, pi, radians, fabs,  floor
 
 now = None
@@ -69,6 +69,7 @@ class Visual(QtWidgets.QMainWindow, win2.Ui_MainWindow):
         self.rect = []
         self.clip = None
         self.point_now = None
+        self.color_back = QtCore.Qt.white
 
         self.radioButton_draw_line.clicked.connect(self.cheng)
         self.radioButton_draw_rest.clicked.connect(self.cheng) 
@@ -195,21 +196,27 @@ class Visual(QtWidgets.QMainWindow, win2.Ui_MainWindow):
 
     def set_black_bg(self):
         self.graphicsView.setStyleSheet("background-color: black")
+        self.color_back = QtCore.Qt.black
 
     def set_white_bg(self):
         self.graphicsView.setStyleSheet("background-color: white")
+        self.color_back = QtCore.Qt.white
 
     def set_blue_bg(self):
         self.graphicsView.setStyleSheet("background-color: blue")
+        self.color_back = QtCore.Qt.blue
 
     def set_red_bg(self):
         self.graphicsView.setStyleSheet("background-color: red")
+        self.color_back = QtCore.Qt.red
 
     def set_green_bg(self):
         self.graphicsView.setStyleSheet("background-color: #00ff00")
+        self.color_back = QtCore.Qt.green
 
     def set_yellow_bg(self):
         self.graphicsView.setStyleSheet("background-color: yellow")
+        self.color_back = QtCore.Qt.yellow
 
 
     def add_line1(self):
@@ -366,8 +373,10 @@ def end_rect():
             wind.scene.addLine(wind.rect[i - 1][0], wind.rect[i - 1][1], 
                                wind.rect[0][0], wind.rect[0][1], wind.pen_rest)
 
+
+################# ДОП ПРОВЕРКА НА ВЫПУКЛОСТЬ ####################
 def get_d_k_b(ax, ay, cx, cy):
-        # Коэффициенты прямой АС
+    # Коэффициенты прямой АС
     # Если точки A и С лежат на одной вертикальной прямой
     if abs((cx - ax) - 0) <= 1e-6:
         k = 1
@@ -380,13 +389,9 @@ def get_d_k_b(ax, ay, cx, cy):
 
     return d, k, b
 
-
 def cross_lines(ax, ay, bx, by, cx, cy, dx, dy):
     d_ab, k_ab, b_ab = get_d_k_b(ax, ay, bx, by)
     d_cd, k_cd, b_cd = get_d_k_b(cx, cy, dx, dy)
-
-    print("ab", d_ab, k_ab, b_ab)
-    print("cd", d_cd, k_cd, b_cd)
 
     if abs(k_ab - k_cd) < 1e-6:
         return False
@@ -398,8 +403,6 @@ def cross_lines(ax, ay, bx, by, cx, cy, dx, dy):
     else:
         y = (k_ab * x + b_ab)
 
-    print(x, y)
-
     b1 = ax
     b2 = bx
     ax = max(b1, b2)
@@ -409,13 +412,12 @@ def cross_lines(ax, ay, bx, by, cx, cy, dx, dy):
     ay = max(b1, b2)
     by = min(b1, b2)
 
-    print((bx < x and x < ax) and (by < y and y < ay), "aaaa", ax, x, bx, ay, y, by)
+    if (abs(bx - x) < 1e-6) or (abs(ax - x) < 1e-6) or (abs(by - y) < 1e-6) or (abs(ay - y) < 1e-6):
+        return False
     if (bx < x and x < ax) and (by < y and y < ay):
         return True
     else:
         return False
-
-    
 
 def check_cross(arr):
     n = len(arr)
@@ -425,21 +427,31 @@ def check_cross(arr):
             if j == n - 1:
                 f = cross_lines(arr[i][0], arr[i][1], arr[i + 1][0], arr[i + 1][1],
                                 arr[j][0], arr[j][1], arr[0][0], arr[0][1])
-                print("n-1 f", f, i, j, arr[i], arr[j])
                 if f:
                     return True
             else:
                 f = cross_lines(arr[i][0], arr[i][1], arr[i + 1][0], arr[i + 1][1],
                                 arr[j][0], arr[j][1], arr[j + 1][0], arr[j + 1][1])
-                print("simple f", f, i, j, arr[i], arr[j])
                 if f:
                     return True
 
     return False
 
+def all_polynom():
+    p = QPolygonF()
+    for i in wind.rect:
+        new_p = QPointF(i[0], i[1])
+        p.append(new_p)
+    
+    pen = QPen(wind.pen_rest.color())
+    p_brush = QBrush(wind.color_back)
+    wind.scene.addPolygon(p, pen, p_brush)
+##############################################################
+
 
 def scalar_mult(a, b):
     return a[0] * b[0] + a[1] * b[1]
+
 
 def vector_mult(a, b):
     return a[0] * b[1] - a[1] * b[0] # Ax * By - Ay * Bx --- это будет координата Z, которая нам нужна
@@ -465,6 +477,7 @@ def is_convex(arr):
 
     return True
 
+
 def normal(a, b, pos):
     fvec = [b[0] - a[0], b[1] - a[1]]
     posvec = [pos[0] - b[0], pos[1] - b[1]]
@@ -481,43 +494,91 @@ def normal(a, b, pos):
 
     return normvec
 
+
 def cut_one(line, count):
+    # Вычисление директрисы заданного отрезка:
+    # D = P_2-P_1
     d = [line[1][0] - line[0][0], line[1][1] - line[0][1]]
+
+    # Инициализация пределов значений параметра t при условии, 
+    # что отрезок полностью видим:
+    # t_н=0,t_к=1
     top = 0
     bottom = 1
+
+    # Начало цикла по всем сторонам отсекателя.
+    # Для каждой i-ой стороны отсекателя выполнить следующие действия:
     for i in range(-2, count - 2):
+        # Вычисление вектора внутренней нормали к очередной 
+        # i-ой стороне отсекателя - N_вi
         norm = normal(wind.rect[i], wind.rect[i + 1], wind.rect[i + 2])
+
+        # Вычисление вектора W_i=P_1-f_i (f_i берем за вершины стороны)
         w = [line[0][0] - wind.rect[i][0], line[0][1] - wind.rect[i][1]]
+
+        # Вычисление скалярного произведения векторов:
+        # W_iскал=W_i N_вi 
+        # D_скал=DN_вi 
         d_scal = scalar_mult(d, norm)
         w_scal = scalar_mult(w, norm)
+
+        # Если D_скал=0, Если W_скi>0, то отрезок 
+        # (точка) видим(-а) относительно текущей стороны отсекателя
         if d_scal == 0:
             if w_scal < 0:
                 return []
             else:
                 continue
-        param = -w_scal / d_scal
-        if d_scal > 0:
-            top = max(top, param)
-        elif d_scal < 0:
-            bottom = min(bottom, param)
 
+        # Вычисление параметра t:
+        # t=-W_скi/D_ск 
+        param = -w_scal / d_scal
+
+        # if d_scal > 0:
+        #     top = max(top, param)
+        # elif d_scal < 0:
+        #     bottom = min(bottom, param)
+
+        if d_scal > 0:
+            if param <= 1:
+                top = max(top, param)
+            else:
+                return
+        elif d_scal < 0:
+            if param >= 0:
+                bottom = min(bottom, param)
+            else:
+                return
+
+        # Проверка фактической видимости отсечённого отрезка. Если t_н > t_в, то выход
         if top > bottom:
             break
+
+    # Проверка фактической видимости отсечённого отрезка.
+    #  Если t_н≤t_в, то изобразить отрезок в 
+    # интервале от P(t_н ) до P(t_н ).
     if top <= bottom:
         return [[round(line[0][0] + d[0] * top), round(line[0][1] + d[1] * top)],
                         [round(line[0][0] + d[0] * bottom), round(line[0][1] + d[1] * bottom)]]
 
     return []
 
+
+# 1 - Ввод исходных данных: точки отрезка P_1 (P_(1.x),P_(1.y) )  и P_2 (P_(2.x),P_(2.y) )
+# 2 - Ввод числа сторон m выпуклого многоугольника и координат его вершин (массив C)
 def cyrus_beck_alg():
+    all_polynom()
     lines = wind.lines
     rect = wind.rect
     print(lines, rect)
+
+    # Проверка отсекателя на выпуклость.
     if not is_convex(rect):
         QMessageBox.warning(wind, "Внимание!", "Отсекатель невыпусклый!!!")
         return 
     count_sides = len(rect)
 
+    # Начало цикла по всем сторонам отсекателя.
     drawarr = []
     for line in lines:
         cutt = cut_one(line, count_sides)
@@ -526,6 +587,7 @@ def cyrus_beck_alg():
 
     draw_lines(drawarr)
     return
+
 
 def draw_lines(arr):
     print(arr)
@@ -539,66 +601,6 @@ def draw_lines(arr):
     for l in arr:
 
         wind.scene.addLine(l[1][0], l[1][1], l[0][0], l[0][1], wind.pen_res)
-
-
-# def digitBresenhamForCuted(image, xStart, yStart, xEnd, yEnd, color):
-#     if xStart == xEnd and yStart == yEnd:
-#         image.put(color, (xStart, yStart))
-#         return
-
-#     deltaX = xEnd - xStart
-#     deltaY = yEnd - yStart
-
-#     stepX = int(np.round(sign(deltaX)))
-#     stepY = int(np.round(sign(deltaY)))
-
-#     deltaX = abs(deltaX)
-#     deltaY = abs(deltaY)
-
-#     if deltaX < deltaY:
-#         deltaX, deltaY = deltaY, deltaX
-#         flag = True
-#     else:
-#         flag = False
-
-#     acc = deltaY + deltaY - deltaX
-#     curX = xStart
-#     curY = yStart
-
-#     for i in range(1, deltaX + 1):
-#         magicColor = wind.pen_line
-#         print(magicColor)
-#         if image.get(curX, curY) == magicColor:
-#             image.put(color, (curX, curY))
-#         if image.get(curX, curY + 1) == magicColor:
-#             image.put(color, (curX, curY + 1))
-#         if image.get(curX, curY - 1) == magicColor:
-#             image.put(color, (curX, curY - 1))
-#         if image.get(curX + 1, curY) == magicColor:
-#             image.put(color, (curX + 1, curY))
-#         if image.get(curX - 1, curY) == magicColor:
-#             image.put(color, (curX - 1, curY))
-#         if image.get(curX - 1, curY - 1) == magicColor:
-#             image.put(color, (curX - 1, curY - 1))
-#         if image.get(curX - 1, curY + 1) == magicColor:
-#             image.put(color, (curX - 1, curY + 1))
-#         if image.get(curX + 1, curY - 1) == magicColor:
-#             image.put(color, (curX + 1, curY - 1))
-#         if image.get(curX + 1, curY + 1) == magicColor:
-#             image.put(color, (curX + 1, curY + 1))
-
-#         if flag:
-#             if acc >= 0:
-#                 curX += stepX
-#                 acc -= (deltaX + deltaX)
-#             curY += stepY
-#             acc += deltaY + deltaY
-#         else:
-#             if acc >= 0:
-#                 curY += stepY
-#                 acc -= (deltaX + deltaX)
-#             curX += stepX
-#             acc += deltaY + deltaY
 
 
 def main():

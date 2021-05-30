@@ -74,12 +74,12 @@ class Visual(QtWidgets.QMainWindow, win2.Ui_MainWindow):
         self.radioButton_draw_line.clicked.connect(self.cheng)
         self.radioButton_draw_rest.clicked.connect(self.cheng) 
 
-        self.radioButtonBlack_bg.clicked.connect(self.set_black_bg)
-        self.radioButtonBlue_bg.clicked.connect(self.set_blue_bg)
-        self.radioButtonGreen_bg.clicked.connect(self.set_green_bg)
-        self.radioButtonRed_bg.clicked.connect(self.set_red_bg)
-        self.radioButtonWhite_bg.clicked.connect(self.set_white_bg)
-        self.radioButtonYellow_bg.clicked.connect(self.set_yellow_bg)
+        # self.radioButtonBlack_bg.clicked.connect(self.set_black_bg)
+        # self.radioButtonBlue_bg.clicked.connect(self.set_blue_bg)
+        # self.radioButtonGreen_bg.clicked.connect(self.set_green_bg)
+        # self.radioButtonRed_bg.clicked.connect(self.set_red_bg)
+        # self.radioButtonWhite_bg.clicked.connect(self.set_white_bg)
+        # self.radioButtonYellow_bg.clicked.connect(self.set_yellow_bg)
 
         self.radioButtonBlack_line.clicked.connect(self.set_black_line)
         self.radioButtonBlue_line.clicked.connect(self.set_blue_line)
@@ -194,29 +194,29 @@ class Visual(QtWidgets.QMainWindow, win2.Ui_MainWindow):
 
 
 
-    def set_black_bg(self):
-        self.graphicsView.setStyleSheet("background-color: black")
-        self.color_back = QtCore.Qt.black
+    # def set_black_bg(self):
+    #     self.graphicsView.setStyleSheet("background-color: black")
+    #     self.color_back = QtCore.Qt.black
 
-    def set_white_bg(self):
-        self.graphicsView.setStyleSheet("background-color: white")
-        self.color_back = QtCore.Qt.white
+    # def set_white_bg(self):
+    #     self.graphicsView.setStyleSheet("background-color: white")
+    #     self.color_back = QtCore.Qt.white
 
-    def set_blue_bg(self):
-        self.graphicsView.setStyleSheet("background-color: blue")
-        self.color_back = QtCore.Qt.blue
+    # def set_blue_bg(self):
+    #     self.graphicsView.setStyleSheet("background-color: blue")
+    #     self.color_back = QtCore.Qt.blue
 
-    def set_red_bg(self):
-        self.graphicsView.setStyleSheet("background-color: red")
-        self.color_back = QtCore.Qt.red
+    # def set_red_bg(self):
+    #     self.graphicsView.setStyleSheet("background-color: red")
+    #     self.color_back = QtCore.Qt.red
 
-    def set_green_bg(self):
-        self.graphicsView.setStyleSheet("background-color: #00ff00")
-        self.color_back = QtCore.Qt.green
+    # def set_green_bg(self):
+    #     self.graphicsView.setStyleSheet("background-color: #00ff00")
+    #     self.color_back = QtCore.Qt.green
 
-    def set_yellow_bg(self):
-        self.graphicsView.setStyleSheet("background-color: yellow")
-        self.color_back = QtCore.Qt.yellow
+    # def set_yellow_bg(self):
+    #     self.graphicsView.setStyleSheet("background-color: yellow")
+    #     self.color_back = QtCore.Qt.yellow
 
 
     def add_line1(self):
@@ -312,7 +312,7 @@ def add_point(point):
                     y = wind.point_now.y()
                 ctrl = False
             wind.lines.append([[wind.point_now.x(), wind.point_now.y()],
-                            [x, y]])
+                               [x, y]])
 
             add_row(wind, 1)
             i = wind.table_line.rowCount() - 1
@@ -454,7 +454,8 @@ def scalar_mult(a, b):
 
 
 def vector_mult(a, b):
-    return a[0] * b[1] - a[1] * b[0] # Ax * By - Ay * Bx --- это будет координата Z, которая нам нужна
+    return a[0] * b[1] - a[1] * b[0] 
+    # Ax * By - Ay * Bx --- это будет координата Z, которая нам нужна
 
 
 def is_convex(arr):
@@ -509,6 +510,7 @@ def cut_one(line, count):
     # Начало цикла по всем сторонам отсекателя.
     # Для каждой i-ой стороны отсекателя выполнить следующие действия:
     for i in range(-2, count - 2):
+        print(i)
         # Вычисление вектора внутренней нормали к очередной 
         # i-ой стороне отсекателя - N_вi
         norm = normal(wind.rect[i], wind.rect[i + 1], wind.rect[i + 2])
@@ -521,11 +523,15 @@ def cut_one(line, count):
         # D_скал=DN_вi 
         d_scal = scalar_mult(d, norm)
         w_scal = scalar_mult(w, norm)
-
+        
         # Если D_скал=0, Если W_скi>0, то отрезок 
         # (точка) видим(-а) относительно текущей стороны отсекателя
+        # Проверка видимости точки, в которую выродился отрезок, или проверка видимости произвольной 
+        # точки отрезка в случае его параллельности стороне отсекателя: если W_скi<0, то отрезок (точка)
+        # невидим(-а). Если W_скi>0, то отрезок (точка) видим(-а) относительно текущей 
+        # стороны отсекателя.
         if d_scal == 0:
-            if w_scal < 0:
+            if w_scal < 0: # невидима
                 return []
             else:
                 continue
@@ -534,17 +540,14 @@ def cut_one(line, count):
         # t=-W_скi/D_ск 
         param = -w_scal / d_scal
 
-        # if d_scal > 0:
-        #     top = max(top, param)
-        # elif d_scal < 0:
-        #     bottom = min(bottom, param)
 
-        if d_scal > 0:
+        if d_scal > 0: # нижняя граница видимости (выбираем из 0 и получившегося)
             if param <= 1:
                 top = max(top, param)
             else:
                 return
-        elif d_scal < 0:
+
+        elif d_scal < 0: # верхняя граница видимости (выбираем из 1 и получившегося)
             if param >= 0:
                 bottom = min(bottom, param)
             else:
@@ -557,6 +560,7 @@ def cut_one(line, count):
     # Проверка фактической видимости отсечённого отрезка.
     #  Если t_н≤t_в, то изобразить отрезок в 
     # интервале от P(t_н ) до P(t_н ).
+    # TOP - нижнее BOTTOM вернее
     if top <= bottom:
         return [[round(line[0][0] + d[0] * top), round(line[0][1] + d[1] * top)],
                         [round(line[0][0] + d[0] * bottom), round(line[0][1] + d[1] * bottom)]]
@@ -574,7 +578,7 @@ def cyrus_beck_alg():
 
     # Проверка отсекателя на выпуклость.
     if not is_convex(rect):
-        QMessageBox.warning(wind, "Внимание!", "Отсекатель невыпусклый!!!")
+        QMessageBox.warning(wind, "Внимание!", "Отсекатель невыпуклый!!!")
         return 
     count_sides = len(rect)
 

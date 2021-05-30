@@ -30,160 +30,28 @@
     <property name="geometry">
      <rect>
       <x>0</x>
-      <y>280</y>
+      <y>420</y>
       <width>621</width>
-      <height>551</height>
+      <height>411</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout">
      <item>
       <layout class="QHBoxLayout" name="horizontalLayout_9">
        <item>
-        <widget class="QGroupBox" name="groupBoxChooseBG_8">
-         <property name="minimumSize">
-          <size>
-           <width>350</width>
-           <height>250</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>350</width>
-           <height>250</height>
-          </size>
-         </property>
+        <widget class="QLabel" name="label_2">
          <property name="font">
           <font>
-           <pointsize>14</pointsize>
+           <family>Ubuntu Condensed</family>
+           <pointsize>17</pointsize>
+           <italic>true</italic>
           </font>
          </property>
-         <property name="title">
-          <string>Ввод отсекателя </string>
+         <property name="text">
+          <string>ВНИМАНИЕ: 
+1 - Ввод внешних отсекателей - ПО ЧАСОВОЙ стрелке
+2 - Ввод внутренних - ПРОТИВ ЧАСОВОЙ стрелке</string>
          </property>
-         <widget class="QLabel" name="label_2">
-          <property name="geometry">
-           <rect>
-            <x>10</x>
-            <y>70</y>
-            <width>101</width>
-            <height>31</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string>Y</string>
-          </property>
-         </widget>
-         <widget class="QLabel" name="label_3">
-          <property name="geometry">
-           <rect>
-            <x>10</x>
-            <y>40</y>
-            <width>101</width>
-            <height>31</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string>Х</string>
-          </property>
-         </widget>
-         <widget class="QLineEdit" name="lineEdit_x_cut">
-          <property name="geometry">
-           <rect>
-            <x>110</x>
-            <y>40</y>
-            <width>113</width>
-            <height>25</height>
-           </rect>
-          </property>
-          <property name="font">
-           <font>
-            <pointsize>16</pointsize>
-           </font>
-          </property>
-          <property name="text">
-           <string>100</string>
-          </property>
-         </widget>
-         <widget class="QLineEdit" name="lineEdit_y_cut">
-          <property name="geometry">
-           <rect>
-            <x>110</x>
-            <y>70</y>
-            <width>113</width>
-            <height>25</height>
-           </rect>
-          </property>
-          <property name="font">
-           <font>
-            <pointsize>16</pointsize>
-           </font>
-          </property>
-          <property name="text">
-           <string>100</string>
-          </property>
-         </widget>
-         <widget class="QPushButton" name="pushButton_draw_cut">
-          <property name="geometry">
-           <rect>
-            <x>100</x>
-            <y>110</y>
-            <width>231</width>
-            <height>41</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string>Ввести точку</string>
-          </property>
-         </widget>
-         <widget class="QPushButton" name="pushButton_end_cut">
-          <property name="geometry">
-           <rect>
-            <x>100</x>
-            <y>180</y>
-            <width>231</width>
-            <height>41</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string>Замкнуть контур</string>
-          </property>
-         </widget>
-        </widget>
-       </item>
-       <item>
-        <widget class="QTableWidget" name="table_cut">
-         <property name="minimumSize">
-          <size>
-           <width>220</width>
-           <height>250</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>220</width>
-           <height>250</height>
-          </size>
-         </property>
-         <column>
-          <property name="text">
-           <string>X</string>
-          </property>
-          <property name="font">
-           <font>
-            <pointsize>14</pointsize>
-           </font>
-          </property>
-         </column>
-         <column>
-          <property name="text">
-           <string>Y</string>
-          </property>
-          <property name="font">
-           <font>
-            <pointsize>14</pointsize>
-           </font>
-          </property>
-         </column>
         </widget>
        </item>
       </layout>
@@ -191,60 +59,34 @@
      <item>
       <layout class="QHBoxLayout" name="horizontalLayout_11">
        <item>
-        <widget class="QGroupBox" name="groupBoxChooseBG_9">
+        <widget class="QGroupBox" name="groupBoxChooseDRAW_2">
          <property name="minimumSize">
           <size>
-           <width>350</width>
-           <height>250</height>
+           <width>600</width>
+           <height>100</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>350</width>
-           <height>250</height>
+           <width>500</width>
+           <height>100</height>
           </size>
          </property>
          <property name="font">
           <font>
-           <pointsize>14</pointsize>
+           <pointsize>16</pointsize>
           </font>
          </property>
          <property name="title">
-          <string>Ввод отсекаемого многоугольника</string>
+          <string>ОТСЕЧЕНИЕ</string>
          </property>
-         <widget class="QLabel" name="label_6">
+         <widget class="QRadioButton" name="radioButton_draw_out">
           <property name="geometry">
            <rect>
-            <x>10</x>
-            <y>70</y>
-            <width>101</width>
-            <height>31</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string>У </string>
-          </property>
-         </widget>
-         <widget class="QLabel" name="label_7">
-          <property name="geometry">
-           <rect>
-            <x>10</x>
+            <x>20</x>
             <y>40</y>
-            <width>101</width>
-            <height>31</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string>Х </string>
-          </property>
-         </widget>
-         <widget class="QLineEdit" name="lineEdit_x_rest">
-          <property name="geometry">
-           <rect>
-            <x>110</x>
-            <y>40</y>
-            <width>113</width>
-            <height>25</height>
+            <width>351</width>
+            <height>41</height>
            </rect>
           </property>
           <property name="font">
@@ -253,16 +95,19 @@
            </font>
           </property>
           <property name="text">
-           <string>100</string>
+           <string>Внешние</string>
+          </property>
+          <property name="checked">
+           <bool>false</bool>
           </property>
          </widget>
-         <widget class="QLineEdit" name="lineEdit_y_rest">
+         <widget class="QRadioButton" name="radioButton_draw_in">
           <property name="geometry">
            <rect>
-            <x>110</x>
-            <y>70</y>
-            <width>113</width>
-            <height>25</height>
+            <x>390</x>
+            <y>40</y>
+            <width>166</width>
+            <height>51</height>
            </rect>
           </property>
           <property name="font">
@@ -271,97 +116,12 @@
            </font>
           </property>
           <property name="text">
-           <string>100</string>
+           <string>Внутренние</string>
+          </property>
+          <property name="checked">
+           <bool>true</bool>
           </property>
          </widget>
-         <widget class="QPushButton" name="pushButton_draw_rest">
-          <property name="geometry">
-           <rect>
-            <x>100</x>
-            <y>120</y>
-            <width>231</width>
-            <height>41</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string>Ввести точку</string>
-          </property>
-         </widget>
-         <widget class="QLabel" name="label_11">
-          <property name="geometry">
-           <rect>
-            <x>250</x>
-            <y>40</y>
-            <width>101</width>
-            <height>31</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string>Толщина</string>
-          </property>
-         </widget>
-         <widget class="QSpinBox" name="spinBox_w">
-          <property name="geometry">
-           <rect>
-            <x>260</x>
-            <y>70</y>
-            <width>61</width>
-            <height>31</height>
-           </rect>
-          </property>
-          <property name="value">
-           <number>2</number>
-          </property>
-         </widget>
-         <widget class="QPushButton" name="pushButton_end_rest">
-          <property name="geometry">
-           <rect>
-            <x>100</x>
-            <y>180</y>
-            <width>231</width>
-            <height>41</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string>Замкнуть контур</string>
-          </property>
-         </widget>
-        </widget>
-       </item>
-       <item>
-        <widget class="QTableWidget" name="table_rest">
-         <property name="minimumSize">
-          <size>
-           <width>220</width>
-           <height>250</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>220</width>
-           <height>250</height>
-          </size>
-         </property>
-         <column>
-          <property name="text">
-           <string>X</string>
-          </property>
-          <property name="font">
-           <font>
-            <pointsize>14</pointsize>
-           </font>
-          </property>
-         </column>
-         <column>
-          <property name="text">
-           <string>Y</string>
-          </property>
-          <property name="font">
-           <font>
-            <pointsize>14</pointsize>
-           </font>
-          </property>
-         </column>
         </widget>
        </item>
       </layout>
@@ -760,7 +520,7 @@
       <x>0</x>
       <y>170</y>
       <width>621</width>
-      <height>102</height>
+      <height>241</height>
      </rect>
     </property>
     <layout class="QHBoxLayout" name="horizontalLayout_8">
@@ -769,13 +529,13 @@
        <property name="minimumSize">
         <size>
          <width>600</width>
-         <height>90</height>
+         <height>200</height>
         </size>
        </property>
        <property name="maximumSize">
         <size>
          <width>500</width>
-         <height>90</height>
+         <height>200</height>
         </size>
        </property>
        <property name="font">
@@ -786,13 +546,13 @@
        <property name="title">
         <string>РИСОВАНИЕ</string>
        </property>
-       <widget class="QRadioButton" name="radioButton_draw_line">
+       <widget class="QRadioButton" name="radioButton_draw_rest_out">
         <property name="geometry">
          <rect>
           <x>20</x>
-          <y>50</y>
-          <width>311</width>
-          <height>20</height>
+          <y>40</y>
+          <width>331</width>
+          <height>51</height>
          </rect>
         </property>
         <property name="font">
@@ -801,19 +561,42 @@
          </font>
         </property>
         <property name="text">
-         <string>Отсекаемый многоугольник</string>
+         <string>Отсекаемый мн-ник 
+внешний</string>
+        </property>
+        <property name="checked">
+         <bool>false</bool>
+        </property>
+       </widget>
+       <widget class="QRadioButton" name="radioButton_draw_cut_out">
+        <property name="geometry">
+         <rect>
+          <x>400</x>
+          <y>40</y>
+          <width>166</width>
+          <height>51</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>16</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>Отсекатель
+ внешний</string>
         </property>
         <property name="checked">
          <bool>true</bool>
         </property>
        </widget>
-       <widget class="QRadioButton" name="radioButton_draw_rest">
+       <widget class="QRadioButton" name="radioButton_draw_rest_in">
         <property name="geometry">
          <rect>
-          <x>410</x>
-          <y>50</y>
-          <width>166</width>
-          <height>20</height>
+          <x>20</x>
+          <y>100</y>
+          <width>351</width>
+          <height>61</height>
          </rect>
         </property>
         <property name="font">
@@ -822,7 +605,30 @@
          </font>
         </property>
         <property name="text">
-         <string>Отсекатель</string>
+         <string>Отсекаемые мн-ники 
+внутренние</string>
+        </property>
+        <property name="checked">
+         <bool>false</bool>
+        </property>
+       </widget>
+       <widget class="QRadioButton" name="radioButton_draw_cut_in">
+        <property name="geometry">
+         <rect>
+          <x>390</x>
+          <y>110</y>
+          <width>166</width>
+          <height>51</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>16</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>Отсекатели
+ внутренние</string>
         </property>
        </widget>
       </widget>
@@ -887,65 +693,6 @@
 2 - В случае добавления точки на границу отсекателя, 
  нажмите на среднюю кнопку, (точка будет на ближней стороне)</string>
     </property>
-   </widget>
-   <widget class="QGroupBox" name="groupBoxChooseLINE_2">
-    <property name="geometry">
-     <rect>
-      <x>70</x>
-      <y>840</y>
-      <width>500</width>
-      <height>50</height>
-     </rect>
-    </property>
-    <property name="minimumSize">
-     <size>
-      <width>500</width>
-      <height>50</height>
-     </size>
-    </property>
-    <property name="maximumSize">
-     <size>
-      <width>500</width>
-      <height>50</height>
-     </size>
-    </property>
-    <property name="font">
-     <font>
-      <pointsize>14</pointsize>
-     </font>
-    </property>
-    <property name="title">
-     <string>ЛОЖНЫЕ РЕБРА</string>
-    </property>
-    <widget class="QRadioButton" name="radioButton_FALSE_BE">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>30</y>
-       <width>231</width>
-       <height>20</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>ОСТАВИТЬ</string>
-     </property>
-    </widget>
-    <widget class="QRadioButton" name="radioButton_FALSE_DEL">
-     <property name="geometry">
-      <rect>
-       <x>240</x>
-       <y>30</y>
-       <width>231</width>
-       <height>20</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>УДАЛИТЬ</string>
-     </property>
-     <property name="checked">
-      <bool>true</bool>
-     </property>
-    </widget>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">

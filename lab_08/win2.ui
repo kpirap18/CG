@@ -23,7 +23,7 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>Козлова Ирина, ИУ7-42Б, Лабораторная работа 9</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QWidget" name="verticalLayoutWidget">
@@ -477,111 +477,6 @@
      </rect>
     </property>
     <layout class="QHBoxLayout" name="horizontalLayout">
-     <item>
-      <widget class="QGroupBox" name="groupBoxChooseBG">
-       <property name="minimumSize">
-        <size>
-         <width>145</width>
-         <height>160</height>
-        </size>
-       </property>
-       <property name="maximumSize">
-        <size>
-         <width>145</width>
-         <height>150</height>
-        </size>
-       </property>
-       <property name="font">
-        <font>
-         <pointsize>14</pointsize>
-        </font>
-       </property>
-       <property name="title">
-        <string>Фон</string>
-       </property>
-       <widget class="QRadioButton" name="radioButtonWhite_bg">
-        <property name="geometry">
-         <rect>
-          <x>10</x>
-          <y>30</y>
-          <width>166</width>
-          <height>20</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Белый</string>
-        </property>
-        <property name="checked">
-         <bool>true</bool>
-        </property>
-       </widget>
-       <widget class="QRadioButton" name="radioButtonBlack_bg">
-        <property name="geometry">
-         <rect>
-          <x>10</x>
-          <y>50</y>
-          <width>166</width>
-          <height>20</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Черный</string>
-        </property>
-       </widget>
-       <widget class="QRadioButton" name="radioButtonRed_bg">
-        <property name="geometry">
-         <rect>
-          <x>10</x>
-          <y>110</y>
-          <width>166</width>
-          <height>20</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Красный</string>
-        </property>
-       </widget>
-       <widget class="QRadioButton" name="radioButtonYellow_bg">
-        <property name="geometry">
-         <rect>
-          <x>10</x>
-          <y>70</y>
-          <width>166</width>
-          <height>20</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Желтый</string>
-        </property>
-       </widget>
-       <widget class="QRadioButton" name="radioButtonGreen_bg">
-        <property name="geometry">
-         <rect>
-          <x>10</x>
-          <y>90</y>
-          <width>181</width>
-          <height>20</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Зеленый</string>
-        </property>
-       </widget>
-       <widget class="QRadioButton" name="radioButtonBlue_bg">
-        <property name="geometry">
-         <rect>
-          <x>10</x>
-          <y>130</y>
-          <width>176</width>
-          <height>20</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Синий</string>
-        </property>
-       </widget>
-      </widget>
-     </item>
      <item>
       <widget class="QGroupBox" name="groupBoxChooseREST">
        <property name="minimumSize">
@@ -1037,8 +932,8 @@
     </property>
     <property name="text">
      <string>Для отрисовки отсекателя:
-1 - Нарисуйте верхнюю левую вершину 
-2- С зажатой левой кнопкой растягивайте прямоугольник</string>
+1 - Вершины рисуются левой кнопкой мыши 
+2 - Завершить ввод отсекателя можно правой кнопкой мыши</string>
     </property>
    </widget>
   </widget>

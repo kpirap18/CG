@@ -3,6 +3,15 @@ from numpy import sign
 
 EPS = 1e-06
 
+# скалярное произведение векторов vec1 и vec2
+def scalar_mult(vec1, vec2):
+    return vec1[0] * vec2[0] + vec1[1] * vec2[1]
+
+
+def get_vect(point_start, point_end):
+    return [point_end[0] - point_start[0], point_end[1] - point_start[1]]
+
+
 # Векторное произведение
 def vector_mult(a, b):
     return a[0] * b[1] - a[1] * b[0] 
@@ -18,6 +27,7 @@ def equation_line(p1, p2):
     b = p1[0] - p2[0]
     c = p2[0] * p1[1] - p1[0] * p2[1]
     line = {'a': a, 'b': b, 'c': c}
+    # print("\n\n\n\nLINE", a * (p1[0] + 1) + b * (p1[1] + 1) + c, line, "\n\n\n\n")
     return line
 
 
@@ -56,10 +66,41 @@ def point_in_sec(p, sec):
 
 # Пересечение стороны отсекателя и сторны отсекаемого
 def cross_line_edge(sp1, sp2, lp1, lp2):
+    a = get_vect(sp1, sp2)
+    b = get_vect(lp1, lp2)
+    print(a, b)
+    if (a[1] == 0 and b[1] == 0) or (a[0] == 0 and b[0] == 0):
+        segment = equation_line(sp1, sp2)
+        line = equation_line(lp1, lp2)
+        print(line['a'] * lp2[0] + line['b'] * lp2[1] + line['c'])
+        if (line['a'] * lp2[0] + line['b'] * lp2[1] + line['c'] == 0):
+            if (line['a'] * (lp2[0] + 1) + line['b'] * lp2[1] + line['c'] != 0):
+                return [lp2[0] + 1, lp2[1]]
+            if (line['a'] * (lp2[0]) + line['b'] * (lp2[1] + 1) + line['c'] != 0):
+                return [lp2[0], lp2[1] + 1]
+            if (line['a'] * (lp2[0] + 1) + line['b'] * (lp2[1] + 1) + line['c'] != 0):
+                return [lp2[0] + 1, lp2[1] + 1]
+            
+    elif b[0] != 0 and b[1] != 0:
+        print("elif", a[0] / b[0] == a[1] / b[1], a[0] / b[0], a[1] / b[1])
+        if(a[0] / b[0] == a[1] / b[1]):
+            segment = equation_line(sp1, sp2)
+            line = equation_line(lp1, lp2)
+            if (line['a'] * lp2[0] + line['b'] * lp2[1] + line['c'] == 0):
+                if (line['a'] * (lp2[0] + 1) + line['b'] * lp2[1] + line['c'] != 0):
+                    return [lp2[0] + 1, lp2[1]]
+                if (line['a'] * (lp2[0]) + line['b'] * (lp2[1] + 1) + line['c'] != 0):
+                    return [lp2[0], lp2[1] + 1]
+                if (line['a'] * (lp2[0] + 1) + line['b'] * (lp2[1] + 1) + line['c'] != 0):
+                    return [lp2[0] + 1, lp2[1] + 1]
+
+
     segment = equation_line(sp1, sp2)
     line = equation_line(lp1, lp2)
     cross = cross_2lines(segment, line)
     print("cross", cross, segment, line, sp1, sp2, lp1, lp2)
+
+
     if cross and point_in_sec(cross, [sp1, sp2]) and point_in_sec(cross, [lp1, lp2]):
         return cross
     return None
@@ -81,6 +122,31 @@ def check_cross(n, cutter):
                         point_in_sec(cross, [cutter[j], cutter[(i + 1) % n]])):
                     return True
     return False
+
+# Поиск перпендикуляра, через точку point 
+def perp_by_sige(point, line):
+    an = -line['b']
+    bn = line['a']
+    # Ищем нормаль через точку point
+    cn = -(an * point[0] + bn * point[1])
+    perp = {'a': an, 'b': bn, 'c': cn}
+    return perp
+
+
+# Pастояние от отчки point до прямой, 
+# проходящей через точки A и B
+def dist_to_edge(point, a, b):
+    if (a[0] == b[0]) and (a[1] == b[1]):
+        dist = ((point[0] - a[0])**2 + (point[1] - a[1])**2) ** 0.5
+        cross = a
+    else:
+        line = equation_line(a, b)
+        perp = perp_by_sige(point, line)
+        cross = cross_2lines(line, perp)
+        dist = ((point[0] - cross[0])**2 + (point[1] - cross[1])**2) ** 0.5
+    return dist, cross
+
+
 
 # Функция, которая определяет, точка внутри или
 # точка снаружи. 
@@ -112,7 +178,7 @@ def inside_or_outside(point, arr):
 # в массив С, после c_i
 def find_pos_in_arr(point, C, c_i):
     i = C.index(c_i)
-    print("find_pos_in_C", i, point, C)
+    print("find_pos_in_C", i, point, C , c_i)
     print(C[i][0], C[(i + 1) % len(C)][0])
 
     # Если соседние точки приндлежат стороне отсекаемого или 
@@ -789,6 +855,8 @@ def get_outside_rest(exit_point, a, c, ab, cb):
 
 
 def alg_cutter_baylera_azertona(a, c, a_b, c_b):
+    inside_rest = [[]]
+    outside_rest = []
     # if check_cross(len(a), a) or \
     #    check_cross(len(c), c) or \
     #    check_cross(len(a_b), a_b) or \
@@ -802,14 +870,57 @@ def alg_cutter_baylera_azertona(a, c, a_b, c_b):
     print("enter", enter_point)
     print("exit", exit_point)
 
-    inside_rest = get_inside_rest(enter_point, new_a, new_c, new_ab, new_cb)
-    print("RES inside_rest", inside_rest)
+    flag  = False
+    for i in range(len(new_a)):
+        if new_a[i][2] == 2:
+            flag = True
+    print("ALGORITM flag", flag)
 
-    print("\n\n\n\n\n\n\n\n\n")
+    # Если в массиве А - нет точек пересечения
+    if flag == False:
+        # А не в С и С не в А
+        if ((inside_or_outside(new_a[0], new_c) == False and inside_or_outside(new_a[1], new_c) == False)
+            and inside_or_outside(new_c[0], new_a) == False):
+            print("a не в с и с не в а")
+            for i in range(len(new_a)):
+                for j in range(len(new_c)):
+                    if new_a[i][0] == new_c[j][0] and new_a[i][1] == new_c[j][1]:
+                        inside_rest.append([new_a[i], new_a[i]])
+            outside_rest.append(new_a)
 
-    outside_rest = get_outside_rest(exit_point, new_a, new_c, new_ab, new_cb)
-    print("RES outside_rest", outside_rest)
-    print("\n\n\n\n\n\n\n\n\n")
+        # А не в С и С в А
+        if (inside_or_outside(new_a[0], new_c) == False and inside_or_outside(new_c[0], new_a) == True):
+            print("a не в с и с в а")
+            outside_rest.append(new_a)
+
+
+        # А в С и С не в А
+        if ((inside_or_outside(new_a[0], new_c) == True or inside_or_outside(new_a[1], new_c))
+            and inside_or_outside(new_c[0], new_a) == False):
+            print("while a в с и с не в а", len(new_cb))
+            if len(new_cb) == 0:
+                inside_rest.append(new_a)
+            else:
+                for j in range(len(new_cb)):
+                    ccb = new_cb[j]
+                    if (inside_or_outside(new_a[0], ccb) or inside_or_outside(new_a[1], ccb)):
+                        outside_rest.append(new_a)
+                    else:
+                        inside_rest.append(new_a)
+
+
+
+    if len(enter_point) == 0 and len(exit_point) == 0:
+        print("EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE")
+    else:
+        inside_rest = get_inside_rest(enter_point, new_a, new_c, new_ab, new_cb)
+        print("RES inside_rest", inside_rest)
+
+        print("\n\n\n\n\n\n\n\n\n")
+
+        outside_rest = get_outside_rest(exit_point, new_a, new_c, new_ab, new_cb)
+        print("RES outside_rest", outside_rest)
+        print("\n\n\n\n\n\n\n\n\n")
     return 0, inside_rest, outside_rest
 
 # def main():

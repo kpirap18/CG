@@ -39,6 +39,7 @@ class Scene(QtWidgets.QGraphicsScene):
             point = QMouseEvent.scenePos()
             x = round(point.x())
             y = round(point.y())
+            # reform_point(x, y)
             wind.add_point(x, y)
         
         if (QMouseEvent.button() == Qt.RightButton):
@@ -118,7 +119,7 @@ class Visual(QtWidgets.QMainWindow, win2.Ui_MainWindow):
 
         self.pushButton_RES.clicked.connect(self.my_cut)
 
-
+        self.pushButton_add.clicked.connect(self.before_add_point)
 
     def clean_screen(self):
         global now, end_rect_, end_lines_
@@ -267,6 +268,20 @@ class Visual(QtWidgets.QMainWindow, win2.Ui_MainWindow):
                                    self.cut_in[self.count_cut_in][l][1],
                                    self.pen_cut)
 
+    def before_add_point(self):
+        print("before_add_point")
+        try:
+            x = float(self.lineEdit_x.text())
+            y = float(self.lineEdit_y.text())
+            print(x, y)
+        except Exception:
+            QMessageBox.warning(wind, "Внимание!", "Невено введены координаты!")
+            return
+        x = round(x)
+        y = round(y)
+
+        self.add_point(x, y)
+
     # замыкание
     def end_p(self):
         # Многоугольник внешний
@@ -338,6 +353,7 @@ class Visual(QtWidgets.QMainWindow, win2.Ui_MainWindow):
         c = deepcopy(self.cut_out)
         a_b = deepcopy(self.rest_in)
         c_b = deepcopy(self.cut_in)
+        print(a, c, a_b, c_b)
 
         a.pop(len(a) - 1)
         c.pop(len(c) - 1)
@@ -445,38 +461,51 @@ def end_rest():
                                wind.pen_rest)
 
 
-def reform_point(point1):
+def reform_point(x, y):
     global wind
-    x = point1.x()
-    y = point1.y()
 
-    x = round(x)
-    y = round(y)
 
     point = [x, y]
     
     min_dist = 15 + 2
     closest_point = None
-    if len(wind.rect) > 1:
-        for i in range(len(wind.rect) - 1):
+    if len(wind.cut_out) > 1:
+        for i in range(len(wind.cut_out) - 1):
             cur_dist, cur_closest = dist_to_edge(point, 
-                                                 wind.rect[i], 
-                                                 wind.rect[i + 1])
+                                                 wind.cut_out[i], 
+                                                 wind.cut_out[i + 1])
             if cur_dist < min_dist:
                 min_dist = cur_dist
                 closest_point = cur_closest
         cur_dist, cur_closest = dist_to_edge(point, 
-                                             wind.rect[1], 
-                                             wind.rect[-1])
+                                             wind.cut_out[1], 
+                                             wind.cut_out[-1])
         
         if cur_dist < min_dist:
             min_dist = cur_dist
             closest_point = cur_closest
 
-        if min_dist <= 15:
-            point = list(map(round, closest_point))
+    for j in range(len(wind.cut_in)):
+        if len(wind.cut_in[j]) > 1:
+            for i in range(len(wind.cut_in[j]) - 1):
+                cur_dist, cur_closest = dist_to_edge(point, 
+                                                    wind.cut_in[j][i], 
+                                                    wind.cut_in[j][i + 1])
+                if cur_dist < min_dist:
+                    min_dist = cur_dist
+                    closest_point = cur_closest
+            cur_dist, cur_closest = dist_to_edge(point, 
+                                                wind.cut_in[j][1], 
+                                                wind.cut_in[j][-1])
+            
+            if cur_dist < min_dist:
+                min_dist = cur_dist
+                closest_point = cur_closest
 
-    add_point(point[0], point[1])
+    if min_dist <= 15:
+        point = list(map(round, closest_point))
+
+    wind.add_point(point[0], point[1])
 
 
 

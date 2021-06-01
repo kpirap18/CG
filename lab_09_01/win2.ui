@@ -59,6 +59,96 @@
      <item>
       <layout class="QHBoxLayout" name="horizontalLayout_11">
        <item>
+        <widget class="QGroupBox" name="groupBoxChooseDRAW_3">
+         <property name="minimumSize">
+          <size>
+           <width>600</width>
+           <height>100</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>500</width>
+           <height>100</height>
+          </size>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>16</pointsize>
+          </font>
+         </property>
+         <property name="title">
+          <string>Ввод точки (что вводим, выбирать вверху)</string>
+         </property>
+         <widget class="QLabel" name="label_3">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>50</y>
+            <width>16</width>
+            <height>20</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>X</string>
+          </property>
+         </widget>
+         <widget class="QLineEdit" name="lineEdit_x">
+          <property name="geometry">
+           <rect>
+            <x>30</x>
+            <y>50</y>
+            <width>113</width>
+            <height>25</height>
+           </rect>
+          </property>
+         </widget>
+         <widget class="QLineEdit" name="lineEdit_y">
+          <property name="geometry">
+           <rect>
+            <x>190</x>
+            <y>50</y>
+            <width>113</width>
+            <height>25</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_4">
+          <property name="geometry">
+           <rect>
+            <x>170</x>
+            <y>50</y>
+            <width>16</width>
+            <height>20</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>Y</string>
+          </property>
+         </widget>
+         <widget class="QPushButton" name="pushButton_add">
+          <property name="geometry">
+           <rect>
+            <x>390</x>
+            <y>40</y>
+            <width>141</width>
+            <height>41</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>Ввести</string>
+          </property>
+         </widget>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_10">
+       <item>
         <widget class="QGroupBox" name="groupBoxChooseDRAW_2">
          <property name="minimumSize">
           <size>
@@ -125,9 +215,6 @@
         </widget>
        </item>
       </layout>
-     </item>
-     <item>
-      <layout class="QHBoxLayout" name="horizontalLayout_10"/>
      </item>
     </layout>
    </widget>

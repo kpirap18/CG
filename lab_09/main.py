@@ -38,8 +38,8 @@ class Scene(QtWidgets.QGraphicsScene):
             point = QMouseEvent.scenePos()
             x = round(point.x())
             y = round(point.y())
-            # reform_point(QMouseEvent.scenePos())
-            add_point(x, y)
+            reform_point(QMouseEvent.scenePos())
+            # add_point(x, y)
         
         if (QMouseEvent.button() == Qt.RightButton):
             if wind.input_cut:
@@ -414,8 +414,8 @@ def reform_point(point1):
             min_dist = cur_dist
             closest_point = cur_closest
 
-        if min_dist <= 15:
-            point = list(map(round, closest_point))
+    if min_dist <= 15:
+        point = list(map(round, closest_point))
 
     add_point(point[0], point[1])
 

@@ -912,6 +912,7 @@ def alg_cutter_baylera_azertona(a, c, a_b, c_b):
 
     if len(enter_point) == 0 and len(exit_point) == 0:
         print("EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE")
+# >>>>>>> 082f65a4d92ff2bb2cbcf72f7e118942e9f4c949
     else:
         inside_rest = get_inside_rest(enter_point, new_a, new_c, new_ab, new_cb)
         print("RES inside_rest", inside_rest)

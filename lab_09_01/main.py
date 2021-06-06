@@ -401,12 +401,12 @@ class Visual(QtWidgets.QMainWindow, win2.Ui_MainWindow):
         print("\n\n")
         rc, res_in, res_out = alg_cutter_baylera_azertona(a, c, a_b, c_b)
         print("IN MAIN.PY", res_in, res_out)
-        # draw_lines1(a, 0)
-        # for i in range(len(a_b)):
-        #     draw_lines1(a_b[i], 0)
-        # draw_lines1(c, 1)
-        # for i in range(len(c_b)):
-        #     draw_lines1(c_b[i], 1)
+        draw_lines1(a, 0)
+        for i in range(len(a_b)):
+            draw_lines1(a_b[i], 0)
+        draw_lines1(c, 1)
+        for i in range(len(c_b)):
+            draw_lines1(c_b[i], 1)
 
         if self.radioButton_draw_out.isChecked():
             for i in range(len(res_out)):

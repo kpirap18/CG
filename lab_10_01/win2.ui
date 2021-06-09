@@ -228,7 +228,7 @@
            </rect>
           </property>
           <property name="text">
-           <string>48</string>
+           <string>34</string>
           </property>
          </widget>
          <widget class="QLineEdit" name="lineEdit_z_turn">
@@ -241,7 +241,7 @@
            </rect>
           </property>
           <property name="text">
-           <string>20</string>
+           <string>5</string>
           </property>
          </widget>
          <widget class="QLineEdit" name="lineEdit_x_turn">
@@ -254,7 +254,7 @@
            </rect>
           </property>
           <property name="text">
-           <string>20</string>
+           <string>5</string>
           </property>
          </widget>
          <widget class="QLineEdit" name="lineEdit_y_turn">
@@ -267,7 +267,7 @@
            </rect>
           </property>
           <property name="text">
-           <string>20</string>
+           <string>5</string>
           </property>
          </widget>
          <widget class="QLabel" name="label_7">

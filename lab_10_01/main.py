@@ -1,7 +1,8 @@
 import sys
 import win2
-from math import pi, sin, cos
-from func import *
+
+from func import funcs
+from draw_hor import float_horizon
 
 
 from PyQt5 import QtWidgets, QtCore, QtGui
@@ -185,13 +186,14 @@ class Visual(QtWidgets.QMainWindow, win2.Ui_MainWindow):
                 y2 = max(f(x_b, z_b), f(x_b, z_e), f(x_e, z_b), f(x_e, z_e))
                 y1 = min(f(x_b, z_b), f(x_b, z_e), f(x_e, z_b), f(x_e, z_e))
                 print(y1, y2, "y1 and y2")
+                dy = y2 - y1
                 if abs(y2 - y1) < 1e-6:
-                    k1 = 48
-                else:
-                    k1 = int(self.h / (y2 - y1)) - 1
-                
-                k2 = int(self.w / (x_e - x_b)) - 1
-                print(k1, k2)
+                    dy = 1
+
+                k1 = int(self.h / dy) - 7
+                k2 = int(self.w / (x_e - x_b)) - 7 
+
+                print("SCALE START", k1, k2)
                 self.scale_k = min(k1, k2)
         self.x_begin = int(x_b)
         self.x_end = int(x_e)
@@ -203,206 +205,17 @@ class Visual(QtWidgets.QMainWindow, win2.Ui_MainWindow):
 
     def draw_res(self):
 
-        print("draw_res", self.alpha_x, self.alpha_y, self.alpha_z)
+        # print("draw_res", self.alpha_x, self.alpha_y, self.alpha_z)
         self.scene.clear()
         self.image.fill(QtCore.Qt.white)
-        # f = funcs[self.number_func]
 
         self.read_x_z_value()
 
-        self.image = self.float_horizon()
+        self.image = float_horizon(self)
 
         p = QPixmap()
         p.convertFromImage(self.image)
         self.scene.addPixmap(p)
-
-
-    def float_horizon(self):
-        print("float_hor")
-        # для удобства использования
-        func = funcs[self.number_func]
-        alpha_x = self.alpha_x
-        alpha_y = self.alpha_y
-        alpha_z = self.alpha_z
-
-        x_min = self.x_begin
-        x_max = self.x_end
-        x_step = self.x_step
-
-        z_min = self.z_begin
-        z_max = self.z_end
-        z_step = self.z_step
-
-        # инициализация для боковых ребер
-        x_r = -1
-        y_r = -1
-        x_l = -1
-        y_l = -1
-
-        # инициализация массивов горизонта
-        hight_hor = {x: 0 for x in range(0, int(self.w) + 1)}
-        low_hor = {x: self.h for x in range(0, int(self.w) + 1)}
-
-        z = z_max
-        print(z, z_min)
-        while z >= z_min:
-            print("z", z)
-            z_buf = z
-            x_prev = x_min
-            y_prev = func(x_min, z)
-            x_prev, y_prev, z_buf = transform(x_prev, y_prev, z,
-                                              alpha_x, alpha_y, alpha_z, 
-                                              self.scale_k, self.w, self.h)
-
-            if x_l != -1:
-                # if not is_visible([x_l, y_l]) or not is_visible([x_prev, y_prev]):
-                #     z -= z_step
-                #     continue
-                hight_hor, low_hor = horizon(x_prev, y_prev, x_l, y_l,
-                                             hight_hor, low_hor, 
-                                             self.image)
-            x_l = x_prev
-            y_l = y_prev
-
-            x = x_min
-            while x <= x_max:
-                print("x", x)
-                y = func(x, z)
-                x_cur, y_cur, z_buf = transform(x, y, z, alpha_x, alpha_y, alpha_z,
-                                                self.scale_k, self.w, self.h)
-                # if not is_visible([x_cur, y_cur]) or not  is_visible([x_prev, y_prev]):
-                #     x += x_step
-                #     continue
-                hight_hor, low_hor = horizon(x_prev, y_prev, x_cur, y_cur, hight_hor, low_hor, self.image)
-                x_prev = x_cur
-                y_prev = y_cur
-
-                x += x_step
-
-            if z != z_max:
-                x_r = x_max
-                y_r = func(x_max, z - z_step)
-                x_r, y_r, z_buf = transform(x_r, y_r, z - z_step, alpha_x, alpha_y, alpha_z, self.scale_k, self.w, self.h)
-                # if not is_visible([x_r, y_r]) or not is_visible([x_prev, y_prev]):
-                #     x += x_step
-                #     continue
-                hight_hor, low_hor = horizon(x_prev, y_prev, x_r, y_r, hight_hor, low_hor, self.image)
-
-            z -= z_step
-
-        return self.image
-
-def sign(x):
-    if not x:
-        return 0
-    else:
-        return x / abs(x)
-
-# Проверка точки на видимость
-def is_visible(point):
-    return 0 <= point[0] < wind.w  - 1 and 0 <= point[1] < wind.h - 1
-
-
-
-def horizon(x1, y1, x2, y2, hh, lh, image):
-    if  x1 < 0 or x1 > image.width() or x2 < 0 or x2 > image.width():
-        return hh, lh
-    print("hor x1", x1)
-    x = x1
-    y = y1
-    dx = x2 - x1
-    dy = y2 - y1
-    s_x = sign(dx)
-    s_y = sign(dy)
-    dx = abs(dx)
-    dy = abs(dy)
-    print("dx == 0 and dy == 0 and 0 <= x < image.width()", dx == 0 and dy == 0 and 0 <= x < image.width())
-    if dx == 0 and dy == 0 and 0 <= x < image.width():
-        if y >= hh[x]:
-            hh[x] = y
-            image.setPixelColor(x, image.height() - y, wind.color_res)
-        if y <= lh[x]:
-            lh[x] = y
-            image.setPixelColor(x, image.height() - y, wind.color_res)
-        return hh, lh
-    flag = 0
-    if dy > dx:
-        dx, dy = dy, dx
-        flag = 1
-    y_max_cur = hh[x]
-    y_min_cur = lh[x]
-
-    e = 2 * dy - dx
-    i = 1
-    while i <= dx:
-        if 0 <= x < image.width():
-            if y >= hh[x]:
-                if y >= y_max_cur:
-                    y_max_cur = y
-                image.setPixelColor(x, image.height() - y, wind.color_res)
-            if y <= lh[x]:
-                if y <= y_min_cur:
-                    y_min_cur = y
-                image.setPixelColor(x, image.height() - y, wind.color_res)
-        if e >= 0:
-            if flag:
-                hh[x] = y_max_cur
-                lh[x] = y_min_cur
-                x += s_x
-                y_max_cur = hh[x]
-                y_min_cur = lh[x]
-            else:
-                y += s_y
-            e -= 2 * dx
-        if e < 0:
-            if not flag:
-                hh[x] = y_max_cur
-                lh[x] = y_min_cur
-                x += s_x
-                y_max_cur = hh[x]
-                y_min_cur = lh[x]
-            else:
-                y += s_y
-            e += 2 * dy
-        i += 1
-    return hh, lh
-
-
-
-def turn_x(x, y, z, alpha):
-    alpha = alpha * pi / 180
-    buf = y
-    y = cos(alpha) * y - sin(alpha) * z
-    z = cos(alpha) * z + sin(alpha) * buf
-    return x, y, z
-        
-
-def turn_y(x, y, z, alpha):
-    alpha = alpha * pi / 180
-    buf = x
-    x = cos(alpha) * x - sin(alpha) * z
-    z = cos(alpha) * z + sin(alpha) * buf
-    return x, y, z
-
-
-def turn_z(x, y, z, alpha):
-    alpha = alpha * pi / 180
-    buf = x
-    x = cos(alpha) * x - sin(alpha) * y
-    y = cos(alpha) * y + sin(alpha) * buf
-    return x, y, z
-
-
-def transform(x, y, z, alpha_x, alpha_y, alpha_z, scale_k, w, h):
-    print("transform", scale_k, w, h)
-    x, y, z = turn_x(x, y, z, alpha_x)
-    x, y, z = turn_y(x, y, z, alpha_y)
-    x, y, z = turn_z(x, y, z, alpha_z)
-    print(x, y, z)
-    x = x * scale_k + w / 2 
-    y = y * scale_k + h / 2 
-    print("transform end", x, y, z)
-    return round(x), round(y), round(z)
 
 
 def main():
